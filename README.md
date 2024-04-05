@@ -1,25 +1,19 @@
 # -Demo-Generate-Baseline-With-AI
 
-Este repositório contém os artefatos e a documentação para a demonstração de criação de baselines de segurança utilizando o ChatGPT. O processo é guiado pelo `Caderno_De_Testes_Demo_IA.docx` e utiliza o `Template_Baseline.docx` para estruturar os baselines de segurança.
-
 ## Sobre o Projeto
 
 Este projeto demonstra como o ChatGPT pode ser utilizado para automatizar a criação de baselines de segurança. Através do uso de inteligência artificial, o processo se torna mais rápido, eficiente e padronizado, assegurando que todos os baselines de segurança cumpram com os requisitos necessários.
 
 ## Estrutura do Repositório
 
-- `Caderno_De_Testes_Demo_IA.docx`: Documento que descreve o processo de teste e demonstração para a criação de baselines com ChatGPT.
-- `Template_Baseline.docx`: Template utilizado como base para a criação de cada baseline de segurança.
+- `Caderno_De_Testes_Demo_IA.docx`: Este documento fornece uma visão detalhada do método usado para gerar baselines de segurança com ChatGPT, incluindo etapas de teste e validação.
+- `Template_Baseline.docx`: Template padrão que orienta a estruturação dos baselines de segurança, garantindo consistência e cobertura completa dos controles de segurança necessários.
+- `\resources`: Pasta que contém subdiretórios específicos para cada tecnologia avaliada, como EC2, EKS, S3 e Athena. Estes diretórios incluem os arquivos utilizados no processo de geração do baseline, bem como os baselines finais criados. Notavelmente, o diretório do S3 apresenta uma gravação em vídeo demonstrando a execução prática do processo de criação do baseline.
 
 ## Como Usar
 
-1. **Preparação**: Certifique-se de ter uma cópia do ChatGPT e acesso aos documentos necessários no repositório.
+1. **Preparação**: Certifique-se de ter acesso ao ChatGPT.
 2. **Execução**: Siga as instruções detalhadas no `Caderno_De_Testes_Demo_IA.docx` para criar um novo baseline de segurança.
-3. **Customização**: Utilize o `Template_Baseline.docx` para garantir que todos os baselines sigam um formato padronizado e consistente.
-
-## Contribuições
-
-Contribuições para o projeto são bem-vindas! Se você tem sugestões de melhoria ou quer contribuir com novos templates ou melhorias no processo, sinta-se à vontade para abrir um pull request ou issue.
 
 ## Licença
 
