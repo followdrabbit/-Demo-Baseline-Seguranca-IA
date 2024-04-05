@@ -19,7 +19,7 @@ Este projeto demonstra como o ChatGPT pode ser utilizado para automatizar a cria
 
 ## A Fazer
 
-- [ ] Utilizar ferramentas como o [GPT Pilot](https://www.youtube.com/watch?v=xQlnqTMC9xA&list=PLyQhIiC8pBQth5iX-o_Ys_aveomLyGugk&index=4&t=586s&ab_channel=MatthewBerman), [Devika](https://www.youtube.com/watch?v=kw9nTK42bTw&list=PLyQhIiC8pBQth5iX-o_Ys_aveomLyGugk&index=5&ab_channel=MatthewBerman), [DBRX](https://www.youtube.com/watch?v=0Z4BGBCl4gc&list=PLyQhIiC8pBQth5iX-o_Ys_aveomLyGugk&index=6&ab_channel=MatthewBerman), [OpenDevin](https://www.youtube.com/watch?v=dKD4a_sv69o&list=PLyQhIiC8pBQth5iX-o_Ys_aveomLyGugk&index=7&ab_channel=MatthewBerman) ou similar para automatizar o processo
+- [ ] Utilizar ferramentas como o [SWE-Agent](https://www.youtube.com/watch?v=9-JBHGlYEBI&ab_channel=MatthewBerman), [GPT Pilot](https://www.youtube.com/watch?v=xQlnqTMC9xA&list=PLyQhIiC8pBQth5iX-o_Ys_aveomLyGugk&index=4&t=586s&ab_channel=MatthewBerman), [Devika](https://www.youtube.com/watch?v=kw9nTK42bTw&list=PLyQhIiC8pBQth5iX-o_Ys_aveomLyGugk&index=5&ab_channel=MatthewBerman), [DBRX](https://www.youtube.com/watch?v=0Z4BGBCl4gc&list=PLyQhIiC8pBQth5iX-o_Ys_aveomLyGugk&index=6&ab_channel=MatthewBerman), [OpenDevin](https://www.youtube.com/watch?v=dKD4a_sv69o&list=PLyQhIiC8pBQth5iX-o_Ys_aveomLyGugk&index=7&ab_channel=MatthewBerman) ou similar para automatizar o processo
 
 ## Licença
 
