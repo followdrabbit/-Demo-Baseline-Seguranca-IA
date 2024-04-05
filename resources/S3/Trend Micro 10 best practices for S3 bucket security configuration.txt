@@ -1,0 +1,280 @@
+
+Referencia: [Trend Micro 10 best practices for S3 bucket security configuration](https://www.trendmicro.com/pt_br/devops/22/c/best-practices-s3-buckets-security-configurations.html)
+
+
+Since its launch, Amazon’s Simple Storage Service (S3) has grown to become the data repository of choice for many organizations. According to an announcement in March 2021, Amazon S3 stores over 100 trillion objects, and its service hit tens of millions of requests per second. Its popularity is due to the range and quality of its services. For example, S3 offers automatic scale-up, zero capital expenditures, and requires minimum technical and managerial expertise.
+
+This popularity naturally makes S3 an attractive target for breaches, unauthorized exfiltration of data, and ransomware. The AWS Shared Responsibility Model makes the configuration of S3 and access permissions the user’s responsibility. This means users must implement the preventive measures provided by AWS and third parties to secure Amazon S3.
+
+Most successful attacks on S3 buckets are due to human error, such as unprotected or poorly-protected access, phishing links, easily guessed unsigned URLs, misconfigurations of bucket policies, access control list (ACL), and identitiy and access management (IAM) permissions.
+
+This article explores the top 10 security best practices for securing data in Amazon S3 and how to implement them with minimal effort using Trend Micro Cloud One™ – Conformity. Note that this article doesn’t look at service policies (SCPs) created in AWS organizations.
+
+What is Conformity?
+
+Conformity provides real-time monitoring and auto-remediation for the security, compliance, and governance of cloud infrastructure. It provides broad visibility of your cloud infrastructure, enabling continuous compliance and fast remediation of incidents. Conformity also has a public Knowledge Base with detailed resources and best practices.
+
+confirmity
+Conformity can run an account-wide scan to detect security risks, assign threat level metrics, and display them on a dashboard for rectification. The public library consists of a catalog of nearly 1000 guardrails on cloud infrastructure and configuration best practices for Amazon Web Services (AWS), Microsoft Azure, and Google Cloud Platform™ (GCP) environments. Leveraging the console or command-line interface (CLI) can help address security vulnerabilities, reliability risks, performance, and cost inefficiencies.
+
+Configuring the top 10 security best practices for S3 buckets
+
+1. Block public S3 buckets at the organization level
+
+Conformity offers rules to identify whether a block is at the account and bucket level but not the organizational level.
+
+The following rules are relevant:
+
+Rule S3-027: S3 block public access for AWS accounts
+
+Conformity can identify whether a block is at the account level and the bucket level. Rule S3-027 is the S3 Block Public Access feature, which can block account-wide public access to current and future S3 buckets, objects, and access points.
+
+amazon
+The Block Public Access feature consists of four settings:
+
+BlockPublicAcls
+IgnorePublicAcls
+BlockPublicPolicy
+RestrictPublicBuckets
+Depending on the use case, you can activate them together or individually. While Conformity categorizes this threat level as low, it’s strongly recommended that you implement the Block Public Access feature for any AWS account that you use for internal applications.
+
+Rule S3-026: enable S3 block public access for S3 buckets
+
+You may want some of your S3 buckets to be publicly accessible. This means turning off the account block and focusing on configuring each S3 bucket directly as needed.
+
+For the individual S3 bucket whose objects you must block from public access, you navigate to the bucket, click the Permissions tab, and then click Edit.
+
+Like the account block, the S3 bucket block has four settings that you can enable individually or in bulk. However, in contrast to the account block, Conformity categorizes the threat level as medium because, in the event of a breach, the blast radius is limited to the specific bucket and its object as opposed to all buckets.
+
+permission
+2. Use S3 bucket policies to verify restricted and specific access
+
+Conformity checks that users don’t have access to change their permissions.
+
+This threat level is very high, requiring immediate action. Typical remediation is to check that the access granted in the bucket policy is for specific AWS principals, federated users, service principals, IP addresses, or VPCs.
+
+Note that anyone can potentially access a bucket with a policy allowing an identity with a wildcard like "Principal*". A bucket policy that allows a wildcard action (*) can potentially allow a user to perform any action in the bucket.
+
+The following rules are relevant:
+
+Rule S3-014: S3 bucket public access via policy
+
+Rule S3-014 checks the Bucket Policy Editor dialog box on the Permissions tab, to verify the Effect and Principal policy elements.
+
+For example, there’s a wildcard * symbol next to Principal in the image below, granting s3:GetObject rights to any user. This makes the bucket vulnerable to a breach because any user can download objects in the S3 bucket. A remediation step would be to replace the wildcard with a specific IAM user or group resource name.
+
+bucket
+Rule S3-004: S3 bucket public ‘WRITE_ACP’ access
+
+Rule S3-004 checks the Access control list (ACL) dialog box on the Permissions tab to verify that write access to the bucket’s ACL for Everyone (public access) isn’t enabled.
+
+If enabled, unauthorized persons can edit bucket permissions and breach your S3 bucket. By default, AWS disables your ability to select or clear the Write box using the console. However, if you need to grant write access, you can use the AWS CLI, AWS SDK, or the S3 API (grant-write-acp).
+
+acl
+Rule S3-002: block public S3 buckets ‘READ_ACP’ access (policy)
+
+Rule S3-002 checks the Access control list (ACL) dialog box on the Permissions tab, to verify that read access to the bucket’s ACL for Everyone (public access) isn’t enabled. Otherwise, unauthorized persons can examine your ACL config and find permission vulnerabilities.
+
+acl2
+Rule S3-003: S3 bucket public ‘WRITE’ ACL access
+
+Rule S3-003 checks the Permissions tab > Access control list (ACL) dialog box to verify that write access to the Object ACL for Everyone (public access) isn’t enabled. If enabled, unauthorized persons can upload, delete, and overwrite objects within the bucket.
+
+By default, AWS disables your ability to select or clear the Write box using the console. However, if you need to grant write access, you can use the AWS CLI, AWS SDK, or the S3 API (grant-write).
+
+acl3
+3. Ensure that any identity-based policies don’t use Wildcard actions
+
+Conformity checks for misconfigurations using the following IAM rules.
+
+Rule IAM-036: AWS IAM users with admin privileges
+
+Rule IAM-036 checks the IAM user to see if it has the AWS managed policy of Administrator access, full access, or the permissions to create, update, and delete. The threat level is high and deemed “not an acceptable risk.”
+
+This is a concern, as malicious use of this access can be devastating to any AWS account resource; denial of service (DDoS), exfiltration of data, and unauthorized use of AWS resources to drive up costs are possible. Conformity strongly recommends detaching the Administrator access policy and redefining access based on the principle of least privilege.
+iam
+Also, full access policies grant IAM users create, update, and delete rights to any resource. As such, you must detach the policy from the IAM user and base it on the principle of least privilege. For example, Amazon EC2 server instances are a common resource used daily for most AWS accounts. Because of speed, staging reasons, or small operations, you might assign or request AmazonEC2FullAccess. The problem is that this enables the creation of rogue server instances without your knowledge for malicious purposes or to increase costs significantly.
+
+Where there’s a need for Admin or full access, you can create a Masters or Managers group and add the IAM user to the group.
+
+iam2
+Rule IAM-049: IAM role policy too permissive
+
+Generally, rule IAM-049 checks that IAM role policies can use only the minimum set of actions required to complete tasks. The threat level is medium, so Conformity encourages compliance.
+
+IAM role policies that allow all actions (for example, using *), all IAM actions (for example, using iam:*), allow anyone to uses sts:AssumeRole. This endangers your resources. Its compromise means attackers can use any action or role to commandeer your resources.
+
+Also, IAM role policies that allow for passing on roles to EC2 instances using the iam:PassRole action and NotAction policy elements combined with "Effect": "Allow" blocks often provide more privileges than necessary.
+
+Remediation is to replace any wildcard with specificity and rewrite the policy to avoid using NotAction or sts:AssumeRole with a wildcard principal. For example, the image below shows the hello-lambda-role, made up of the AWSLambdaBasicExecution managed policy has been assumed. Any assignee with this role can only run Lambda functions.
+
+access
+Rule IAM-045 IAM policies with full administrative privileges
+
+Rule IAM-045 checks that no customer-managed IAM policies allow full administrative privileges in the AWS account. It searches for statements with the following combination of elements: "Effect": "Allow", "Action": "*", "Resource": "*".
+
+Non-compliance is a high-level threat. The problem is that unauthorized persons have access to all AWS actions and resources. For example, the customer-managed ec2-limited-access policy in the image below designates that cloud monitoring and load balancing apply to all EC2 resources. You can also see that the IAM action is specific as well. So, this customer-managed policy is compliant with the Conformity IAM-045 rule, as there’s a specific action, not just any action.
+
+iam
+IAM AccessAnalyzer
+
+The AWS AccessAnalyzer tool identifies resources shared with external principals by using logic-based reasoning and generating a finding for each instance of a resource shared outside of your account. You can lean on the Conformity Knowledge Base to resolve the finding and achieve continuous security and compliance.
+
+all
+S3 Buckets Lifecycle Configuration
+
+S3-020 checks for the use of lifecycle configurations to manage S3 objects during their lifetime. An S3 lifecycle configuration is a set of one or more rules, where each rule defines an action (transition or expiration action) for Amazon S3 to apply to a group of objects. By having an S3 lifecycle policy to delete old objects, limited access is maintained.
+
+IAM Configuration Changes
+
+IAM-054 checks for changes in detected configuration changes made at the Identity and Access Management (IAM) service level, within your AWS account. This includes configuration changes that may affect permissions to your S3 buckets
+
+4. Enable Amazon S3 protection in GuardDuty to detect suspicious activities
+
+Conformity has rules for leveraging Amazon GuardDuty for your AWS account and workloads in the following ways.
+
+guardduty
+Rule GD-001: GuardDuty enabled
+
+Conformity has rule GD-001 for enabling GuardDuty. This rule checks that GuardDuty is enabled in all regions for the security of your AWS environment and infrastructure. Because this rule is a medium-level threat, Conformity encourages compliance.
+
+The result of non-compliance is the potential occurrence and proliferation of malicious activity on your AWS account and infrastructure without your knowledge, such as Recon:EC2/PortProbeUnprotectedPort, UnauthorizedAccess:EC2/SSHBruteForce, or UnauthorizedAccess:IAMUser/MaliciousIPCaller.
+
+To remediate, simply visit GuardDuty to enable and activate it in every region.
+
+Rule GD-002: GuardDuty findings
+
+Conformity also has rule GD-002 that ingests and provides help with managing GuardDuty findings. The threat level is medium. Within your Conformity account, you can have notifications sent over email, SMS, Slack, JIRA, PagerDuty, and ServiceNow. Then, you can lean on the Conformity knowledge base to resolve the findings and achieve continuous security and compliance.
+
+For example, if you have a random port on your EC2 instance, say 30784, that you aren’t using but someone is probing, you check your inbound rules to delist port ranges, input specific port numbers, and restrict access to particular Ips or IP ranges.
+
+5. Use Amazon Macie to scan for sensitive data outside of designated areas
+
+Conformity has the following rules for Amazon Macie service
+
+Rule Macie-001: Amazon Macie
+
+This rule checks that Macie is enabled so that it can scan your S3 buckets to identify sensitive information, such as credit cards, financial records, or personally identifiable information (PII). Macie analyzes access and user behavior patterns then bring this data to your attention.
+
+You can use Macie-001 to help comply with the General Data Protection Regulation (GDPR) and the Payment Card Industry Data Security Standard (PCI DSS) for encryption and pseudonymization of data, as it recognizes PII.
+
+gdpr
+Rule ID: Macie2-002 - Amazon Macie Sensitive Data Repository
+
+Macie2-002 checks if Amazon Macie service is configured to store data discovery results in an Amazon S3 bucket to discover, classify, and protect sensitive data within AWS cloud
+
+Rule Macie2-003 - Amazon Macie Discovery Jobs
+
+Macie2-003 checks if Amazon Macie sensitive data discovery jobs are created within each AWS cloud region in order to automate discovery, logging, and reporting of sensitive data stored in Amazon S3 buckets. A Macie data discovery job analyzes the objects available in your S3 buckets to determine whether the objects contain sensitive data, and it provides detailed reports of the data that it finds, and the analysis that it performs.
+
+6. Encrypt data in Amazon S3
+
+Conformity has the following rules offering different approaches for encryption.
+
+Rule S3-025: customer-provided CMKs
+
+Conformity also includes rule S3-025, which checks if bucket-level encryption using Customer Managed Keys (CMK) is active. You must use the AWS CLI, AWS SDK, or Amazon S3 REST API during upload to implement this, as it’s not available on the console. You may opt for CMK to exercise even more fine-grained control over server-side encryption and decryption of objects in an S3 bucket. The threat level for non-compliance is medium.
+
+Rule S3-016: server-side encryption
+
+Rule S3-016 rule checks that server-side encryption is enabled using either Policy Conditions or Default Encryption methods outlined below. The threat level for non-encrypted buckets is high, making the risk unacceptable. Encryption can takes place during the upload process using server-side encryption, which features Amazon S3-managed keys (SSE-S3) and AWS KMS-managed keys (SSE-KMS) as options. To remediate, enable default encryption of the bucket on the Properties tab and select any SSE-S3 or SSE-KMS options.
+
+sse
+SSE can also be enabled via bucket policy. Visit the Permissions tab for the bucket, then edit and append either the SSE-S3 or SS3-KMS policy depending on the encryption type you chose in the Properties tab.
+
+bucket
+7. Protect data in Amazon S3 from accidental deletion using S3 Versioning and S3 Object Lock
+
+Conformity helps you avoid the accidental deletion of objects in S3 buckets through the following rules.
+
+Rule S3-013: S3 bucket MFA delete enabled
+
+Conformity rule S3-013 ensures that your S3 buckets use multi-factor authentication (MFA). The delete feature prevents accidental deletion of any versioned S3 objects (files). Non-compliance is generally a tolerable level of risk, which is why the threat level is low.
+
+To activate it, you must have root access to an already enabled MFA and the AWS CLI, AWS SDK, or Amazon S3 REST API because the console is disabled.
+
+bucket
+Rule S3-023: S3 Object Lock
+
+Rule S3-023 ensures that your S3 buckets have the Object Lock feature enabled to prevent stored objects from deletion during a user-defined period for policy or compliance reasons. Non-compliance is generally a tolerable level of risk, which is why the threat level is low.
+
+You can only enable an object lock at the creation of a new S3 bucket. After uploading an object, you simply activate either a legal hold or retention on the bucket’s Properties tab, depending on your use case.
+
+cannotbe
+object
+Rule S3-012: S3 bucket versioning enabled
+
+Conformity rule S3-012 ensures that your S3 buckets have the versioning flag enabled to preserve and recover overwritten and deleted S3 objects. This is an extra layer of data protection or data retention. Because non-compliance generally has a tolerable level of risk, the threat level is low.
+
+bucket
+8. Enable logging for S3 using CloudTrail and S3 server access logging
+
+Access logs provide insight into cloud activity, complement live monitoring, and are especially useful in audit and compliance exercises. Conformity helps you achieve server access logging for S3 buckets storing CloudTrail events in the following ways.
+
+Rule S3-011: S3 bucket logging enabled
+
+By default, server access logging isn’t enabled for S3 buckets. This means that if you want to record access requests to comply with security audits, you must enable the feature. Rule S3-011 checks whether the AWS S3 Server Access Logging feature is enabled. The threat level is medium, so Conformity encourages compliance.
+
+with
+Rule CT-002: CloudTrail S3 bucket logging enabled
+
+Conformity rule CT-002 checks that any S3 buckets used by AWS CloudTrail have the Server Access Logging feature enabled. With S3 Server Access Logging enabled, CloudTrail tracks access requests made to the buckets. Also, you can apply limits to determine who can alter or delete the access logs to prevent a user from covering their tracks. Conformity encourages compliance because the threat level is a medium.
+
+aws
+Rule CT-012: CloudTrail data events
+
+Rule CT-012 ensures AWS CloudTrail logs data events for individual S3 buckets, including all current and future buckets. The threat level is low, so the risk is tolerable. The remediation step is to navigate to the specific trail in CloudTrail and edit the Data events tab.
+
+ 
+
+data
+Rule CT-010: CloudTrail management events
+
+Conformity rule CT-010 ensures AWS CloudTrail logs management events for individual S3 buckets or all current and future buckets. The threat level is medium, so Conformity encourages compliance. Remediation is to navigate to the specific trail on CloudTrail and edit the Management events tab.
+
+management
+Rule CT-014: rule for logs in S3
+
+Conformity rule CT-014 checks that AWS CloudTrail uses the right S3 bucket as a target bucket. When this isn’t the case, sensitive CloudTrail data is going elsewhere, which constitutes a breach. Since threat level is medium, Conformity encourages compliance.
+
+dorime
+9. Backup data in Amazon S3
+
+Conformity has one rule to encourage the use of lifecycle management.
+
+Rule S3-020: S3 buckets lifecycle configuration
+
+Rule S3-020 checks that your AWS S3 buckets use lifecycle configuration rules. You can use these S3 lifecycle configuration rules to transition objects to infrequent access or archive objects in S3 Glacier. You can expire (delete) objects because of compliance retention requirements, a need to optimize AWS costs, or because object multipart uploads are incomplete.
+
+The threat level is low, so the risk is tolerable. The remediation step is to navigate to the Management tab of the specific S3 bucket and create a lifecycle configuration rule.
+
+use
+10. Monitor S3 using Security Hub and CloudWatch logs
+
+Conformity’s S3 rules already cover many of the rules found in Security Hub for S3. You have the following rules.
+
+Rule CT-009: CloudTrail integrated with CloudWatch
+
+Conformity checks that CloudWatch Logs are monitoring CloudTrail events. Rule CT-009 enables you to take management or security actions quickly in response to serious operational events detected with CloudTrail events and recorded by CloudWatch logs.
+
+navigate
+The threat level is medium, so Conformity encourages compliance. Remediation is to create a CloudWatch Log group and SNS topic for email notifications on your Trail in the CloudTrail dashboard. Afterward, you create a metric filter on CloudWatch, configure your SNS topic, and the alarm to send to your SNS topic.
+
+For example, this filter, {$.errorCode = "AccessDenied" || $.eventName = "PutObject" }, checks for unauthorized access or S3 uploads in CloudWatch logs. It triggers an alarm if more than three items are being uploaded within 60 seconds after the first two intervals.
+
+aws
+Rule CWL-012: S3 bucket changes alarm
+
+Conformity rule CWL-012 checks that an AWS CloudWatch alarm is created and configured in your AWS account to launch each time an S3 bucket configuration changes. So, when anyone creates, updates, or deletes a bucket policy, CORS, ACL, lifecycle, or replication, CloudWatch triggers this alarm. Note that Conformity assumes that the CloudTrail service is already enabled to stream event log data to CloudWatch within your AWS account.
+
+Since the threat level is medium, Conformity encourages compliance. Remediation is to configure CloudWatch to use S3 metrics, {$.errorCode = "AccessDenied" || $.errorCode = "UnauthorizedOperation" }, with an alarm and an SNS topic for email notifications.
+
+Rule S3-022: S3 Configuration Changes
+
+Rule S3-02 detects any Amazon S3 configuration changes made within your AWS account such as creating and deleting buckets, making S3 buckets publicly accessible using Access Control Lists (ACLs), updating bucket policies to configure permissions for all objects within a bucket, and updating S3 lifecycle policies
+
+Conclusion
+
+Amazon S3 is the foremost data repository globally, making it an attractive target to malicious users. All too often a simple misconfiguration can open your enterprise infrastructure to breaches, exfiltration of data, and ransomware attacks. Conformity aims to prevent, or at the very least mitigate, the occurrence and severity of unauthorized intrusion into S3 buckets with its advanced threat detection system and public knowledge base of remediation actions. So, if you’re looking to implement the AWS recommended top 10 best practices for securing data in S3 buckets, look no further.
+
+Now that you know more about cloud security, sign up for a free, 30-day trial of Conformity to enjoy its threat detection system and make use of its public knowledge base.

@@ -1,0 +1,214 @@
+
+Controles mandatórios e objetivos
+
+Controle: Ativar S3 Block Public Access
+- Referência: Amazon S3 Security and Data Protection, AWS repost How can I secure the files in my Amazon S3 bucket?
+
+Controle: Utilizar IAM roles para acesso ao S3
+- Referência: Amazon S3 Security and Data Protection, AWS - Security best practices for Amazon S3
+
+Controle: Adotar criptografia automática SSE-S3
+- Referência: Amazon S3 Security and Data Protection
+
+Controle: Utilizar Amazon S3 VPC endpoints
+- Referência: Amazon S3 Security and Data Protection, AWS - Security best practices for Amazon S3
+
+Controle: Empregar AWS IAM Access Analyzer para monitoramento
+- Referência: Amazon S3 Security and Data Protection
+
+Controle: Utilizar Amazon S3 Inventory para auditoria
+- Referência: Amazon S3 Security and Data Protection
+
+Controle: Auditar ações da API do Amazon S3 com AWS CloudTrail
+- Referência: Amazon S3 Security and Data Protection, AWS Security Best Practices and Guidelines for Amazon S3, AWS - Security best practices for Amazon S3
+
+Controle: Monitorar acesso aos dados com logs de acesso do servidor S3
+- Referência: Amazon S3 Security and Data Protection, AWS Security Best Practices and Guidelines for Amazon S3, AWS - Security best practices for Amazon S3
+
+Controle: Ativar versão de objetos com S3 Versioning
+- Referência: Amazon S3 Security and Data Protection, AWS Security Best Practices and Guidelines for Amazon S3, AWS - Security best practices for Amazon S3
+
+Controle: Utilizar Amazon S3 Object Lock para políticas de retenção
+- Referência: Amazon S3 Security and Data Protection, AWS Security Best Practices and Guidelines for Amazon S3, AWS - Security best practices for Amazon S3
+
+Controle: Manter estratégia de backup de dados
+- Referência: Amazon S3 Security and Data Protection, AWS Top 10 security best practices for securing data in Amazon S3
+
+Controle: Desabilitar listas de controle de acesso (ACLs) no S3
+- Referência: AWS - Security best practices for Amazon S3
+
+Controle: Aplicar configuração de propriedade de objeto S3 para desabilitar ACLs
+- Referência: AWS - Security best practices for Amazon S3
+
+Controle: Revisar política de bucket para garantir cobertura completa de acesso
+- Referência: AWS - Security best practices for Amazon S3
+
+Controle: Bloquear acesso público aos buckets S3
+- Referência: AWS - Security best practices for Amazon S3, AWS Security Best Practices and Guidelines for Amazon S3
+
+Controle: Utilizar S3 Object Lock para proteção contra exclusão
+- Referência: AWS - Security best practices for Amazon S3
+
+Controle: Habilitar versionamento no S3
+- Referência: AWS - Security best practices for Amazon S3
+
+Controle: Usar endpoints VPC para acesso ao S3
+- Referência: AWS - Security best practices for Amazon S3
+
+Controle: Identificar e auditar todos os buckets S3
+- Referência: AWS - Security best practices for Amazon S3
+
+Controle: Habilitar registro de acesso ao servidor no S3
+- Referência: AWS - Security best practices for Amazon S3, AWS Top 10 security best practices for securing data in Amazon S3
+
+Controle: Usar AWS CloudTrail para registro de atividades no S3
+- Referência: AWS - Security best practices for Amazon S3, AWS Top 10 security best practices for securing data in Amazon S3
+
+Controle: Habilitar AWS Config para avaliação de configurações
+- Referência: AWS - Security best practices for Amazon S3
+
+Controle: Descobrir dados sensíveis usando Amazon Macie
+- Referência: AWS - Security best practices for Amazon S3, AWS Top 10 security best practices for securing data in Amazon S3
+
+Controle: Utilizar S3 Storage Lens para análise de uso de armazenamento
+- Referência: AWS - Security best practices for Amazon S3
+
+Controle: Bloquear buckets S3 públicos no nível da organização
+- Referência: AWS Top 10 security best practices for securing data in Amazon S3
+
+Controle: Utilizar políticas de bucket para restringir o acesso de forma específica
+- Referência: AWS Top 10 security best practices for securing data in Amazon S3
+
+Controle: Separar acessos de leitura, escrita e exclusão no S3
+- Referência: AWS Top 10 security best practices for securing data in Amazon S3
+
+Controle: Ativar proteção do S3 em GuardDuty para detectar atividades suspeitas
+- Referência: AWS Top 10 security best practices for securing data in Amazon S3
+
+Controle: Usar Macie para varredura de dados sensíveis fora das áreas designadas
+- Referência: AWS Top 10 security best practices for securing data in Amazon S3
+
+Controle: Criptografar os dados no S3
+- Referência: AWS Top 10 security best practices for securing data in Amazon S3, Trend Micro Best Practices for Keeping Amazon S3 Buckets Secure
+
+Controle: Proteger dados no S3 contra exclusão acidental usando Versionamento e Object Lock
+- Referência: AWS Top 10 security best practices for securing data in Amazon S3
+
+Controle: Habilitar registro para o S3 usando CloudTrail e logging de acesso do servidor
+- Referência: AWS Top 10 security best practices for securing data in Amazon S3
+
+Controle: Fazer backup dos dados no S3
+- Referência: AWS Top 10 security best practices for securing data in Amazon S3
+
+Controle: Monitorar o S3 usando Security Hub e CloudWatch Logs
+- Referência: AWS Top 10 security best practices for securing data in Amazon S3
+
+Controle: Capturar estatísticas de segurança do Amazon Macie por bucket S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Configurar bucket S3 diferente para armazenamento de logs de acesso do servidor
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Configurar propriedade do objeto S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Usar nomes de buckets S3 compatíveis com DNS
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Negar permissão de escrita do Grupo de Entrega de Logs S3 no bucket de origem
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Ativar bloqueio de acesso público S3 para contas AWS
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Ativar bloqueio de acesso público S3 para buckets S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Habilitar chaves de bucket S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Proibir acesso 'FULL_CONTROL' a usuários autenticados da AWS
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Proibir acesso 'READ' a usuários autenticados da AWS
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Proibir acesso 'READ_ACP' a usuários autenticados da AWS
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Proibir acesso 'WRITE' a usuários autenticados da AWS
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Proibir acesso 'WRITE_ACP' a usuários autenticados da AWS
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Ativar registro de acesso para buckets S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Habilitar MFA Delete nos buckets S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Proibir acesso público 'FULL_CONTROL' aos buckets S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Proibir acesso público 'READ' aos buckets S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Proibir acesso público 'READ_ACP' aos buckets S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Proibir acesso público 'WRITE' aos buckets S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Proibir acesso público 'WRITE_ACP' aos buckets S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Proibir acesso público via políticas de bucket no S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Habilitar versionamento em buckets S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Criptografar buckets S3 com CMKs fornecidos pelo cliente
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Configurar políticas de ciclo de vida em buckets S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Revisar configurações de hospedagem de site em buckets S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Monitorar mudanças de configuração no S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Proibir acesso cruzado desconhecido via políticas de bucket no S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Usar bloqueio de objeto no S3 para proteção de dados
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Utilizar aceleração de transferência no S3 para transferências de dados mais rápidas
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Exigir SSL para proteção de dados em trânsito no S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Exigir criptografia do lado do servidor (SSE) no S3
+- Referência: Trend Micro Best practice rules for Amazon S3
+
+Controle: Criptografar dados em repouso no S3
+- Referência: Trend Micro Best Practices for Keeping Amazon S3 Buckets Secure
+
+Controle: Utilizar o protocolo HTTPS para segurança de dados em trânsito
+- Referência: Trend Micro Best Practices for Keeping Amazon S3 Buckets Secure
+
+Controle: Utilizar Amazon CloudWatch para monitoramento unificado
+- Referência: Trend Micro Best Practices for Keeping Amazon S3 Buckets Secure
+
+Controle: Usar AWS CloudTrail para auditoria contínua do uso da AWS
+- Referência: Trend Micro Best Practices for Keeping Amazon S3 Buckets Secure
+
+Controle: Implementar ferramentas de terceiros para extensão de segurança na AWS
+- Referência: Trend Micro Best Practices for Keeping Amazon S3 Buckets Secure
+
+

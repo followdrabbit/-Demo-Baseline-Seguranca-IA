@@ -1,0 +1,21 @@
+
+Referencia: [AWS Security Best Practices and Guidelines for Amazon S3](https://d1.awsstatic.com/product-marketing/S3/Amazon_S3_Security_eBook_2020.pdf)
+
+O documento "Security Best Practices and Guidelines for Amazon S3" contém várias recomendações de segurança para o Amazon S3, que podem ser resumidas da seguinte forma:
+
+1. **Modelo de acesso de "menor privilégio"**: Limita o acesso aos recursos do S3 usando uma combinação de políticas de IAM, políticas de bucket e Pontos de Acesso do S3【4†source】.
+
+2. **Não permita acesso público aos buckets do S3**: Utilize a funcionalidade de Bloqueio de Acesso Público do Amazon S3 para evitar o acesso público【4†source】.
+
+3. **Proteção de dados em escala**: 
+   - Criptografe todos os dados no Amazon S3 usando criptografia do lado do servidor (SSE) ou criptografia do lado do cliente.
+   - Exija criptografia em trânsito para o acesso ao Amazon S3.
+   - Ative o versionamento de objetos.
+   - Utilize a exclusão Multi-Fator de Autenticação (MFA) e o Bloqueio de Objetos do S3 quando apropriado.
+   - Considere a Replicação do S3 para diferentes contas da AWS para proteção e conformidade dos dados【4†source】.
+
+4. **Monitoramento e auditoria das configurações de segurança**:
+   - Audite as ações da API do Amazon S3 usando o AWS CloudTrail.
+   - Monitore o acesso aos dados do Amazon S3 com logs de acesso【4†source】.
+
+Estas recomendações cobrem aspectos críticos como controle de acesso, proteção de dados, monitoramento e auditoria, essenciais para garantir a segurança dos recursos armazenados no Amazon S3.

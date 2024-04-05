@@ -1,0 +1,578 @@
+
+Controles enriquecidos
+
+### Ativar S3 Block Public Access
+   - **Controle ID:** amazon_s3_001
+   - **Racional:** Impede o acesso público a todos os buckets e objetos armazenados no S3, evitando a exposição acidental de dados sensíveis.
+   - **Riscos Mitigados:** Acesso não autorizado e vazamento de dados.
+   - **Auditoria:** No AWS Management Console, verifique se o bloqueio de acesso público está ativado em todas as configurações dos buckets S3.
+   - **Remediação:** No console do S3, selecione o bucket, vá para a aba 'Permissions', e ative 'Block all public access'.
+   - **Referências:** Amazon S3 Security and Data Protection, AWS repost How can I secure the files in my Amazon S3 bucket?
+
+### Utilizar IAM roles para acesso ao S3
+   - **Controle ID:** amazon_s3_002
+   - **Racional:** As roles do IAM proporcionam uma forma segura de conceder permissões necessárias para que as aplicações e usuários acessem os recursos do S3.
+   - **Riscos Mitigados:** Concessão excessiva de permissões e acesso não autorizado.
+   - **Auditoria:** No console do AWS IAM, verifique se as roles com permissões para o S3 estão devidamente configuradas.
+   - **Remediação:** Crie ou edite roles do IAM no console do AWS IAM, atribuindo políticas específicas que limitam o acesso ao S3 conforme necessário.
+   - **Referências:** Amazon S3 Security and Data Protection, AWS - Security best practices for Amazon S3
+
+### Adotar criptografia automática SSE-S3
+   - **Controle ID:** amazon_s3_003
+   - **Racional:** A criptografia do lado do servidor com chaves gerenciadas pelo S3 (SSE-S3) protege os dados em repouso automaticamente.
+   - **Riscos Mitigados:** Acesso não autorizado a dados em repouso e violações de dados.
+   - **Auditoria:** No console do S3, verifique se a criptografia SSE-S3 está ativada para os buckets necessários.
+   - **Remediação:** No console do S3, selecione o bucket, vá para a aba 'Properties', e ative a criptografia SSE-S3.
+   - **Referências:** Amazon S3 Security and Data Protection
+
+### Utilizar Amazon S3 VPC endpoints
+   - **Controle ID:** amazon_s3_004
+   - **Racional:** Os VPC endpoints permitem que você conecte sua VPC ao S3 sem precisar atravessar a internet pública, aumentando a segurança da transmissão de dados.
+   - **Riscos Mitigados:** Intercepção de dados e acesso não autorizado.
+   - **Auditoria:** No console da VPC, verifique se há endpoints do S3 configurados e associados às suas VPCs.
+   - **Remediação:** No console da VPC, crie um novo endpoint do S3 e associe-o à sua VPC.
+   - **Referências:** Amazon S3 Security and Data Protection, AWS - Security best practices for Amazon S3
+
+### Empregar AWS IAM Access Analyzer para monitoramento
+   - **Controle ID:** amazon_s3_005
+   - **Racional:** O AWS IAM Access Analyzer ajuda a identificar as permissões concedidas aos seus buckets S3 e avaliar se elas estão em conformidade com as práticas recomendadas de segurança.
+   - **Riscos Mitigados:** Concessão excessiva de permissões e acesso não autorizado.
+   - **Auditoria:** No console do IAM Access Analyzer, verifique se há alguma política que permite acesso não intencional ou excessivo ao S3.
+   - **Remediação:** Revise e ajuste as políticas de permissão conforme as recomendações do Access Analyzer.
+   - **Referências:** Amazon S3 Security and Data Protection
+
+### Utilizar Amazon S3 Inventory para auditoria
+   - **Controle ID:** amazon_s3_006
+   - **Racional:** O Amazon S3 Inventory fornece relatórios sobre os objetos armazenados no S3, permitindo uma auditoria eficiente e a verificação do cumprimento das políticas de dados.
+   - **Riscos Mitigados:** Não conformidade com políticas de dados e falta de visibilidade sobre os dados armazenados.
+   - **Auditoria:** No console do S3, verifique se o S3 Inventory está configurado e está gerando relatórios
+
+ conforme esperado.
+   - **Remediação:** Configure o S3 Inventory no console do S3 para obter relatórios regulares sobre os objetos armazenados.
+   - **Referências:** Amazon S3 Security and Data Protection
+
+### Auditar ações da API do Amazon S3 com AWS CloudTrail
+   - **Controle ID:** amazon_s3_007
+   - **Racional:** O AWS CloudTrail ajuda a registrar e monitorar as ações da API para os buckets S3, permitindo a detecção de atividades suspeitas ou não autorizadas.
+   - **Riscos Mitigados:** Acesso não autorizado e atividades suspeitas.
+   - **Auditoria:** No console do CloudTrail, verifique se os logs das ações da API do S3 estão sendo capturados e armazenados corretamente.
+   - **Remediação:** Certifique-se de que o CloudTrail esteja configurado para capturar todas as atividades da API relacionadas ao S3.
+   - **Referências:** Amazon S3 Security and Data Protection, AWS Security Best Practices and Guidelines for Amazon S3, AWS - Security best practices for Amazon S3
+
+### Monitorar acesso aos dados com logs de acesso do servidor S3
+   - **Controle ID:** amazon_s3_008
+   - **Racional:** Os logs de acesso do servidor S3 fornecem detalhes sobre as solicitações feitas ao S3, ajudando a monitorar e analisar o acesso aos dados.
+   - **Riscos Mitigados:** Acesso não autorizado e análise de padrões de acesso.
+   - **Auditoria:** No console do S3, verifique se o logging de acesso do servidor está habilitado para os buckets necessários.
+   - **Remediação:** Habilite o logging de acesso do servidor nos settings do bucket S3 no console do S3.
+   - **Referências:** Amazon S3 Security and Data Protection, AWS Security Best Practices and Guidelines for Amazon S3, AWS - Security best practices for Amazon S3
+   
+### Ativar versão de objetos com S3 Versioning
+   - **Controle ID:** amazon_s3_009
+   - **Racional:** O versionamento no S3 protege contra a exclusão acidental ou sobrescrita de objetos, permitindo restaurar versões anteriores.
+   - **Riscos Mitigados:** Perda de dados acidental e sobrescrita de objetos.
+   - **Auditoria:** No console do S3, verifique se o versionamento está habilitado para os buckets necessários.
+   - **Remediação:** Habilite o versionamento nos settings do bucket no console do S3.
+   - **Referências:** Amazon S3 Security and Data Protection, AWS Security Best Practices and Guidelines for Amazon S3, AWS - Security best practices for Amazon S3
+
+### Utilizar Amazon S3 Object Lock para políticas de retenção
+   - **Controle ID:** amazon_s3_010
+   - **Racional:** O Object Lock no S3 protege os objetos contra exclusão, permitindo que você aplique políticas de retenção e cumpra regulamentações de conformidade.
+   - **Riscos Mitigados:** Exclusão acidental ou maliciosa de objetos.
+   - **Auditoria:** No console do S3, verifique se o Object Lock está ativado e configurado corretamente nos buckets necessários.
+   - **Remediação:** Ative e configure o Object Lock nas propriedades do bucket no console do S3.
+   - **Referências:** Amazon S3 Security and Data Protection, AWS Security Best Practices and Guidelines for Amazon S3, AWS - Security best practices for Amazon S3
+
+### Manter estratégia de backup de dados
+   - **Controle ID:** amazon_s3_011
+   - **Racional:** A estratégia de backup garante a recuperação de dados em caso de perda, corrupção ou desastre, mantendo a continuidade dos negócios.
+   - **Riscos Mitigados:** Perda de dados e interrupção do negócio.
+   - **Auditoria:** No console do S3, verifique se as políticas e práticas de backup estão sendo seguidas e os dados estão sendo armazenados com segurança.
+   - **Remediação:** Implemente uma estratégia de backup regular no S3, utilizando recursos como o S3 Glacier para arquivamento de longo prazo.
+   - **Referências:** Amazon S3 Security and Data Protection, AWS Top 10 security best practices for securing data in Amazon S3
+
+### Desabilitar listas de controle de acesso (ACLs) no S3
+   - **Controle ID:** amazon_s3_012
+   - **Racional:** Desabilitar as ACLs no S3 ajuda a evitar configurações complexas e potenciais erros de permissão que podem levar a exposição de dados.
+   - **Riscos Mitigados:** Configuração incorreta de permissões e exposição de dados.
+   - **Auditoria:** No console do S3, verifique se as ACLs estão desabilitadas para todos os buckets e objetos.
+   - **Remediação:** Desabilite as ACLs nas configurações de permissões do bucket no console do S3.
+   - **Referências:** AWS - Security best practices for Amazon S3
+
+### Aplicar configuração de propriedade de objeto S3 para desabilitar ACLs
+   - **Controle ID:** amazon_s3_013
+   - **Racional:** A configuração da propriedade do objeto ajuda a gerenciar as permissões de forma mais eficiente e segura, evitando o uso de ACLs.
+   - **Riscos Mitigados:** Erros de configuração de ACL e vazamento de dados.
+   - **Auditoria:** No console do S3, verifique se a propriedade do objeto está configurada para desabilitar ACLs.
+   - **Remediação:** Configure a propriedade do objeto para desabilitar ACLs no console do S3.
+   - **Referências:** AWS - Security best practices for Amazon S3
+
+### Revisar política de bucket para garantir cobertura completa de acesso
+   - **Controle ID:** amazon_s3_014
+   - **Racional:** Revisar a política de bucket assegura que apenas os usuários e serviços autorizados tenham acesso ao S3, reduzindo o risco de acesso não autorizado.
+   - **Riscos Mitigados:** Acesso não autorizado e violação de dados.
+   - **Auditoria:** No console do S3, ver
+
+ifique se as políticas de bucket estão configuradas corretamente para limitar o acesso.
+   - **Remediação:** Revise e ajuste as políticas de bucket no console do S3 para garantir que apenas entidades autorizadas tenham acesso.
+   - **Referências:** AWS - Security best practices for Amazon S3, AWS Security Best Practices and Guidelines for Amazon S3
+
+### Bloquear acesso público aos buckets S3
+   - **Controle ID:** amazon_s3_015
+   - **Racional:** Bloquear o acesso público aos buckets S3 previne a exposição acidental de dados sensíveis na internet.
+   - **Riscos Mitigados:** Exposição de dados sensíveis e ataques cibernéticos.
+   - **Auditoria:** No console do S3, verifique se o bloqueio de acesso público está habilitado para todos os buckets.
+   - **Remediação:** Habilite o bloqueio de acesso público nas configurações do bucket no console do S3.
+   - **Referências:** AWS - Security best practices for Amazon S3, AWS Security Best Practices and Guidelines for Amazon S3
+
+### Utilizar S3 Object Lock para proteção contra exclusão
+   - **Controle ID:** amazon_s3_016
+   - **Racional:** O S3 Object Lock protege contra exclusões acidentais ou mal-intencionadas, proporcionando uma camada adicional de segurança para os dados armazenados.
+   - **Riscos Mitigados:** Exclusão acidental ou maliciosa de dados.
+   - **Auditoria:** No console do S3, verifique se o Object Lock está ativado e configurado corretamente para os buckets necessários.
+   - **Remediação:** Ative e configure o Object Lock para os buckets necessários no console do S3.
+   - **Referências:** AWS - Security best practices for Amazon S3
+
+### Habilitar versionamento no S3
+   - **Controle ID:** amazon_s3_017
+   - **Racional:** Habilitar o versionamento nos buckets do S3 permite manter diferentes versões de um objeto, facilitando a recuperação de versões anteriores em caso de exclusão ou sobrescrita.
+   - **Riscos Mitigados:** Perda de dados devido a exclusão ou sobrescrita acidental.
+   - **Auditoria:** Verifique no console do S3 se o versionamento está habilitado nos buckets relevantes.
+   - **Remediação:** Ative o versionamento no console do S3, nas configurações do bucket.
+   - **Referências:** AWS - Security best practices for Amazon S3
+
+### Usar endpoints VPC para acesso ao S3
+   - **Controle ID:** amazon_s3_018
+   - **Racional:** Utilizar VPC endpoints para o S3 permite acesso privado aos buckets S3, melhorando a segurança e reduzindo o tráfego na Internet pública.
+   - **Riscos Mitigados:** Interceptação de dados e acesso não autorizado.
+   - **Auditoria:** No console do VPC, verifique se os endpoints para o S3 estão configurados e associados às rotas corretas.
+   - **Remediação:** Configure VPC endpoints para o S3 no console do VPC, associando-os às sub-redes e tabelas de rotas apropriadas.
+   - **Referências:** AWS - Security best practices for Amazon S3
+
+### Identificar e auditar todos os buckets S3
+   - **Controle ID:** amazon_s3_019
+   - **Racional:** Identificar e auditar regularmente os buckets S3 garante que somente os dados autorizados estão armazenados e acessíveis conforme a política de segurança.
+   - **Riscos Mitigados:** Armazenamento e acesso não autorizado a dados sensíveis.
+   - **Auditoria:** No console do S3, revise e audite todas as configurações e permissões de bucket.
+   - **Remediação:** Utilize ferramentas de gerenciamento e auditoria da AWS para regularmente revisar e corrigir configurações de buckets.
+   - **Referências:** AWS - Security best practices for Amazon S3
+
+### Habilitar registro de acesso ao servidor no S3
+   - **Controle ID:** amazon_s3_020
+   - **Racional:** Habilitar os registros de acesso ao servidor no S3 fornece um histórico de solicitações de acesso aos buckets, o que é crucial para análise de segurança e auditoria.
+   - **Riscos Mitigados:** Atividades maliciosas e acesso não autorizado.
+   - **Auditoria:** No console do S3, verifique se o registro de acesso ao servidor está habilitado nos buckets.
+   - **Remediação:** Ative os registros de acesso ao servidor nas configurações do bucket no console do S3.
+   - **Referências:** AWS - Security best practices for Amazon S3, AWS Top 10 security best practices for securing data in Amazon S3
+
+### Usar AWS CloudTrail para registro de atividades no S3
+   - **Controle ID:** amazon_s3_021
+   - **Racional:** Utilizar o CloudTrail para registrar atividades no S3 ajuda a monitorar e auditar as ações executadas nos recursos do S3, fornecendo transparência e facilitando a detecção de atividades suspeitas.
+   - **Riscos Mitigados:** Acesso não autorizado e alterações indevidas nos dados ou configurações do S3.
+   - **Auditoria:** No console do CloudTrail, verifique se os logs estão capturando as atividades relacionadas ao S3.
+   - **Remediação:** Configure o CloudTrail para capturar e registrar as atividades dos buckets do S3.
+   - **Referências:** AWS - Security best practices for Amazon S3, AWS Top 10 security best practices for securing data in Amazon S3
+
+### Habilitar AWS Config para avaliação de configurações
+   - **Controle ID:** amazon_s3_022
+   - **Racional:** O AWS Config fornece uma visão detalhada das configurações dos recursos da AWS, permitindo avaliação contínua e auditoria da conformidade com as políticas de segurança.
+   - **Riscos Mitigados:** Configurações inadequadas e não conformidades.
+   - **Auditoria:** No console do AWS Config, verifique se o serviço está habilitado e configurado para avaliar as config
+
+urações dos recursos do S3.
+   - **Remediação:** Ative e configure o AWS Config para monitorar e avaliar as configurações dos recursos do S3.
+   - **Referências:** AWS - Security best practices for Amazon S3
+
+### Descobrir dados sensíveis usando Amazon Macie
+   - **Controle ID:** amazon_s3_023
+   - **Racional:** Utilizar o Amazon Macie para descobrir dados sensíveis ajuda a identificar e proteger os dados armazenados no S3, reduzindo o risco de exposição e vazamento.
+   - **Riscos Mitigados:** Vazamento de dados sensíveis e não conformidade com regulamentos de proteção de dados.
+   - **Auditoria:** No console do Amazon Macie, verifique se a varredura de dados sensíveis está configurada e em operação para os buckets do S3.
+   - **Remediação:** Configure e habilite o Amazon Macie para monitorar e proteger dados sensíveis nos buckets do S3.
+   - **Referências:** AWS - Security best practices for Amazon S3, AWS Top 10 security best practices for securing data in Amazon S3
+
+### Utilizar S3 Storage Lens para análise de uso de armazenamento
+   - **Controle ID:** amazon_s3_024
+   - **Racional:** O S3 Storage Lens oferece insights e análises abrangentes do uso de armazenamento do S3, ajudando a otimizar os custos e melhorar a segurança.
+   - **Riscos Mitigados:** Uso ineficiente de recursos e potenciais riscos de segurança devido à falta de visibilidade.
+   - **Auditoria:** No console do S3, verifique se o S3 Storage Lens está ativado e configurado para analisar o uso do armazenamento.
+   - **Remediação:** Ative e configure o S3 Storage Lens para obter análises detalhadas do uso do armazenamento nos buckets do S3.
+   - **Referências:** AWS - Security best practices for Amazon S3
+
+### Bloquear buckets S3 públicos no nível da organização
+   - **Controle ID:** amazon_s3_025
+   - **Racional:** Bloquear buckets públicos no nível da organização ajuda a prevenir acesso não autorizado, reduzindo o risco de exposição de dados.
+   - **Riscos Mitigados:** Exposição não intencional de dados e acesso não autorizado.
+   - **Auditoria:** Verifique nas configurações da conta AWS se o bloqueio de acesso público está ativado para todos os buckets do S3.
+   - **Remediação:** Ative o bloqueio de acesso público no nível da conta AWS para todos os buckets S3.
+   - **Referências:** AWS Top 10 security best practices for securing data in Amazon S3
+
+### Utilizar políticas de bucket para restringir o acesso de forma específica
+   - **Controle ID:** amazon_s3_026
+   - **Racional:** Restringir o acesso usando políticas de bucket garante que somente usuários autorizados possam acessar os dados do S3.
+   - **Riscos Mitigados:** Acesso não autorizado e vazamento de dados.
+   - **Auditoria:** No console do S3, revise as políticas de bucket para verificar restrições específicas de acesso.
+   - **Remediação:** Configure políticas de bucket no S3 para restringir o acesso com base em critérios específicos.
+   - **Referências:** AWS Top 10 security best practices for securing data in Amazon S3
+
+### Separar acessos de leitura, escrita e exclusão no S3
+   - **Controle ID:** amazon_s3_027
+   - **Racional:** Separar os acessos por tipo de operação ajuda a minimizar o risco de operações não autorizadas ou acidentais.
+   - **Riscos Mitigados:** Modificação ou exclusão acidental ou maliciosa de dados.
+   - **Auditoria:** Verifique as permissões de bucket no console do S3 para garantir separação adequada dos acessos.
+   - **Remediação:** Aplique políticas de acesso no S3 que separem as permissões de leitura, escrita e exclusão.
+   - **Referências:** AWS Top 10 security best practices for securing data in Amazon S3
+
+### Ativar proteção do S3 em GuardDuty para detectar atividades suspeitas
+   - **Controle ID:** amazon_s3_028
+   - **Racional:** A proteção do S3 em GuardDuty ajuda a identificar e alertar sobre atividades suspeitas, melhorando a postura de segurança.
+   - **Riscos Mitigados:** Atividades suspeitas e ataques potenciais.
+   - **Auditoria:** No console do GuardDuty, verifique se a proteção para o S3 está ativada.
+   - **Remediação:** Ative a proteção do S3 no GuardDuty para monitorar e alertar sobre atividades suspeitas.
+   - **Referências:** AWS Top 10 security best practices for securing data in Amazon S3
+
+### Usar Macie para varredura de dados sensíveis fora das áreas designadas
+   - **Controle ID:** amazon_s3_029
+   - **Racional:** Usar o Macie para varredura de dados sensíveis ajuda a identificar e proteger informações críticas armazenadas no S3.
+   - **Riscos Mitigados:** Vazamento de dados sensíveis e não conformidade regulatória.
+   - **Auditoria:** No console do Macie, verifique se a varredura de dados sensíveis está configurada para os buckets do S3.
+   - **Remediação:** Configure e habilite o Macie para realizar varreduras automáticas de dados sensíveis no S3.
+   - **Referências:** AWS Top 10 security best practices for securing data in Amazon S3
+
+### Criptografar os dados no S3
+   - **Controle ID:** amazon_s3_030
+   - **Racional:** A criptografia de dados no S3 protege contra acesso não autorizado, assegurando que os dados sejam acessíveis apenas por entidades autorizadas.
+   - **Riscos Mitigados:** Acesso não autorizado a dados sensíveis e comprometimento de dados.
+   - **Auditoria:** No console do S3, verifique se a criptografia está ativada para os buckets.
+   - **Remediação:** Ative a criptografia no nível do bucket no S3 para proteger
+
+ os dados em repouso.
+   - **Referências:** AWS Top 10 security best practices for securing data in Amazon S3, Trend Micro Best Practices for Keeping Amazon S3 Buckets Secure
+
+### Proteger dados no S3 contra exclusão acidental usando Versionamento e Object Lock
+   - **Controle ID:** amazon_s3_031
+   - **Racional:** O uso de versionamento e Object Lock no S3 previne a exclusão ou alteração acidental de dados, proporcionando uma camada adicional de segurança.
+   - **Riscos Mitigados:** Exclusão ou alteração acidental ou maliciosa de dados.
+   - **Auditoria:** No console do S3, verifique se o versionamento e o Object Lock estão ativados para os buckets.
+   - **Remediação:** Ative o versionamento e o Object Lock nos buckets do S3 para proteger os dados contra exclusão ou alteração acidental.
+   - **Referências:** AWS Top 10 security best practices for securing data in Amazon S3
+
+### Habilitar registro para o S3 usando CloudTrail e logging de acesso do servidor
+   - **Controle ID:** amazon_s3_032
+   - **Racional:** Habilitar o registro para o S3 proporciona uma trilha de auditoria detalhada das atividades de acesso, ajudando a detectar e responder a incidentes de segurança.
+   - **Riscos Mitigados:** Atividades maliciosas, acesso não autorizado e não conformidade com políticas de segurança.
+   - **Auditoria:** No console do AWS CloudTrail e do S3, verifique se o registro de acesso do servidor e o logging do CloudTrail estão ativados.
+   - **Remediação:** Configure o registro de acesso do servidor no S3 e integre com o CloudTrail para capturar e analisar as atividades de acesso.
+   - **Referências:** AWS Top 10 security best practices for securing data in Amazon S3
+
+### Fazer backup dos dados no S3
+   - **Controle ID:** amazon_s3_033
+   - **Racional:** O backup dos dados no S3 assegura a recuperação em caso de perda ou corrupção de dados.
+   - **Riscos Mitigados:** Perda de dados e interrupção dos negócios.
+   - **Auditoria:** No console do S3, verifique se existem políticas ou processos automatizados de backup configurados para os buckets.
+   - **Remediação:** Configure backups regulares dos dados armazenados no S3, utilizando políticas de ciclo de vida do S3 ou serviços de backup integrados.
+   - **Referências:** AWS Top 10 security best practices for securing data in Amazon S3
+
+### Monitorar o S3 usando Security Hub e CloudWatch Logs
+   - **Controle ID:** amazon_s3_034
+   - **Racional:** Monitorar o S3 com Security Hub e CloudWatch Logs permite a detecção proativa de eventos de segurança e operacionais.
+   - **Riscos Mitigados:** Ameaças de segurança, atividades suspeitas e problemas operacionais.
+   - **Auditoria:** No AWS Security Hub e CloudWatch Logs, verifique a integração e monitoramento dos buckets S3.
+   - **Remediação:** Integre o S3 com Security Hub e CloudWatch Logs para monitoramento contínuo das atividades e alertas de segurança.
+   - **Referências:** AWS Top 10 security best practices for securing data in Amazon S3
+
+### Capturar estatísticas de segurança do Amazon Macie por bucket S3
+   - **Controle ID:** amazon_s3_035
+   - **Racional:** Utilizar o Amazon Macie para capturar estatísticas de segurança por bucket S3 ajuda a identificar e mitigar riscos de segurança de dados.
+   - **Riscos Mitigados:** Exposição de dados sensíveis e não conformidade regulatória.
+   - **Auditoria:** No console do Amazon Macie, verifique se as estatísticas de segurança estão sendo capturadas para cada bucket S3.
+   - **Remediação:** Configure o Amazon Macie para analisar automaticamente os buckets S3 e capturar estatísticas de segurança.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Configurar bucket S3 diferente para armazenamento de logs de acesso do servidor
+   - **Controle ID:** amazon_s3_036
+   - **Racional:** Utilizar um bucket S3 separado para logs de acesso do servidor ajuda na organização e segurança dos logs, facilitando a auditoria.
+   - **Riscos Mitigados:** Alteração ou exclusão não autorizada de logs e dificuldade no rastreamento de atividades.
+   - **Auditoria:** Verifique no console do S3 se os logs de acesso do servidor estão sendo armazenados em um bucket dedicado.
+   - **Remediação:** Configure o armazenamento de logs de acesso do servidor S3 em um bucket separado para isolamento e proteção.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Configurar propriedade do objeto S3
+   - **Controle ID:** amazon_s3_037
+   - **Racional:** Configurar a propriedade do objeto S3 garante que a posse dos dados seja claramente definida e gerenciada.
+   - **Riscos Mitigados:** Disputas de propriedade de dados e problemas de acesso.
+   - **Auditoria:** No console do S3, verifique se a propriedade dos objetos está corretamente configurada para refletir a posse.
+   - **Remediação:** Ajuste as configurações de propriedade do objeto nos buckets S3 para garantir a correta atribuição de posse.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Usar nomes de buckets S3 compatíveis com DNS
+   - **Controle ID:** amazon_s3_038
+   - **Racional:** Usar nomes de buckets compatíveis com DNS assegura que eles podem ser acessados sem problemas e seguem as melhores práticas.
+   - **Riscos Mitigados:** Problemas de conectividade e acesso.
+   - **Auditoria:** No console do S3, verifique se todos os nomes de buckets estão em conformidade com as normas de nomenclatura DNS.
+   - **Remediação:** Renomeie os buckets S3 para garantir que eles sigam as normas
+
+ de nomenclatura DNS compatível.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Negar permissão de escrita do Grupo de Entrega de Logs S3 no bucket de origem
+   - **Controle ID:** amazon_s3_039
+   - **Racional:** Negar permissão de escrita do Grupo de Entrega de Logs no bucket de origem previne alterações não autorizadas nos logs.
+   - **Riscos Mitigados:** Alteração ou exclusão maliciosa de logs de acesso.
+   - **Auditoria:** No console do S3, verifique se as permissões de escrita do Grupo de Entrega de Logs estão negadas no bucket de origem.
+   - **Remediação:** Configure as ACLs do bucket de origem para negar permissões de escrita ao Grupo de Entrega de Logs S3.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Ativar bloqueio de acesso público S3 para contas AWS
+   - **Controle ID:** amazon_s3_040
+   - **Racional:** Ativar o bloqueio de acesso público para contas AWS ajuda a prevenir exposições acidentais de dados.
+   - **Riscos Mitigados:** Exposição acidental de dados sensíveis e violações de segurança.
+   - **Auditoria:** No console AWS, verifique se o bloqueio de acesso público está ativado para a conta AWS.
+   - **Remediação:** Habilite o bloqueio de acesso público no nível da conta AWS para todos os buckets S3 associados.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Ativar bloqueio de acesso público S3 para buckets S3
+   - **Controle ID:** amazon_s3_041
+   - **Racional:** Ativar o bloqueio de acesso público nos buckets S3 previne acessos não autorizados e expõe dados sensíveis.
+   - **Riscos Mitigados:** Acesso não autorizado e vazamento de dados.
+   - **Auditoria:** No console do S3, verifique se o bloqueio de acesso público está ativado para cada bucket S3.
+   - **Remediação:** No console do S3, ative o bloqueio de acesso público para cada bucket individualmente.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Habilitar chaves de bucket S3
+   - **Controle ID:** amazon_s3_042
+   - **Racional:** Usar chaves de bucket S3 otimiza a performance da criptografia do lado do servidor, melhorando a segurança.
+   - **Riscos Mitigados:** Desempenho reduzido devido à sobrecarga de criptografia e vulnerabilidades de segurança.
+   - **Auditoria:** No console do S3, verifique se as chaves de bucket estão habilitadas para melhorar a eficiência da criptografia.
+   - **Remediação:** Habilite as chaves de bucket S3 para aprimorar a performance da criptografia do lado do servidor.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Proibir acesso 'FULL_CONTROL' a usuários autenticados da AWS
+   - **Controle ID:** amazon_s3_043
+   - **Racional:** Proibir acesso 'FULL_CONTROL' a usuários autenticados previne controle total indesejado sobre os buckets.
+   - **Riscos Mitigados:** Alterações não autorizadas e exclusão de dados.
+   - **Auditoria:** No console do S3, verifique se o acesso 'FULL_CONTROL' está proibido para usuários autenticados da AWS.
+   - **Remediação:** Modifique as políticas de ACLs e bucket para proibir acesso 'FULL_CONTROL' a usuários autenticados.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Proibir acesso 'READ' a usuários autenticados da AWS
+   - **Controle ID:** amazon_s3_044
+   - **Racional:** Proibir acesso 'READ' a usuários autenticados da AWS reduz o risco de acesso e leitura não autorizados de dados.
+   - **Riscos Mitigados:** Acesso não autorizado e vazamento de informações.
+   - **Auditoria:** No console do S3, verifique se o acesso 'READ' está proibido para usuários autenticados da AWS.
+   - **Remediação:** Modifique as ACLs e políticas de bucket para proibir acesso 'READ' a usuários autenticados.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Proibir acesso 'READ_ACP' a usuários autenticados da AWS
+   - **Controle ID:** amazon_s3_045
+   - **Racional:** Proibir acesso 'READ_ACP' a usuários autenticados da AWS evita a exposição das configurações de permissões do bucket.
+   - **Riscos Mitigados:** Divulgação não autorizada de configurações de permissões.
+   - **Auditoria:** No console do S3, verifique se o acesso 'READ_ACP' está proibido para usuários autenticados da AWS.
+   - **Remediação:** Modifique as ACLs e políticas de bucket para proibir acesso 'READ_ACP' a usuários autenticados.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Proibir acesso 'WRITE' a usuários autenticados da AWS
+   - **Controle ID:** amazon_s3_046
+   - **Racional:** Proibir acesso 'WRITE' a usuários autenticados da AWS impede alterações não autorizadas nos buckets S3.
+   - **Riscos Mitigados:** Modificação não autorizada e sobrescrita de dados.
+   - **Auditoria:** No console do S3, verifique se o acesso 'WRITE' está proibido para usuários autenticados da AWS.
+   - **Remediação:** Modifique as ACLs e políticas de bucket para proibir acesso 'WRITE' a usuários autenticados.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Proibir acesso 'WRITE_ACP' a usuários autenticados da AWS
+   - **Controle ID:** amazon_s3_047
+   - **Racional:** Proibir acesso 'WRITE_ACP' a usuários autenticados da AWS previne alterações não autorizadas nas configurações do bucket.
+   - **Riscos Mitigados:** Modificação não autorizada de permissões e configurações do bucket.
+   - **Auditoria:** No console do S3, verifique se o acesso 'WRITE_ACP' está proibido para usuários autenticados da AWS.
+   - **Remediação:** Modifique as ACLs e políticas de bucket para proibir acesso 'WRITE_ACP' a usuários autenticados.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Ativar registro de acesso para buckets S3
+   - **Controle ID:** amazon_s3_048
+   - **Racional:** Ativar o registro de acesso para buckets S3 fornece um histórico de atividades de acesso para auditoria.
+   - **Riscos Mitigados:** Falta de visibilidade e monitoramento de atividades de acesso.
+   - **Auditoria:** No console do S3, verifique se o registro de acesso está ativado para os buckets S3.
+   - **Remediação:** Ative o registro de acesso nos buckets S3 para manter um histórico de atividades de acesso.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Habilitar MFA Delete nos buckets S3
+   - **Controle ID:** amazon_s3_049
+   - **Racional:** Habilitar MFA Delete nos buckets S3 aumenta a segurança exigindo autenticação multifator para deletar objetos ou desativar o versionamento.
+   - **Riscos Mitigados:** Exclusão acidental ou maliciosa de dados.
+   - **Auditoria:** No console do S3, verifique se o MFA Delete está habilitado nos buckets S3.
+   - **Remediação:** Ative o MFA Delete nos buckets S3 utilizando as configurações de versionamento e MFA.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Proibir acesso público 'FULL_CONTROL' aos buckets S3
+   - **Controle ID:** amazon_s3_050
+   - **Racional:** Proibir acesso público 'FULL_CONTROL' aos buckets S3 evita controle total não autorizado sobre os dados armazenados.
+   - **Riscos Mitigados:** Acesso não autorizado e manipulação de dados.
+   - **Auditoria:** No console do S3, verifique se os buckets S3 não permitem acesso público 'FULL_CONTROL'.
+   - **Remediação:** Modifique as ACLs e políticas de bucket para proibir acesso público 'FULL_CONTROL'.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Proibir acesso público 'READ' aos buckets S3
+   - **Controle ID:** amazon_s3_051
+   - **Racional:** Proibir acesso público 'READ' aos buckets S3 previne a leitura não autorizada de dados.
+   - **Riscos Mitigados:** Vazamento de dados e acesso não autorizado.
+   - **Auditoria:** No console do S3, verifique se os buckets S3 não permitem acesso público 'READ'.
+   - **Remediação:** Modifique as ACLs e políticas de bucket para proibir acesso público 'READ'.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Proibir acesso público 'READ_ACP' aos buckets S3
+   - **Controle ID:** amazon_s3_052
+   - **Racional:** Proibir acesso público 'READ_ACP' aos buckets S3 impede o acesso não autorizado às configurações de permissão.
+   - **Riscos Mitigados:** Exposição de configurações de segurança e permissões.
+   - **Auditoria:** No console do S3, verifique se os buckets S3 não permitem acesso público 'READ_ACP'.
+   - **Remediação:** Modifique as ACLs e políticas de bucket para proibir acesso público 'READ_ACP'.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Proibir acesso público 'WRITE' aos buckets S3
+   - **Controle ID:** amazon_s3_053
+   - **Racional:** Proibir acesso público 'WRITE' aos buckets S3 evita que dados não autorizados sejam carregados ou alterados.
+   - **Riscos Mitigados:** Sobrescrita, exclusão ou adição não autorizada de dados.
+   - **Auditoria:** No console do S3, verifique se os buckets S3 não permitem acesso público 'WRITE'.
+   - **Remediação:** Modifique as ACLs e políticas de bucket para proibir acesso público 'WRITE'.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Proibir acesso público 'WRITE_ACP' aos buckets S3
+   - **Controle ID:** amazon_s3_054
+   - **Racional:** Proibir acesso público 'WRITE_ACP' aos buckets S3 evita alterações não autorizadas nas configurações de permissão.
+   - **Riscos Mitigados:** Alterações não autorizadas de permissões e configurações de segurança.
+   - **Auditoria:** No console do S3, verifique se os buckets S3 não permitem acesso público 'WRITE_ACP'.
+   - **Remediação:** Modifique as ACLs e políticas de bucket para proibir acesso público 'WRITE_ACP'.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Proibir acesso público via políticas de bucket no S3
+   - **Controle ID:** amazon_s3_055
+   - **Racional:** Proibir acesso público via políticas de bucket no S3 reduz o risco de exposição e acesso não autorizado aos dados.
+   - **Riscos Mitigados:** Acesso não autorizado e exposição de dados.
+   - **Auditor
+
+ia:** No console do S3, verifique se as políticas de bucket não permitem acesso público.
+   - **Remediação:** Modifique as políticas de bucket para proibir acesso público.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Habilitar versionamento em buckets S3
+   - **Controle ID:** amazon_s3_056
+   - **Racional:** Habilitar versionamento em buckets S3 permite manter versões múltiplas de um objeto, o que pode proteger contra exclusão ou sobrescrita acidental.
+   - **Riscos Mitigados:** Perda de dados acidental e sobrescrita.
+   - **Auditoria:** No console do S3, verifique se o versionamento está habilitado nos buckets S3.
+   - **Remediação:** Ative o versionamento nos buckets S3 para manter múltiplas versões dos objetos.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Criptografar buckets S3 com CMKs fornecidos pelo cliente
+   - **Controle ID:** amazon_s3_057
+   - **Racional:** Utilizar CMKs (Chaves de Gerenciamento de Cliente) proporciona um maior controle sobre a gestão e rotação de chaves para a criptografia de buckets S3.
+   - **Riscos Mitigados:** Acesso não autorizado a dados e violação de compliance.
+   - **Auditoria:** Verifique se os buckets S3 estão configurados para usar CMKs fornecidos pelo cliente para criptografia no console do S3.
+   - **Remediação:** Configure a criptografia de bucket S3 para usar CMKs personalizados no AWS KMS.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Configurar políticas de ciclo de vida em buckets S3
+   - **Controle ID:** amazon_s3_058
+   - **Racional:** Políticas de ciclo de vida automatizam a gestão de dados, como transição para armazenamento de baixo custo ou exclusão de objetos antigos.
+   - **Riscos Mitigados:** Custos elevados de armazenamento e retenção de dados desnecessária.
+   - **Auditoria:** No console do S3, verifique se as políticas de ciclo de vida estão configuradas para gerenciar eficientemente os dados armazenados.
+   - **Remediação:** Configure políticas de ciclo de vida para automatizar a transição e exclusão de objetos em buckets S3.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Revisar configurações de hospedagem de site em buckets S3
+   - **Controle ID:** amazon_s3_059
+   - **Racional:** A revisão regular das configurações de hospedagem de site garante que somente o conteúdo apropriado esteja acessível publicamente.
+   - **Riscos Mitigados:** Exposição não intencional de dados sensíveis e violação de segurança.
+   - **Auditoria:** Verifique no console do S3 se as configurações de hospedagem de site estão corretas e seguras.
+   - **Remediação:** Revise e ajuste as configurações de hospedagem de site nos buckets S3 conforme necessário para garantir a segurança.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Monitorar mudanças de configuração no S3
+   - **Controle ID:** amazon_s3_060
+   - **Racional:** Monitorar mudanças de configuração no S3 ajuda a identificar alterações não autorizadas ou inadvertidas que possam impactar a segurança dos dados.
+   - **Riscos Mitigados:** Alterações de configuração não autorizadas e potenciais violações de segurança.
+   - **Auditoria:** Utilize ferramentas como AWS CloudTrail e AWS Config para monitorar e registrar mudanças de configuração nos buckets S3.
+   - **Remediação:** Configure alertas para monitorar e revisar mudanças de configuração nos buckets S3.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Proibir acesso cruzado desconhecido via políticas de bucket no S3
+   - **Controle ID:** amazon_s3_061
+   - **Racional:** Proibir o acesso cruzado desconhecido evita o compartilhamento não intencional de dados com entidades externas.
+   - **Riscos Mitigados:** Vazamento de dados e acesso não autorizado.
+   - **Auditoria:** No console do S3, verifique se as políticas de bucket não permitem acesso cruzado desconhecido.
+   - **Remediação:** Ajuste as políticas de bucket no S3 para proibir explicitamente o acesso cruzado desconhecido.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Usar bloqueio de objeto no S3 para proteção de dados
+   - **Controle ID:** amazon_s3_062
+   - **Racional:** O bloqueio de objeto no S3 previne a exclusão ou alteração de objetos durante um período de retenção definido.
+   - **Riscos Mitigados:** Exclusão ou alteração acidental ou maliciosa de objetos.
+   - **Auditoria:** Verifique no console do S3 se o bloqueio de objeto está habilitado e configurado corretamente.
+   - **Remediação:** Configure o bloqueio de objeto em buckets
+
+ S3 para proteger os dados contra alterações e exclusões não autorizadas.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Utilizar aceleração de transferência no S3 para transferências de dados mais rápidas
+   - **Controle ID:** amazon_s3_063
+   - **Racional:** A aceleração de transferência no S3 pode melhorar a velocidade de upload e download de dados para buckets S3.
+   - **Riscos Mitigados:** Latência elevada e atrasos na transferência de dados.
+   - **Auditoria:** No console do S3, verifique se a aceleração de transferência está habilitada para os buckets apropriados.
+   - **Remediação:** Ative a aceleração de transferência nos buckets S3 para otimizar a performance de transferência de dados.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Exigir SSL para proteção de dados em trânsito no S3
+   - **Controle ID:** amazon_s3_064
+   - **Racional:** Exigir SSL garante que os dados transmitidos para e do S3 sejam criptografados e protegidos contra interceptação.
+   - **Riscos Mitigados:** Interceptação de dados e comprometimento da integridade dos dados em trânsito.
+   - **Auditoria:** No console do S3, verifique se a política de bucket exige conexões SSL para todas as transferências de dados.
+   - **Remediação:** Configure as políticas de bucket S3 para exigir conexões SSL para proteger os dados em trânsito.
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Exigir criptografia do lado do servidor (SSE) no S3
+   - **Controle ID:** amazon_s3_065
+   - **Racional:** A criptografia do lado do servidor protege os dados em repouso, garantindo que eles sejam armazenados de forma segura e acessíveis apenas com as chaves de criptografia corretas.
+   - **Riscos Mitigados:** Acesso não autorizado a dados em repouso e vazamento de dados.
+   - **Auditoria:** Verifique no console do S3 se a criptografia do lado do servidor está habilitada para todos os buckets S3.
+   - **Remediação:** Configure todos os buckets S3 para usar a criptografia do lado do servidor com chaves gerenciadas pela AWS (SSE-S3) ou chaves gerenciadas pelo cliente (SSE-KMS).
+   - **Referências:** Trend Micro Best practice rules for Amazon S3
+
+### Criptografar dados em repouso no S3
+   - **Controle ID:** amazon_s3_066
+   - **Racional:** Criptografar dados em repouso no S3 ajuda a proteger informações sensíveis contra acesso não autorizado e garantir a conformidade com as regulamentações de privacidade.
+   - **Riscos Mitigados:** Acesso não autorizado a dados em repouso e vazamento de dados.
+   - **Auditoria:** No console do S3, verifique se a criptografia em repouso está habilitada para todos os buckets.
+   - **Remediação:** Habilite a criptografia em repouso usando SSE-S3 ou SSE-KMS para todos os buckets S3.
+   - **Referências:** Trend Micro Best Practices for Keeping Amazon S3 Buckets Secure
+
+### Utilizar o protocolo HTTPS para segurança de dados em trânsito
+   - **Controle ID:** amazon_s3_067
+   - **Racional:** O uso do protocolo HTTPS assegura que os dados transmitidos entre os clientes e o S3 sejam criptografados, protegendo-os contra interceptação e adulteração.
+   - **Riscos Mitigados:** Interceptação e modificação de dados em trânsito.
+   - **Auditoria:** Verifique no console do S3 se as políticas de bucket e as configurações de rede exigem HTTPS para todas as conexões.
+   - **Remediação:** Configure as políticas de bucket S3 e as configurações de rede para forçar o uso do protocolo HTTPS em todas as comunicações.
+   - **Referências:** Trend Micro Best Practices for Keeping Amazon S3 Buckets Secure
+
+### Utilizar Amazon CloudWatch para monitoramento unificado
+   - **Controle ID:** amazon_s3_068
+   - **Racional:** O Amazon CloudWatch permite o monitoramento centralizado de recursos e aplicações na AWS, fornecendo visibilidade em tempo real do estado e desempenho do ambiente AWS.
+   - **Riscos Mitigados:** Indisponibilidade de sistema, desempenho inadequado e falhas não detectadas.
+   - **Auditoria:** Verifique no console do CloudWatch se métricas, alarmes e logs para recursos do S3 estão sendo coletados e monitorados.
+   - **Remediação:** Configure o Amazon CloudWatch para coletar métricas e logs do S3, e crie alarmes para notificar sobre condições anormais ou de falha.
+   - **Referências:** Trend Micro Best Practices for Keeping Amazon S3 Buckets Secure
+
+### Usar AWS CloudTrail para auditoria contínua do uso da AWS
+   - **Controle ID:** amazon_s3_069
+   - **Racional:** O AWS CloudTrail ajuda a registrar, armazenar e analisar chamadas de API para ações na AWS, proporcionando uma trilha de auditoria completa de atividades de usuário e sistema.
+   - **Riscos Mitigados:** Atividades maliciosas, erros de configuração e violação de políticas de compliance.
+   - **Auditoria:** No console do AWS CloudTrail, verifique se o registro de eventos de API para o S3 está habilitado e se os logs estão sendo armazenados e analisados corretamente.
+   - **Remediação:** Habilite o AWS CloudTrail e configure-o para registrar as chamadas de API do S3, armazenando os logs em um bucket S3 seguro e analisando-os para identificar atividades suspeitas.
+   - **Referências:** Trend Micro Best Practices for Keeping Amazon S3 Buckets
+
+ Secure
+
+### Implementar ferramentas de terceiros para extensão de segurança na AWS
+   - **Controle ID:** amazon_s3_070
+   - **Racional:** As ferramentas de segurança de terceiros podem oferecer funcionalidades adicionais para proteger, monitorar e auditar os recursos na AWS, complementando as capacidades nativas da plataforma.
+   - **Riscos Mitigados:** Ameaças avançadas, lacunas de segurança e conformidade.
+   - **Auditoria:** Revise a integração e configuração das ferramentas de segurança de terceiros com os recursos do S3 e outros serviços AWS.
+   - **Remediação:** Implemente e configure ferramentas de segurança de terceiros que se integrem com a AWS para melhorar a postura de segurança e o monitoramento dos recursos do S3.
+   - **Referências:** Trend Micro Best Practices for Keeping Amazon S3 Buckets Secure

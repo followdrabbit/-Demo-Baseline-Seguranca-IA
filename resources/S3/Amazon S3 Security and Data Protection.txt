@@ -1,0 +1,24 @@
+
+Referencia: [Amazon S3 Security and Data Protection](https://d1.awsstatic.com/product-marketing/S3/Amazon_s3_Security_and_Data_Protection_Tools_and_Best_Practices.pdf)
+
+O documento "Amazon S3 Security and Data Protection Tools and Best Practices" aborda práticas recomendadas de segurança e proteção de dados para o Amazon S3. Aqui estão as recomendações principais contidas no documento:
+
+1. **Gerenciamento de acesso**:
+   - Ative o "S3 Block Public Access" para bloquear todo o acesso público aos buckets.
+   - Utilize IAM roles para aplicações e serviços AWS que necessitam de acesso ao S3.
+   - Adote a criptografia automática do lado do servidor (SSE-S3) para todos os novos objetos e considere opções de criptografia adicionais como SSE-KMS e SSE-C.
+   - Utilize Amazon S3 VPC endpoints e políticas de controle de serviço para limitar o acesso e as permissões【8†source】.
+
+2. **Monitoramento e auditoria de segurança**:
+   - Empregue AWS IAM Access Analyzer para monitorar o acesso aos dados.
+   - Utilize o Amazon S3 Inventory para auditar o status de replicação e criptografia dos objetos.
+   - Audite ações da API do Amazon S3 usando o AWS CloudTrail.
+   - Monitore o acesso aos dados do Amazon S3 com logs de acesso do servidor S3【8†source】.
+
+3. **Proteção de dados em escala**:
+   - Ative a versão de objetos com o S3 Versioning.
+   - Use o Amazon S3 Object Lock para aplicar políticas de retenção.
+   - Considere a replicação do S3, incluindo replicação entre diferentes regiões da AWS e contas para proteger os dados.
+   - Mantenha uma estratégia de backup de dados【8†source】.
+
+Estas recomendações visam fornecer um nível alto de segurança e proteção para os dados armazenados no Amazon S3, enfatizando a importância do gerenciamento de acesso, monitoramento contínuo e proteção robusta de dados.
