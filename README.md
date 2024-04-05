@@ -6,14 +6,16 @@ Este projeto demonstra como o ChatGPT pode ser utilizado para automatizar a cria
 
 ## Estrutura do Repositório
 
-- `Caderno_De_Testes_Demo_IA.docx`: Este documento fornece uma visão detalhada do método usado para gerar baselines de segurança com ChatGPT, incluindo etapas de teste e validação.
-- `Template_Baseline.docx`: Template padrão que orienta a estruturação dos baselines de segurança, garantindo consistência e cobertura completa dos controles de segurança necessários.
+## Estrutura do Repositório
+
+- `POP_Criacao_Baseline.docx`: Documento que orienta a criação sistemática de baselines de segurança para serviços AWS, usando inteligência artificial para auxiliar na coleta, análise e consolidação de práticas de segurança, visando garantir a consistência e a qualidade dos baselines gerados.
+- `Modelo_baseline_seguranca.docx`: Modelo padrão que serve como documento base para a elaboração dos baselines de segurança, assegurando um padrão de segurança robusto e abrangente, com controles de segurança claramente definidos e detalhados, alinhados às melhores práticas e normas de segurança da informação.
 - `\resources`: Pasta que contém subdiretórios específicos para cada tecnologia avaliada, como EC2, EKS, S3 e Athena. Estes diretórios incluem os arquivos utilizados no processo de geração do baseline, bem como os baselines finais criados. Notavelmente, o diretório do S3 apresenta uma gravação em vídeo demonstrando a execução prática do processo de criação do baseline.
 
 ## Como Usar
 
 1. **Preparação**: Certifique-se de ter acesso ao ChatGPT.
-2. **Execução**: Siga as instruções detalhadas no `Caderno_De_Testes_Demo_IA.docx` para criar um novo baseline de segurança.
+2. **Execução**: Siga as instruções detalhadas no `POP_Criacao_Baseline.docx` para criar um novo baseline de segurança utilizando o chatGPT.
 
 ## A Fazer
 
