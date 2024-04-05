@@ -25,7 +25,7 @@ Este projeto está licenciado sob a [Licença MIT](LICENSE).
 - Cargo: Arquiteto de Segurança da Informação
 - LinkedIn: [raphaelflorencio](https://linkedin.com/in/raphaelflorencio)
 
-Sou apaixonado por desafios e sempre estou em busca de aprender coisas novas. Atualmente, estou focado em estudar Inteligência Artificial, visando não apenas melhorar os processos e sistemas de segurança, mas também buscar eficiência e inovação nas áreas de desenvolvimento. Meu interesse em pesquisa e desenvolvimento me motiva a fomentar mudanças culturais, contribuindo para o avanço tecnológico em segurança da informação.
+Sou apaixonado por desafios e estou sempre em busca de aprender coisas novas. Atualmente, estou focado em estudar Inteligência Artificial, visando não apenas melhorar os processos e sistemas de segurança, mas também buscar eficiência e inovação nas áreas de desenvolvimento. Meu interesse em pesquisa e desenvolvimento me motiva a fomentar mudanças culturais, contribuindo para o avanço tecnológico em segurança da informação.
 
 ## Contato
 
