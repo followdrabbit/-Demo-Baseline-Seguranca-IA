@@ -1,0 +1,9 @@
+
+Referencia: [Best practice rules for Amazon Athena](https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/Athena/)
+
+
+Trend Micro Cloud One™ – Conformity monitors Amazon Athena with the following rules:
+
+Enable Encryption for AWS Athena Query Results
+Ensure that AWS Athena query results stored in Amazon S3 are encrypted at rest.
+

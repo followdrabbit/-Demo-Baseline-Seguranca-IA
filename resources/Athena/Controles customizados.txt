@@ -1,0 +1,36 @@
+
+### **Implementar Criptografia de Dados em Repouso para Amazon Athena e Amazon S3**
+   - **Controle ID:** AthenaSecurity_002
+   - **Racional:** Proteger os dados armazenados no Amazon S3 e os resultados das consultas do Amazon Athena contra acessos não autorizados, garantindo a confidencialidade e integridade dos dados.
+   - **Riscos Mitigados:** Mitiga o risco de exposição de dados sensíveis devido a acessos não autorizados ou brechas de segurança em armazenamentos de dados.
+   - **Auditoria:**
+     1. Acesse o console do Amazon S3 e verifique se os buckets utilizados pelo Athena estão configurados com SSE-S3 ou SSE-KMS para criptografia de dados em repouso.
+     2. No console do Amazon Athena, confirme se os resultados das consultas são armazenados em locais do S3 com a criptografia habilitada.
+     3. No console do AWS Glue Data Catalog, verifique se os metadados estão configurados para criptografia.
+   - **Remediação:**
+     1. No console do Amazon S3, selecione o bucket relevante e habilite a criptografia usando SSE-S3 ou SSE-KMS.
+     2. No Amazon Athena, assegure que os resultados das consultas sejam armazenados em buckets do S3 com criptografia habilitada.
+     3. No AWS Glue Data Catalog, ative a criptografia de metadados.
+   - **Referências:**
+     - [Proteção de dados no Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/security-data-protection.html)
+     - [Criptografia de resultados de consultas no Amazon S3](https://docs.aws.amazon.com/athena/latest/ug/encryption.html)
+
+
+### **Implementar Criptografia de Dados em Trânsito para Amazon Athena**
+   - **Controle ID:** AthenaSecurity_003
+   - **Racional:** Garantir que os dados transmitidos entre o Amazon Athena e o Amazon S3, bem como entre o Athena e as aplicações dos clientes, estejam protegidos contra interceptações e acessos não autorizados.
+   - **Riscos Mitigados:** Mitiga o risco de interceptação de dados sensíveis durante a transmissão.
+   - **Auditoria:**
+     1. Verifique se as conexões entre o Amazon Athena e o Amazon S3 estão usando TLS.
+     2. Confirme que todas as conexões cliente-Athena estão utilizando HTTPS (TLS), verificando as políticas do IAM dos buckets do S3.
+     3. Para conexões JDBC ou ODBC, assegure-se de que a criptografia TLS está sendo utilizada.
+   - **Remediação:**
+     1. Garanta que as políticas do IAM dos buckets do S3 incluam a condição `aws:SecureTransport` para forçar conexões criptografadas via HTTPS (TLS).
+     2. Atualize e configure os drivers JDBC e ODBC do Athena para utilizar a criptografia TLS.
+     3. Para fontes de dados federadas do Athena, verifique a documentação dos conectores específicos para assegurar o suporte à criptografia em trânsito.
+   - **Referências:**
+     - [Proteção de dados no Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/security-data-protection.html)
+     - [Criptografia em trânsito no Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/encryption-in-transit.html)
+     - [Conectando ao Amazon Athena com JDBC](https://docs.aws.amazon.com/athena/latest/ug/connect-with-jdbc.html)
+     - [Conectando ao Amazon Athena com ODBC](https://docs.aws.amazon.com/athena/latest/ug/connect-with-odbc.html)
+	 - [Data protection in Athena](https://docs.aws.amazon.com/athena/latest/ug/security-data-protection.html)

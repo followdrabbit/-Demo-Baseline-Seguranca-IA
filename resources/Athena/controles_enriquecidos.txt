@@ -1,0 +1,418 @@
+Controles enriquecidos
+
+### **Habilitar Criptografia para Resultados de Consultas do AWS Athena**
+   - **Controle ID:** AWS-Athena_001
+   - **Racional:** A criptografia dos resultados das consultas do AWS Athena ajuda a proteger os dados sensíveis e garante que somente usuários autorizados possam acessar esses resultados.
+   - **Riscos Mitigados:** A falta de criptografia pode expor dados sensíveis a acessos não autorizados, comprometendo a confidencialidade e integridade dos dados.
+   - **Auditoria:** 
+     1. Faça login no console da AWS e abra o serviço Amazon Athena.
+     2. Clique em 'Configurações' no painel de navegação à esquerda.
+     3. Verifique se a opção 'Criptografia das configurações de resultado de consulta' está definida para 'Ativada'.
+     4. Confirme que o tipo de criptografia (como SSE-S3, SSE-KMS ou CSE-KMS) está especificado e é apropriado para a política de segurança da sua organização.
+   - **Remediação:** 
+     1. Acesse o console da AWS e navegue até o serviço Amazon Athena.
+     2. Clique em 'Configurações' no menu lateral.
+     3. Na seção 'Configurações de resultado de consulta', escolha 'Editar'.
+     4. Selecione 'Ativado' na opção de criptografia.
+     5. Escolha o tipo de criptografia desejado (SSE-S3, SSE-KMS, ou CSE-KMS) e configure os detalhes necessários, como o ARN da chave KMS, se aplicável.
+     6. Salve as configurações para aplicar a criptografia.
+   - **Referências:** 
+     - [Amazon Athena User Guide - Configuring Encryption Options](https://docs.aws.amazon.com/athena/latest/ug/encryption.html)
+
+### **Proteger Credenciais da Conta AWS**
+   - **Controle ID:** AWS-Account_001
+   - **Racional:** Proteger as credenciais da conta AWS é fundamental para garantir que apenas usuários autorizados possam acessar e gerenciar os recursos da AWS, prevenindo o acesso não autorizado e possíveis violações de segurança.
+   - **Riscos Mitigados:** A exposição de credenciais da conta AWS pode levar a acessos não autorizados, comprometendo a segurança dos dados e recursos na nuvem.
+   - **Auditoria:** 
+     1. Acesse o console da AWS e vá para o serviço IAM (Identity and Access Management).
+     2. Verifique as políticas de senha para garantir que estão em conformidade com as melhores práticas de segurança, como complexidade e rotação de senhas.
+     3. Confira os registros do CloudTrail para identificar qualquer uso anormal das credenciais da conta.
+     4. Verifique se há credenciais de acesso (chaves de acesso) que não estão sendo utilizadas ou que estão expostas e tome as medidas adequadas.
+     5. Garanta que o MFA (Multi-Factor Authentication) esteja ativado para todas as contas de usuário privilegiadas.
+   - **Remediação:** 
+     1. No console da AWS, navegue até o serviço IAM.
+     2. Implemente políticas de senha fortes e habilite a rotação regular de senhas.
+     3. Ative o MFA para todas as contas de usuário com permissões administrativas.
+     4. Regularmente revise e remova as chaves de acesso antigas ou não utilizadas.
+     5. Use o AWS CloudTrail para monitorar e auditar todas as atividades de uso das credenciais.
+   - **Referências:** 
+     - [AWS IAM User Guide - Best Practices for Managing AWS Access Keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
+     - [AWS CloudTrail User Guide](https://docs.aws.amazon.com/cloudtrail/index.html)
+
+### **Configurar Usuários Individuais com IAM ou AWS IAM Identity Center**
+   - **Controle ID:** AWS-IAM_001
+   - **Racional:** A configuração de usuários individuais com IAM ou AWS IAM Identity Center permite uma gestão segura e granular das permissões de acesso, assegurando que cada usuário tenha apenas os privilégios necessários para realizar suas funções, reduzindo o risco de acesso excessivo.
+   - **Riscos Mitigados:** O acesso excessivo ou inadequado pode levar a vulnerabilidades de segurança, onde usuários não autorizados podem acessar ou modificar recursos sensíveis.
+   - **Auditoria:** 
+     1. Acesse o console da AWS e vá para o serviço IAM ou AWS IAM Identity Center.
+     2. Revise a lista de usuários para garantir que cada um tenha as permissões adequadas, conforme suas necessidades de trabalho.
+     3. Verifique se as políticas de permissões estão de acordo com o princípio do menor privilégio.
+     4. Assegure-se de que todos os usuários estão utilizando autenticação multifatorial (MFA).
+   - **Remediação:** 
+     1. No console da AWS, acesse o serviço IAM ou AWS IAM Identity Center.
+     2. Crie usuários individuais para cada pessoa que necessita de acesso à AWS.
+     3. Atribua permissões específicas a cada usuário com base no princípio do menor privilégio.
+     4. Ative a autenticação multifatorial (MFA) para cada usuário.
+     5. Regularmente revise as permissões dos usuários para garantir que elas continuam adequadas e seguras.
+   - **Referências:** 
+     - [AWS IAM User Guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
+     - [AWS IAM Identity Center User Guide](https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html)
+
+### **Utilizar Autenticação Multifator (MFA)**
+   - **Controle ID:** AWS-Security_001
+   - **Racional:** A utilização da Autenticação Multifator (MFA) adiciona uma camada extra de segurança, exigindo que os usuários forneçam duas ou mais formas de verificação de identidade antes de obter acesso aos recursos, reduzindo significativamente o risco de acessos não autorizados.
+   - **Riscos Mitigados:** A MFA mitiga o risco de acessos não autorizados, especialmente em casos de comprometimento de credenciais, ao requerer uma segunda forma de verificação que é difícil de obter para um invasor.
+   - **Auditoria:** 
+     1. Acesse o console da AWS e navegue até o serviço IAM.
+     2. Verifique se a MFA está ativada para todas as contas de usuários, especialmente aquelas com permissões administrativas ou de acesso a dados sensíveis.
+     3. Para usuários do AWS IAM Identity Center, verifique também se a MFA está configurada e sendo utilizada.
+   - **Remediação:** 
+     1. No console da AWS, acesse o serviço IAM ou AWS IAM Identity Center.
+     2. Selecione os usuários para os quais você deseja ativar a MFA.
+     3. Nas configurações de segurança do usuário, encontre a opção de MFA e selecione “Ativar MFA”.
+     4. Escolha o tipo de dispositivo MFA (como um dispositivo virtual MFA, um hardware MFA ou uma aplicação móvel compatível) e siga as instruções para configurá-lo.
+     5. Garanta que todos os usuários completem o processo de configuração da MFA.
+   - **Referências:** 
+     - [AWS IAM User Guide - Using Multi-Factor Authentication (MFA) in AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html)
+     - [AWS IAM Identity Center User Guide - Manage MFA Devices](https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-mfa.html)
+
+### **Comunicar com Recursos AWS Usando SSL/TLS**
+   - **Controle ID:** AWS-Communication_001
+   - **Racional:** A comunicação segura usando SSL/TLS protege os dados em trânsito entre os recursos da AWS e os clientes, evitando a interceptação e o acesso não autorizado por terceiros.
+   - **Riscos Mitigados:** A falta de criptografia em trânsito pode expor dados sensíveis a interceptações, comprometendo a confidencialidade e integridade dos dados.
+   - **Auditoria:** 
+     1. Verifique se os endpoints dos serviços da AWS que você está utilizando suportam SSL/TLS.
+     2. Assegure-se de que todas as comunicações com esses serviços estejam sendo feitas via HTTPS em vez de HTTP.
+     3. Para serviços específicos, como o Amazon Athena, verifique nas configurações do serviço se a opção para forçar conexões SSL/TLS está habilitada.
+   - **Remediação:** 
+     1. Para serviços da AWS que suportam SSL/TLS, configure os endpoints para utilizar HTTPS em todas as comunicações.
+     2. No caso do Amazon Athena, acesse as configurações do serviço e habilite a opção para forçar conexões SSL/TLS.
+     3. Revise as configurações de rede e firewall para garantir que somente o tráfego criptografado seja permitido.
+     4. Atualize quaisquer aplicações cliente para garantir que elas usem HTTPS ao se comunicar com os serviços AWS.
+   - **Referências:** 
+     - [AWS General Reference - AWS Service Endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html)
+     - [Amazon Athena Documentation - Connecting to Amazon Athena with SSL](https://docs.aws.amazon.com/athena/latest/ug/connect-with-ssl.html)
+
+### **Configurar Log de Atividades de API e Usuário com AWS CloudTrail**
+   - **Controle ID:** AWS-CloudTrail_001
+   - **Racional:** O registro de atividades de API e usuário com o AWS CloudTrail é crucial para monitorar, auditar e analisar as ações realizadas em recursos da AWS, permitindo a detecção de atividades suspeitas e a resposta a incidentes de segurança.
+   - **Riscos Mitigados:** Sem o registro adequado de atividades, seria desafiador identificar e responder a acessos não autorizados, modificações de recursos ou outros eventos de segurança potenciais.
+   - **Auditoria:** 
+     1. Acesse o console da AWS e vá para o serviço AWS CloudTrail.
+     2. Verifique se um trail está configurado para gravar todos os eventos de gerenciamento, incluindo atividades de API.
+     3. Confira se o logging está ativado para os recursos desejados e que os logs estão sendo entregues a um bucket do S3 seguro.
+     4. Revise as configurações de CloudTrail para assegurar que ele está configurado para capturar também as atividades de leitura e escrita (se necessário).
+   - **Remediação:** 
+     1. No console da AWS, abra o serviço AWS CloudTrail.
+     2. Crie um novo trail e configure-o para gravar todos os eventos, incluindo atividades de gerenciamento e atividades de leitura e escrita.
+     3. Especifique um bucket do S3 para armazenar os logs do CloudTrail. Certifique-se de que este bucket tenha políticas de segurança adequadas para proteger os logs.
+     4. Ative o logging contínuo para garantir que todas as atividades futuras sejam registradas.
+     5. Configure alertas para notificações de atividades suspeitas ou incomuns, utilizando serviços como o Amazon CloudWatch ou AWS Lambda.
+   - **Referências:** 
+     - [AWS CloudTrail User Guide - Configuring CloudTrail](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html)
+     - [Amazon CloudWatch Documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html)
+
+### **Utilizar Soluções de Criptografia AWS**
+   - **Controle ID:** AWS-Cryptography_001
+   - **Racional:** Utilizar soluções de criptografia da AWS é essencial para proteger dados em repouso e em trânsito, garantindo que apenas usuários autorizados tenham acesso às informações, e mantendo a confidencialidade e integridade dos dados.
+   - **Riscos Mitigados:** Sem criptografia, dados sensíveis podem ser expostos a riscos de acesso e uso não autorizados, comprometendo a segurança e a privacidade dos dados.
+   - **Auditoria:** 
+     1. Verifique se os serviços da AWS utilizados estão configurados para usar criptografia.
+     2. Para dados em repouso, confira se os volumes do Amazon EBS, buckets do S3, e bancos de dados como o Amazon RDS estão utilizando criptografia AES-256.
+     3. Para dados em trânsito, assegure-se de que os dados sendo transferidos entre os serviços da AWS utilizam protocolos criptografados como TLS.
+     4. No caso específico do Athena, verifique se a opção de criptografia está ativada nas configurações de consulta e que os dados resultantes das consultas estão sendo armazenados em locais criptografados.
+   - **Remediação:** 
+     1. Para ativar a criptografia em serviços AWS como S3, EBS, RDS e Athena, vá até as configurações específicas do serviço no console da AWS.
+     2. Selecione a opção de criptografia, geralmente oferecendo AES-256 como padrão, e aplique-a conforme necessário.
+     3. Para criptografia em trânsito, assegure-se de que as configurações de rede e comunicação entre os serviços AWS utilizem TLS ou outros protocolos seguros.
+     4. Em serviços como o AWS KMS (Key Management Service), crie e gerencie chaves de criptografia para controlar o acesso e uso das chaves nos processos de criptografia.
+   - **Referências:** 
+     - [AWS Security - Encryption at Rest](https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-processes.html)
+     - [AWS Key Management Service (KMS) User Guide](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
+
+### **Utilizar Serviços de Segurança Gerenciados Avançados como Amazon Macie**
+   - **Controle ID:** AWS-Macie_001
+   - **Racional:** O uso de serviços de segurança gerenciados avançados, como o Amazon Macie, permite a identificação automática e a proteção contra vazamentos de dados, oferecendo monitoramento contínuo e alertas para configurações de segurança e dados sensíveis.
+   - **Riscos Mitigados:** A falta de visibilidade e monitoramento pode levar a exposições de dados não detectadas, comprometendo a segurança e a privacidade dos dados armazenados.
+   - **Auditoria:** 
+     1. Acesse o console da AWS e verifique se o Amazon Macie está ativado.
+     2. Revise as configurações do Macie para garantir que ele esteja configurado corretamente para monitorar os recursos desejados, como buckets do S3.
+     3. Verifique os alertas e relatórios gerados pelo Macie para identificar possíveis riscos ou incidentes de segurança.
+   - **Remediação:** 
+     1. No console da AWS, acesse o serviço Amazon Macie e ative-o, caso ainda não esteja.
+     2. Configure o Amazon Macie para monitorar automaticamente os buckets do S3 e outros recursos AWS para dados sensíveis e configurações de segurança.
+     3. Defina parâmetros de classificação e políticas de auditoria para ajustar a sensibilidade do monitoramento às necessidades específicas da organização.
+     4. Monitore os alertas e análises fornecidos pelo Macie regularmente para responder rapidamente a potenciais vulnerabilidades ou exposições de dados.
+   - **Referências:** 
+     - [Amazon Macie User Guide](https://docs.aws.amazon.com/macie/latest/userguide/what-is-macie.html)
+     - [AWS Security Services](https://aws.amazon.com/products/security/)
+
+### **Utilizar Endpoint FIPS para Acesso AWS**
+   - **Controle ID:** AWS-FIPS_001
+   - **Racional:** Utilizar endpoints FIPS (Federal Information Processing Standards) para acesso AWS assegura que a comunicação entre os clientes e os serviços da AWS está em conformidade com os padrões governamentais de segurança, proporcionando uma camada adicional de segurança para os dados em trânsito.
+   - **Riscos Mitigados:** O uso de endpoints não conformes com FIPS pode levar a uma segurança de dados inadequada, especialmente para organizações que devem aderir a rigorosos requisitos regulatórios e de segurança.
+   - **Auditoria:** 
+     1. Acesse o console da AWS ou use a AWS CLI para verificar se os serviços estão configurados para usar endpoints FIPS.
+     2. Certifique-se de que as configurações de rede direcionam o tráfego para os endpoints FIPS quando necessário, conforme os requisitos de conformidade.
+     3. Revise as políticas e configurações de segurança para assegurar que o uso de endpoints FIPS está sendo aplicado consistentemente em toda a organização.
+   - **Remediação:** 
+     1. No console da AWS, identifique os serviços que oferecem endpoints FIPS e configure-os para usar esses endpoints.
+     2. Se estiver usando a AWS CLI, configure o perfil da CLI para usar os endpoints FIPS por padrão.
+     3. Atualize as políticas de rede e firewall para garantir que todo o tráfego destinado aos serviços da AWS passe pelos endpoints FIPS.
+     4. Eduque os desenvolvedores e administradores de sistema sobre a importância de usar endpoints FIPS e como configurá-los em suas aplicações e ferramentas de gerenciamento.
+   - **Referências:** 
+     - [AWS FIPS 140-2 Compliance](https://aws.amazon.com/compliance/fips/)
+     - [AWS Documentation on Using FIPS Endpoints](https://docs.aws.amazon.com/general/latest/gr/aws-service-information.html)
+
+### **Evitar Colocar Informações Confidenciais em Campos de Texto Livre**
+   - **Controle ID:** AWS-DataHandling_001
+   - **Racional:** Evitar a inserção de informações confidenciais em campos de texto livre nos sistemas AWS minimiza o risco de exposição acidental ou acesso não autorizado a dados sensíveis, garantindo que tais informações sejam armazenadas e processadas de maneira segura.
+   - **Riscos Mitigados:** A inserção de dados sensíveis em campos de texto livre pode levar à exposição inadvertida de informações confidenciais, aumentando o risco de violações de dados e comprometimento da privacidade.
+   - **Auditoria:** 
+     1. Revise as interfaces de usuário e formulários em aplicativos e sistemas que interagem com a AWS para identificar campos de texto livre.
+     2. Verifique se há políticas ou práticas recomendadas documentadas e implementadas para evitar o uso desses campos para entrada de informações confidenciais.
+     3. Realize auditorias regulares dos registros e logs para detectar possíveis violações desta política.
+   - **Remediação:** 
+     1. Estabeleça políticas claras que proíbam a inclusão de informações confidenciais em campos de texto livre.
+     2. Treine os usuários para entenderem os riscos associados ao manuseio inadequado de dados confidenciais e instrua sobre as alternativas seguras para inserção de dados.
+     3. Implemente controles técnicos, como máscaras de campo e validação de entrada, para prevenir a inserção de dados sensíveis em campos inadequados.
+     4. Revise e aprimore regularmente as práticas e ferramentas de entrada de dados para garantir a conformidade com as políticas de segurança de dados.
+   - **Referências:** 
+     - [AWS Security Best Practices](https://aws.amazon.com/architecture/security-identity-compliance/)
+     - [AWS Documentation on Data Protection](https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-processes.html)
+
+### **Limitar Requisições Usando a Chave de Contexto aws:CalledVia**
+   - **Controle ID:** AWS-RequestLimit_001
+   - **Racional:** Limitar requisições usando a chave de contexto `aws:CalledVia` permite controlar como os serviços da AWS são acessados e por quais meios, ajudando a prevenir o uso indevido e a garantir que apenas chamadas autorizadas sejam executadas.
+   - **Riscos Mitigados:** Sem restrições apropriadas, serviços e recursos da AWS podem ser acessados ou manipulados de maneira inadequada, potencialmente levando a atividades maliciosas ou não autorizadas.
+   - **Auditoria:** 
+     1. Verifique as políticas do IAM para identificar se a chave de contexto `aws:CalledVia` está sendo utilizada para limitar requisições a serviços específicos.
+     2. Analise os registros do CloudTrail para garantir que não haja violações das políticas que utilizam a chave `aws:CalledVia`.
+     3. Assegure-se de que as políticas que utilizam `aws:CalledVia` estejam corretamente configuradas para permitir apenas as chamadas esperadas e autorizadas.
+   - **Remediação:** 
+     1. No console da AWS, acesse o IAM e vá para as políticas de permissões.
+     2. Crie ou edite políticas para incluir a condição `aws:CalledVia` nas cláusulas de controle de acesso, especificando os serviços permitidos para fazer chamadas.
+     3. Aplique as políticas atualizadas aos usuários, grupos ou funções apropriadas para garantir que o acesso seja restrito conforme necessário.
+     4. Monitore regularmente as atividades de acesso usando o AWS CloudTrail para garantir a eficácia e conformidade das políticas.
+   - **Referências:** 
+     - [AWS IAM Policy Elements: Condition Keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition_keys.html)
+     - [AWS Documentation on AWS:CalledVia](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-calledvia)
+
+### **Criptografar Dados de Origem Armazenados no Amazon S3**
+   - **Controle ID:** AWS-S3_001
+   - **Racional:** Criptografar dados de origem armazenados no Amazon S3 protege a confidencialidade e a integridade dos dados, garantindo que apenas usuários e sistemas autorizados possam acessá-los ou decodificá-los.
+   - **Riscos Mitigados:** Dados não criptografados podem ser expostos a acessos não autorizados ou interceptações, levando a possíveis vazamentos ou comprometimentos de dados.
+   - **Auditoria:** 
+     1. Acesse o console da AWS e navegue até o Amazon S3.
+     2. Selecione o bucket que contém os dados de origem e verifique as configurações de criptografia.
+     3. Assegure-se de que a criptografia está ativada para os dados armazenados no bucket, seja com a criptografia do lado do servidor (SSE) usando as chaves gerenciadas pela AWS (SSE-S3 ou SSE-KMS) ou pelo cliente (CSE).
+   - **Remediação:** 
+     1. No console da AWS, acesse o serviço Amazon S3.
+     2. Selecione o bucket onde os dados de origem estão armazenados.
+     3. Vá para a seção de configurações de criptografia do bucket e ative a criptografia.
+     4. Escolha entre a criptografia do lado do servidor com chaves gerenciadas pela AWS (SSE-S3 ou SSE-KMS) ou a criptografia do lado do cliente (CSE).
+     5. Se optar pelo SSE-KMS, pode ser necessário criar uma chave KMS específica ou selecionar uma existente para o processo de criptografia.
+   - **Referências:** 
+     - [Amazon S3 Documentation - Using Encryption to Secure Your Data](https://docs.aws.amazon.com/AmazonS3/latest/dev/serv-side-encryption.html)
+     - [AWS Key Management Service (KMS) Documentation](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
+
+### **Criptografar Metadados no AWS Glue Data Catalog**
+   - **Controle ID:** AWS-Glue_001
+   - **Racional:** A criptografia de metadados no AWS Glue Data Catalog é crucial para proteger as informações sensíveis armazenadas nos metadados, prevenindo o acesso não autorizado e garantindo a confidencialidade dos dados.
+   - **Riscos Mitigados:** A falta de criptografia pode resultar na exposição de informações sensíveis contidas nos metadados, levando a riscos de segurança e privacidade.
+   - **Auditoria:** 
+     1. Acesse o console da AWS e navegue até o AWS Glue.
+     2. Selecione o Data Catalog e verifique as configurações de segurança para confirmar que a criptografia está habilitada para os metadados.
+     3. Assegure-se de que a criptografia utiliza o AWS Key Management Service (KMS) para gerenciar as chaves de criptografia.
+   - **Remediação:** 
+     1. No console da AWS, vá até o AWS Glue.
+     2. Acesse as configurações do Data Catalog.
+     3. Habilite a criptografia de metadados e selecione o AWS Key Management Service (KMS) para gerenciar as chaves de criptografia.
+     4. Configure a chave de criptografia do KMS, selecionando uma chave existente ou criando uma nova específica para o Glue Data Catalog.
+   - **Referências:** 
+     - [AWS Glue Documentation - Encrypting Data Written by Crawlers, Jobs, and Development Endpoints](https://docs.aws.amazon.com/glue/latest/dg/encryption-security-configuration.html)
+     - [AWS Key Management Service (KMS) Documentation](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
+
+### **Criptografar Resultados de Consultas Armazenados no Amazon S3**
+   - **Controle ID:** AWS-S3-Athena_001
+   - **Racional:** Criptografar os resultados das consultas armazenados no Amazon S3 assegura a proteção dos dados processados pelo Amazon Athena, evitando a exposição de informações sensíveis e garantindo a confidencialidade dos dados.
+   - **Riscos Mitigados:** A ausência de criptografia pode levar ao acesso não autorizado ou à exposição de dados confidenciais armazenados no S3, resultando em possíveis violações de segurança e de privacidade.
+   - **Auditoria:** 
+     1. Acesse o console da AWS e navegue até o Amazon S3.
+     2. Verifique os buckets que armazenam os resultados das consultas do Athena para garantir que a criptografia está ativada.
+     3. Confirme que os dados estão sendo criptografados usando o AWS Key Management Service (KMS) ou a criptografia do lado do servidor fornecida pela Amazon S3 (SSE-S3).
+   - **Remediação:** 
+     1. No console da AWS, acesse o Amazon S3.
+     2. Selecione o bucket que armazena os resultados das consultas do Athena.
+     3. Ative a criptografia do lado do servidor (SSE) utilizando o AWS Key Management Service (KMS) ou SSE-S3.
+     4. Se optar pelo AWS KMS, selecione uma chave de criptografia existente ou crie uma nova.
+     5. Assegure que as configurações de criptografia estejam aplicadas a todos os objetos novos e existentes no bucket.
+   - **Referências:** 
+     - [Amazon S3 Documentation - Using Server-Side Encryption](https://docs.aws.amazon.com/AmazonS3/latest/dev/serv-side-encryption.html)
+     - [AWS Key Management Service (KMS) Documentation](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
+
+### **Restringir Acesso a Consultas Salvas Usando Workgroups**
+   - **Controle ID:** AWS-Athena-WG_001
+   - **Racional:** Utilizar workgroups no Amazon Athena permite restringir o acesso a consultas salvas, garantindo que apenas usuários autorizados possam visualizar ou executar essas consultas, o que ajuda a proteger as informações sensíveis e a manter a governança de dados.
+   - **Riscos Mitigados:** Sem a restrição adequada, as consultas salvas podem ser acessadas ou executadas por usuários não autorizados, potencialmente levando à exposição de dados sensíveis.
+   - **Auditoria:** 
+     1. Acesse o console da AWS e vá para o serviço Amazon Athena.
+     2. Verifique se os workgroups estão configurados e sendo utilizados para gerenciar o acesso a consultas e resultados.
+     3. Confira as políticas de permissão associadas a cada workgroup para garantir que apenas os usuários e grupos autorizados tenham acesso às consultas salvas.
+   - **Remediação:** 
+     1. No console da AWS, navegue até o Amazon Athena.
+     2. Crie ou configure um workgroup existente.
+     3. Defina as configurações de permissão do workgroup para controlar quem pode acessar e executar as consultas salvas.
+     4. Aplique políticas de IAM para restringir o acesso ao workgroup a apenas usuários e grupos específicos.
+     5. Certifique-se de que todas as consultas salvas estejam associadas ao workgroup correto com as permissões apropriadas.
+   - **Referências:** 
+     - [Amazon Athena User Guide - Working with Workgroups](https://docs.aws.amazon.com/athena/latest/ug/workgroups.html)
+     - [AWS Identity and Access Management (IAM) User Guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
+
+### **Utilizar TLS 1.2 ou Superior para Comunicação de Rede**
+   - **Controle ID:** AWS-TLS_001
+   - **Racional:** Utilizar TLS 1.2 ou superior para comunicação de rede garante uma conexão segura e criptografada, protegendo a transferência de dados contra interceptações e ataques man-in-the-middle.
+   - **Riscos Mitigados:** O uso de versões antigas do protocolo TLS pode expor as comunicações de rede a vulnerabilidades e ataques, comprometendo a segurança dos dados em trânsito.
+   - **Auditoria:** 
+     1. Verifique as configurações de rede dos serviços AWS para garantir que estão utilizando TLS 1.2 ou superior.
+     2. Confira as políticas de segurança dos grupos de segurança e load balancers para assegurar que apenas o tráfego TLS 1.2+ seja permitido.
+     3. Utilize ferramentas de análise de tráfego ou scanners de vulnerabilidade para validar a versão do TLS em uso.
+   - **Remediação:** 
+     1. No console da AWS, acesse as configurações dos serviços que suportam comunicação de rede, como o Amazon ELB (Elastic Load Balancing), API Gateway, e CloudFront.
+     2. Configure esses serviços para forçar o uso de TLS 1.2 ou superior nas comunicações.
+     3. Atualize as políticas de segurança dos grupos de segurança e dos load balancers para aceitar apenas conexões usando TLS 1.2 ou superior.
+     4. Verifique se todas as aplicações cliente estão configuradas para usar TLS 1.2 ou superior para estabelecer conexões seguras.
+   - **Referências:** 
+     - [AWS Documentation on TLS Security](https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-standards-fsbp-controls.html#fsbp-elb-4)
+     - [AWS Best Practices for Security, Identity, & Compliance](https://aws.amazon.com/architecture/security-identity-compliance/)
+
+### **Suportar Cipher Suites com Segredo Perfeito de Avanço (PFS)**
+   - **Controle ID:** AWS-PFS_001
+   - **Racional:** O suporte a cipher suites com Segredo Perfeito de Avanço (PFS) garante que as chaves de sessão não possam ser derivadas mesmo que a chave privada de longo prazo seja comprometida, proporcionando uma segurança adicional na criptografia das comunicações de rede.
+   - **Riscos Mitigados:** Sem o PFS, um invasor que obtém a chave privada de um servidor pode descriptografar sessões passadas e futuras, comprometendo a confidencialidade das comunicações criptografadas.
+   - **Auditoria:** 
+     1. Revise as configurações dos serviços de rede da AWS, como o Elastic Load Balancer (ELB) e o Amazon CloudFront, para verificar se as cipher suites suportadas incluem aquelas que implementam PFS.
+     2. Utilize ferramentas de teste de segurança SSL/TLS para verificar as cipher suites em uso e confirmar que o PFS está sendo utilizado.
+   - **Remediação:** 
+     1. No console da AWS, acesse os serviços relevantes, como o ELB, CloudFront, ou API Gateway.
+     2. Configure as políticas de segurança desses serviços para incluir apenas cipher suites que suportam PFS.
+     3. Garanta que as configurações sejam aplicadas para todas as instâncias e distribuições relevantes.
+     4. Regularmente revise as cipher suites disponíveis e atualize as políticas conforme necessário para manter a segurança.
+   - **Referências:** 
+     - [AWS Documentation on Configuring SSL Policies](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html)
+     - [AWS Best Practices for Security, Identity, & Compliance](https://aws.amazon.com/architecture/security-identity-compliance/)
+
+### **Assinar Requisições com Chaves de Acesso IAM**
+   - **Controle ID:** AWS-IAM-Signing_001
+   - **Racional:** Assinar requisições com chaves de acesso IAM fornece um método de autenticação seguro, garantindo que as requisições aos serviços AWS sejam feitas por entidades autorizadas, o que ajuda a prevenir o acesso não autorizado e a modificação de requisições.
+   - **Riscos Mitigados:** A falta de assinatura adequada nas requisições pode permitir que atores mal-intencionados façam requisições não autorizadas, comprometendo a segurança dos recursos da AWS.
+   - **Auditoria:** 
+     1. Revise os logs do AWS CloudTrail para verificar se todas as requisições aos serviços AWS estão sendo devidamente assinadas com chaves de acesso IAM.
+     2. Certifique-se de que as políticas de IAM estejam configuradas para exigir a assinatura de requisições para os serviços relevantes.
+   - **Remediação:** 
+     1. Certifique-se de que todas as aplicações e scripts que fazem requisições aos serviços AWS estejam utilizando as SDKs da AWS ou a AWS CLI, que automaticamente assinam as requisições com as chaves de acesso IAM do usuário.
+     2. Regularmente revise e rotacione as chaves de acesso IAM para minimizar os riscos de comprometimento.
+     3. Implemente políticas de IAM que exijam a assinatura de requisições e monitoramento constante através do AWS CloudTrail para identificar e responder a atividades suspeitas.
+   - **Referências:** 
+     - [AWS Security Best Practices - Managing Access Keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
+     - [AWS Documentation on Request Signing](https://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html)
+
+### **Utilizar AWS STS para Gerar Credenciais de Segurança Temporárias**
+   - **Controle ID:** AWS-STS_001
+   - **Racional:** Utilizar o AWS Security Token Service (STS) para gerar credenciais de segurança temporárias reduz o risco de comprometimento de credenciais permanentes, limitando o tempo de exposição e oferecendo maior controle sobre a autenticação e autorização.
+   - **Riscos Mitigados:** Credenciais permanentes, se comprometidas, podem oferecer acesso contínuo a recursos críticos. As credenciais temporárias limitam a janela de tempo durante a qual um ator mal-intencionado pode acessar recursos da AWS.
+   - **Auditoria:** 
+     1. Verifique os logs do AWS CloudTrail para confirmar o uso de credenciais temporárias geradas pelo AWS STS.
+     2. Revise as políticas de IAM e STS para garantir que as credenciais temporárias estejam sendo utilizadas onde apropriado.
+     3. Assegure-se de que as credenciais temporárias sejam configuradas com a menor duração possível que ainda atenda às necessidades da operação.
+   - **Remediação:** 
+     1. Implemente o uso do AWS STS nas aplicações e processos que requerem acesso aos recursos da AWS, substituindo credenciais de longa duração por temporárias.
+     2. Configure as políticas de IAM para limitar as permissões associadas às credenciais temporárias conforme o princípio do menor privilégio.
+     3. Ajuste a duração das credenciais temporárias com base nas necessidades específicas de cada caso de uso, minimizando o período de validade sempre que possível.
+   - **Referências:** 
+     - [AWS Security Token Service Documentation](https://docs.aws.amazon.com/STS/latest/APIReference/welcome.html)
+     - [AWS IAM Best Practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
+
+### **Restringir Acesso às Operações do Athena com Políticas IAM**
+   - **Controle ID:** AWS-Athena-IAM_001
+   - **Racional:** Restringir o acesso às operações do Amazon Athena com políticas IAM assegura que apenas usuários e sistemas autorizados possam executar operações específicas, protegendo os dados e recursos contra acessos e modificações não autorizadas.
+   - **Riscos Mitigados:** Acesso não restrito ou mal configurado ao Athena pode levar a exposições de dados, manipulações indevidas ou uso abusivo dos recursos, comprometendo a segurança dos dados.
+   - **Auditoria:** 
+     1. Revise as políticas IAM associadas ao Amazon Athena para verificar se elas estão corretamente configuradas para limitar as operações com base no princípio do menor privilégio.
+     2. Utilize o AWS CloudTrail para auditar o uso do Athena e verificar se as políticas IAM estão sendo efetivamente aplicadas e respeitadas.
+   - **Remediação:** 
+     1. No console da AWS, acesse o serviço IAM.
+     2. Crie ou revise as políticas IAM para restringir as operações no Amazon Athena, especificando as ações permitidas e os recursos acessíveis.
+     3. Associe as políticas IAM aos usuários, grupos ou funções que necessitam de acesso ao Athena, garantindo que as permissões sejam concedidas estritamente conforme necessário.
+     4. Regularmente revise e ajuste as políticas IAM com base nas mudanças de requisitos de acesso e no princípio do menor privilégio.
+   - **Referências:** 
+     - [Amazon Athena Documentation - IAM Policies for Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/security-iam.html)
+     - [AWS IAM User Guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
+
+### **Seguir as Melhores Práticas de IAM**
+   - **Controle ID:** AWS-IAM-BestPractices_001
+   - **Racional:** Seguir as melhores práticas de IAM (Identity and Access Management) ajuda a garantir que os direitos e privilégios de acesso sejam concedidos de forma segura e adequada, minimizando o risco de acesso não autorizado e potencial comprometimento de recursos da AWS.
+   - **Riscos Mitigados:** Práticas inadequadas de gestão de identidade e acesso podem resultar em excesso de privilégios, configurações inseguras e vulnerabilidades exploráveis, aumentando o risco de incidentes de segurança.
+   - **Auditoria:** 
+     1. Revise as políticas e práticas atuais de IAM para assegurar que estejam em conformidade com as melhores práticas recomendadas pela AWS.
+     2. Verifique se os princípios de menor privilégio, rotação de credenciais e uso de MFA estão sendo seguidos.
+     3. Utilize o AWS IAM Access Advisor para revisar as permissões concedidas e identificar qualquer uso excessivo ou desnecessário de privilégios.
+   - **Remediação:** 
+     1. Implemente o princípio do menor privilégio, garantindo que usuários, grupos, e funções tenham apenas as permissões necessárias para suas tarefas específicas.
+     2. Habilite e exija a autenticação multifatorial (MFA) para todos os usuários, especialmente para aqueles com acesso administrativo.
+     3. Rotacione regularmente as chaves de acesso IAM e senhas para minimizar os riscos associados ao comprometimento de credenciais.
+     4. Revise e atualize as políticas de IAM periodicamente para remover permissões obsoletas ou desnecessárias.
+   - **Referências:** 
+     - [AWS IAM Best Practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
+     - [AWS Documentation on IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
+
+### **Utilizar Políticas Gerenciadas pelo Athena para Facilitar a Atualização de Permissões**
+   - **Controle ID:** AWS-Athena-ManagedPolicies_001
+   - **Racional:** Utilizar políticas gerenciadas pelo Amazon Athena ajuda a simplificar a administração de permissões, assegurando que as atualizações de segurança e de funcionalidades sejam aplicadas de forma consistente e eficiente.
+   - **Riscos Mitigados:** A gestão ineficiente de permissões pode levar a configurações incorretas ou excesso de privilégios, aumentando o risco de exposição de dados e de acessos não autorizados.
+   - **Auditoria:** 
+     1. Revise as políticas de IAM no console da AWS para verificar se as políticas gerenciadas pelo Athena estão sendo utilizadas.
+     2. Garanta que as permissões concedidas através dessas políticas estejam em conformidade com o princípio do menor privilégio e sejam adequadas às necessidades operacionais.
+   - **Remediação:** 
+     1. No console da AWS, acesse o serviço IAM.
+     2. Navegue até a seção de políticas e filtre por políticas gerenciadas pela AWS específicas para o Athena.
+     3. Associe essas políticas gerenciadas aos usuários, grupos ou funções que necessitam de acesso ao Athena.
+     4. Regularmente revise as permissões para garantir que elas continuem adequadas às necessidades e conformes às práticas recomendadas de segurança.
+   - **Referências:** 
+     - [Amazon Athena Documentation - Access Management](https://docs.aws.amazon.com/athena/latest/ug/access.html)
+     - [AWS IAM User Guide - Managed Policies and Inline Policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html)
+
+### **Afinar Políticas com Permissões Granulares para Ações do Athena**
+   - **Controle ID:** AWS-Athena-GranularPermissions_001
+   - **Racional:** A definição de políticas com permissões granulares para ações específicas do Amazon Athena permite um controle mais preciso sobre o acesso e as operações, garantindo que os usuários tenham apenas as permissões necessárias para realizar suas tarefas.
+   - **Riscos Mitigados:** Permissões amplas podem permitir acesso não intencional ou malicioso a dados e recursos, aumentando o risco de comprometimento de dados e de segurança.
+   - **Auditoria:** 
+     1. Examine as políticas de IAM aplicadas ao Athena para garantir que elas especificam ações individuais, em vez de conceder permissões amplas.
+     2. Verifique se as permissões estão alinhadas com o princípio do menor privilégio, permitindo aos usuários realizar apenas as tarefas necessárias.
+   - **Remediação:** 
+     1. No console da AWS, acesse o serviço IAM e edite ou crie políticas de IAM que se aplicam ao Athena.
+     2. Especifique ações individuais nas políticas (como `athena:startQueryExecution`, `athena:getQueryResults`, etc.) para controlar o acesso a operações específicas.
+     3. Aplique estas políticas aos usuários, grupos ou funções que necessitam de acesso ao Athena, assegurando que cada entidade tenha apenas as permissões necessárias para suas funções.
+     4. Regularmente revise e atualize as políticas de IAM para refletir mudanças nas necessidades de acesso e operações.
+   - **Referências:** 
+     - [Amazon Athena Documentation - IAM Policies for Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/security-iam-athena.html)
+     - [AWS IAM User Guide - Example Policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_examples.html)
+
+### **Conceder Acesso Apropriado ao Local do Amazon S3 dos Dados**
+   - **Controle ID:** AWS-S3-AthenaAccess_001
+   - **Racional:** Conceder acesso apropriado ao local do Amazon S3 onde os dados são armazenados é essencial para garantir que os usuários e serviços do Amazon Athena tenham as permissões necessárias para acessar e processar os dados, sem expor informações sensíveis a entidades não autorizadas.
+   - **Riscos Mitigados:** Acesso inadequado aos dados armazenados no S3 pode levar a vazamentos de dados, acesso não autorizado e comprometimento da integridade dos dados.
+   - **Auditoria:** 
+     1. Verifique as políticas de acesso do Amazon S3 para assegurar que os buckets e objetos estão corretamente configurados para permitir o acesso apenas às entidades autorizadas.
+     2. Revise as políticas de IAM e as configurações de permissão do S3 para confirmar que elas estão alinhadas com o uso pretendido no Athena e com as práticas de segurança recomendadas.
+   - **Remediação:** 
+     1. No console da AWS, acesse o serviço Amazon S3.
+     2. Identifique os buckets utilizados pelo Amazon Athena e revise suas políticas de acesso.
+     3. Aplique políticas de bucket do S3 para garantir que o acesso seja restrito a usuários, grupos ou funções do IAM que requerem acesso para suas operações no Athena.
+     4. Configure as permissões em nível de objeto, se necessário, para controlar o acesso a dados específicos dentro dos buckets.
+     5. Utilize as melhores práticas de segurança, como a criptografia dos dados e o logging do acesso, para proteger as informações armazenadas.
+   - **Referências:** 
+     - [Amazon S3 Documentation - Managing Access Permissions to Your Amazon S3 Resources](https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html)
+     - [AWS Documentation on Access Management for Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-overview.html)
+
+

@@ -1,0 +1,75 @@
+
+Controle extraidos
+
+
+Controle: Habilitar Criptografia para Resultados de Consultas do AWS Athena
+- Referência: Best practice rules for Amazon Athena.
+
+Controle: Proteger Credenciais da Conta AWS
+- Referência: Data protection in Athena.
+
+Controle: Configurar Usuários Individuais com IAM ou AWS IAM Identity Center
+- Referência: Data protection in Athena.
+
+Controle: Utilizar Autenticação Multifator (MFA)
+- Referência: Data protection in Athena.
+
+Controle: Comunicar com Recursos AWS Usando SSL/TLS
+- Referência: Data protection in Athena.
+
+Controle: Configurar Log de Atividades de API e Usuário com AWS CloudTrail
+- Referência: Data protection in Athena.
+
+Controle: Utilizar Soluções de Criptografia AWS
+- Referência: Data protection in Athena.
+
+Controle: Utilizar Serviços de Segurança Gerenciados Avançados como Amazon Macie
+- Referência: Data protection in Athena.
+
+Controle: Utilizar Endpoint FIPS para Acesso AWS
+- Referência: Data protection in Athena.
+
+Controle: Evitar Colocar Informações Confidenciais em Campos de Texto Livre
+- Referência: Data protection in Athena.
+
+Controle: Limitar Requisições Usando a Chave de Contexto aws:CalledVia
+- Referência: Data protection in Athena.
+
+Controle: Criptografar Dados de Origem Armazenados no Amazon S3
+- Referência: Data protection in Athena.
+
+Controle: Criptografar Metadados no AWS Glue Data Catalog
+- Referência: Data protection in Athena.
+
+Controle: Criptografar Resultados de Consultas Armazenados no Amazon S3
+- Referência: Data protection in Athena.
+
+Controle: Restringir Acesso a Consultas Salvas Usando Workgroups
+- Referência: Data protection in Athena.
+
+Controle: Utilizar TLS 1.2 ou Superior para Comunicação de Rede
+- Referência: Infrastructure security in Athena.
+
+Controle: Suportar Cipher Suites com Segredo Perfeito de Avanço (PFS)
+- Referência: Infrastructure security in Athena.
+
+Controle: Assinar Requisições com Chaves de Acesso IAM
+- Referência: Infrastructure security in Athena.
+
+Controle: Utilizar AWS STS para Gerar Credenciais de Segurança Temporárias
+- Referência: Infrastructure security in Athena.
+
+Controle: Restringir Acesso às Operações do Athena com Políticas IAM
+- Referência: Infrastructure security in Athena.
+
+Controle: Seguir as Melhores Práticas de IAM
+- Referência: Infrastructure security in Athena.
+
+Controle: Utilizar Políticas Gerenciadas pelo Athena para Facilitar a Atualização de Permissões
+- Referência: Infrastructure security in Athena.
+
+Controle: Afinar Políticas com Permissões Granulares para Ações do Athena
+- Referência: Infrastructure security in Athena.
+
+Controle: Conceder Acesso Apropriado ao Local do Amazon S3 dos Dados
+- Referência: Infrastructure security in Athena.
