@@ -1,0 +1,255 @@
+
+
+Referencia: [Trend Micro Best practice rules for Amazon EC2](https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/EC2/)
+
+
+Best practice rules for Amazon EC2
+Amazon Elastic Cloud Compute (EC2) provides on demand compute capacity that can be tailored to meet your specific system requirements. EC2 servers can be configured and launched in a matter of minutes, allowing customers to scale up and down as usage requirements change.
+
+Trend Micro Cloud One™ – Conformity monitors Amazon EC2 with the following rules:
+
+AMI Naming Conventions
+Follow proper naming conventions for Amazon Machine Images.
+
+AWS AMI Encryption
+Ensure that your existing AMIs are encrypted to meet security and compliance requirements.
+
+Account Instance Limit
+Ensure your AWS account does not reach the limit set by Amazon for the number of instances.
+
+App-Tier EC2 Instance Using IAM Roles
+Ensure that your app-tier EC2 instances are using IAM roles to grant permissions to applications running on these instances.
+
+App-Tier Publicly Shared AMI
+Ensure app-tier AMIs aren't publicly shared to avoid exposing sensitive data.
+
+Approved/Golden AMIs
+Ensure all EC2 instances are launched from your approved AMIs.
+
+Blocklisted AMIs
+Ensure no EC2 instance is launched from any blocklisted AMIs
+
+Check for EC2 Instances with Blocklisted Instance Types
+Ensure there is no EC2 instance with the instance type blocklisted, available in your AWS account.
+
+Check for Unrestricted Memcached Access
+Ensure that no security group allows unrestricted inbound access on TCP/UDP port 11211 (Memcached).
+
+Check for Unrestricted Redis Access
+Ensure that no security group allows unrestricted inbound access on TCP port 6379 (Redis).
+
+Default Security Group Unrestricted
+Ensure the default security group of every VPC restricts all traffic.
+
+Default Security Groups In Use
+Ensure default security groups aren't in use. Instead create unique security groups to better adhere to the principle of least privilege.
+
+Descriptions for Security Group Rules
+Ensure AWS EC2 security group rules have descriptive text for organization and documentation.
+
+Disable Public IP Address Assignment for EC2 Instances
+Ensure that Amazon EC2 instances are not using public IP addresses.
+
+EC2 AMI Too Old
+Ensure EC2 Amazon Machine Images (AMIs) aren't too old
+
+EC2 Desired Instance Type
+Ensure all EC2 instances are of a given instance type.
+
+EC2 Hibernation
+Enable hibernation as an additional stop behavior for your EC2 instances backed by Amazon EBS in order to reduce the time it takes for these instances to return to service at restart.
+
+EC2 Instance Counts
+Ensure fewer EC2 instances than provided count in your account
+
+EC2 Instance Dedicated Tenancy
+Ensure dedicated EC2 instances are regularly reviewed
+
+EC2 Instance Detailed Monitoring
+Ensure that detailed monitoring is enabled for the AWS EC2 instances that you need to monitor closely.
+
+EC2 Instance Generation
+Ensure you always use the latest generation of EC2 instances to get better performance with lower cost.
+
+EC2 Instance In VPC
+Ensure EC2 instances are launched using the EC2-VPC platform instead of EC2-Classic outdated platform.
+
+EC2 Instance Naming Conventions
+Follow proper naming conventions for EC2 instances.
+
+EC2 Instance Not In Public Subnet
+Ensure that no backend EC2 instances are provisioned in public subnets.
+
+EC2 Instance Scheduled Events
+Identify any AWS EC2 instances that have scheduled events and take action to resolve them.
+
+EC2 Instance Security Group Rules Counts
+Determine if there is a large number of security group rules applied to an instance.
+
+EC2 Instance Tenancy
+Ensure EC2 instances have desired tenancy for compliance and regulatory requirements.
+
+EC2 Instance Termination Protection
+Ensure termination protection safety feature is enabled for ec2 instances that aren't part of ASGs
+
+EC2 Instance Too Old
+Ensure EC2 instances aren't too old.
+
+EC2 Instance Using IAM Roles
+Ensure IAM instance roles are used for AWS resource access from instances.
+
+EC2 Instances Scanned by Amazon Inspector Classic
+Ensure that all Amazon EC2 instances are successfully scanned by an Inspector Classic assessment run.
+
+EC2 Instances with Multiple Elastic Network Interfaces
+Ensure that Amazon EC2 instances are not using multiple ENIs.
+
+EC2 Instances with Public IP Addresses or Available in Public Subnets
+Ensure no backend EC2 instances are running in public subnets or having public IP addresses.
+
+EC2 Reserved Instance Payment Failed
+Ensure EC2 Reserved Instances purchases haven't failed.
+
+EC2 Reserved Instance Payment Pending
+Ensure EC2 Reserved Instances purchases aren't pending
+
+EC2 Reserved Instance Recent Purchases
+Ensure EC2 Reserved Instances purchases are regularly reviewed.
+
+EC2-Classic Elastic IP Address Limit
+Determine if the number of allocated EC2-Classic EIPs per region is close to Elastic IP Address Limit.
+
+EC2-VPC Elastic IP Address Limit
+Determine if the number of allocated EC2-VPC EIPs per region is close to Elastic IP Address Limit.
+
+Enable Capacity Rebalancing
+Ensure that Capacity Rebalancing is enabled for your Amazon Auto Scaling Groups.
+
+Idle EC2 Instance
+Identify any Amazon EC2 instances that appear to be idle and stop or terminate them to help lower the cost of your monthly AWS bill.
+
+Instance In Auto Scaling Group
+Ensure every EC2 instance is launched inside an Auto Scaling Group (ASG) in order to follow AWS reliability and security best practices.
+
+Overutilized AWS EC2 Instances
+Identify any Amazon EC2 instances that appear to be overutilized and upgrade (resize) them in order to help your EC2-hosted applications to handle better the workload and improve the response time.
+
+Publicly Shared AMI
+Ensure AMIs aren't publicly shared to avoid exposing sensitive data.
+
+Require IMDSv2 for EC2 Instances
+Ensure that all the Amazon EC2 instances require the use of Instance Metadata Service Version 2 (IMDSv2).
+
+Reserved Instance Lease Expiration In The Next 30 Days
+Ensure Amazon EC2 Reserved Instances (RI) are renewed before expiration.
+
+Reserved Instance Lease Expiration In The Next 7 Days
+Ensure Amazon EC2 Reserved Instances (RI) are renewed before expiration.
+
+Security Group Excessive Counts
+Determine if there is an excessive number of security groups per region
+
+Security Group Large Counts
+Determine if there is a large number of security groups per region
+
+Security Group Name Prefixed With 'launch-wizard'
+Ensure no security group name is prefixed with 'launch-wizard'.
+
+Security Group Naming Conventions
+Follow proper naming conventions for security groups
+
+Security Group Port Range
+Ensure no security group opens range of ports.
+
+Security Group Rules Counts
+Determine if there is a large number of rules in a security group.
+
+SecurityGroup RFC 1918
+Ensure no security group contains RFC 1918 CIDRs
+
+Unassociated Elastic IP Addresses
+Identify unassociated Elastic IP addresses, and delete them to help lower the cost of your monthly AWS bill.
+
+Underutilized EC2 Instance
+Identify underutilized EC2 instances and downsize them in order to optimize your AWS costs
+
+Unrestricted CIFS Access
+Ensure no security group allows unrestricted inbound access to UDP port 445 (CIFS).
+
+Unrestricted DNS Access
+Ensure no security group allows unrestricted ingress access to port 53.
+
+Unrestricted FTP Access
+Ensure no security group allows unrestricted inbound access to TCP ports 20 and 21 (FTP).
+
+Unrestricted HTTP Access
+Ensure no security group allows unrestricted inbound access to TCP port 80 (HTTP).
+
+Unrestricted HTTPS Access
+Ensure no security group allows unrestricted inbound access to TCP port 443 (HTTPS).
+
+Unrestricted ICMP Access
+Ensure no security group allows unrestricted inbound access to ICMP.
+
+Unrestricted MongoDB Access
+Ensure no security group allows unrestricted ingress access to MongoDB port 27017
+
+Unrestricted MsSQL Access
+Ensure no security group allows unrestricted ingress access to port 1433.
+
+Unrestricted MySQL Access
+Ensure no security group allows unrestricted ingress access to port 3306.
+
+Unrestricted NetBIOS Access
+Ensure no security group allows unrestricted inbound access to port UDP/137, UDP/138, and TPC/139 (NetBIOS).
+
+Unrestricted OpenSearch Access
+Ensure no security group allows unrestricted inbound access to TCP port 9200 (OpenSearch).
+
+Unrestricted Oracle Access
+Ensure no security group allows unrestricted ingress access to port 1521.
+
+Unrestricted PostgreSQL Access
+Ensure no security group allows unrestricted ingress access to port 5432.
+
+Unrestricted RDP Access
+Ensure no security groups allow ingress from 0.0.0.0/0 to port 3389.
+
+Unrestricted RPC Access
+Ensure no security group allows unrestricted inbound access to TCP port 135 (RPC).
+
+Unrestricted SMTP Access
+- Ensure no security group allows unrestricted inbound access to TCP port 25 (SMTP).
+
+Unrestricted SSH Access
+Ensure no security groups allow ingress from 0.0.0.0/0 to port 22.
+
+Unrestricted Security Group Egress
+Ensure no security group contains any 0.0.0.0/0 egress rules
+
+Unrestricted Security Group Ingress on Uncommon Ports
+Ensure no security group contains any 0.0.0.0/0 ingress rules.
+
+Unrestricted Telnet Access
+Ensure no security group allows unrestricted inbound access to TCP port 23 (Telnet).
+
+Unused AMI
+Identify unused Amazon Machine Images (AMI), and delete them to help lower the cost of your monthly AWS bill.
+
+Unused AWS EC2 Key Pairs
+Ensure unused AWS EC2 key pairs are decommissioned to follow AWS security best practices.
+
+Unused EC2 Reserved Instances
+Ensure that your Amazon EC2 Reserved Instances are being fully utilized.
+
+Unused Elastic Network Interfaces
+Identify and delete any unused Elastic Network Interfaces
+
+Web-Tier EC2 Instance Using IAM Roles
+Ensure web-tier IAM instance roles are used for AWS resource access from instances.
+
+Web-Tier Publicly Shared AMI
+Ensure web-tier AMIs aren't publicly shared to avoid exposing sensitive data.
+
+vCPU-Based EC2 Instance Limit
+Ensure that your EC2 instances do not reach the limit set by AWS for the number of vCPUs.

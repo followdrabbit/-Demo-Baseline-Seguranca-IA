@@ -1,0 +1,74 @@
+
+Controles revisados 1
+
+Controle: Crie um Endpoint de Interface VPC para Amazon EC2
+- Referência: Access Amazon EC2 using an interface VPC endpoint.
+
+Controle: Aplique uma Política de Endpoint Personalizada para Restringir a Criação e o Lançamento de Volumes e Instâncias Não Criptografadas
+- Referência: Create an endpoint policy.
+
+Controle: Implemente Federação de Identidade com um Provedor de Identidade e Papéis IAM para Gerenciar o Acesso
+- Referência: Best practices for Amazon EC2.
+
+Controle: Aplique Regras de Grupo de Segurança o Menos Permissivas Possível
+- Referência: Best practices for Amazon EC2.
+
+Controle: Atualize Regularmente o Sistema Operacional e Aplicações em sua Instância
+- Referência: Best practices for Amazon EC2.
+
+Controle: Utilize o Amazon Inspector para Descobrir e Verificar Automaticamente Vulnerabilidades de Software e Exposições de Rede nas Instâncias EC2
+- Referência: Best practices for Amazon EC2.
+
+Controle: Monitore seus Recursos EC2 usando os Controles do AWS Security Hub
+- Referência: Best practices for Amazon EC2.
+
+Controle: Separe os Volumes do Amazon EBS para Sistema Operacional e Dados, Garantindo a Persistência dos Dados Após o Término da Instância
+- Referência: Best practices for Amazon EC2.
+
+Controle: Encripte Volumes e Snapshots do EBS
+- Referência: Best practices for Amazon EC2.
+
+Controle: Utilize Metadados de Instância e Tags de Recursos Personalizadas para Rastrear e Identificar seus Recursos AWS
+- Referência: Best practices for Amazon EC2.
+
+Controle: Faça Backups Regulares de seus Volumes EBS usando Snapshots do EBS e Crie uma AMI de sua Instância para Salvar a Configuração
+- Referência: Best practices for Amazon EC2.
+
+Controle: Implemente Componentes Críticos de sua Aplicação em Múltiplas Zonas de Disponibilidade e Replique seus Dados Apropriadamente
+- Referência: Best practices for Amazon EC2.
+
+Controle: Monitore e Responda a Eventos em suas Instâncias EC2
+- Referência: Best practices for Amazon EC2.
+
+Controle: Teste Regularmente o Processo de Recuperação de suas Instâncias e Volumes EBS para Garantir que Dados e Serviços sejam Restaurados com Sucesso
+- Referência: Best practices for Amazon EC2.
+
+Controle: Configure o TTL (Time-to-Live) para 255 em suas Aplicações para Evitar Problemas de Alcançabilidade
+- Referência: Best practices for Amazon EC2.
+
+Controle: Mantenha os Drivers Atualizados em Todas as Instâncias Windows EC2
+- Referência: Best practices for Windows on Amazon EC2.
+
+Controle: Utilize os AMIs Windows mais Recentes para Novas Instâncias
+- Referência: Best practices for Windows on Amazon EC2.
+
+Controle: Atualize para o Agente EC2Launch v2 mais Recente
+- Referência: Best practices for Windows on Amazon EC2.
+
+Controle: Implemente Serviços de Domínio do Active Directory para Infraestrutura Segura e Gerenciável
+- Referência: Best practices for Windows on Amazon EC2.
+
+Controle: Aplique o Princípio de Menor Privilégio para Instâncias e Contas
+- Referência: Best practices for Windows on Amazon EC2.
+
+Controle: Crie uma Configuração de Servidor Baseline que Incorpore Patches de Segurança Atualizados
+- Referência: Best practices for Windows on Amazon EC2.
+
+Controle: Implemente Processos de Gerenciamento de Mudanças Controladas para Configurações de Servidor
+- Referência: Best practices for Windows on Amazon EC2.
+
+Controle: Implemente Processos Regulares de Patch e Atualização para o Sistema Operacional e Aplicações
+- Referência: Best practices for Windows on Amazon EC2.
+
+Controle: Audite o Acesso e Todas as Alterações nas Instâncias EC2 para Verificar a Integridade do Servidor
+- Referência: Best practices for Windows on Amazon EC2.
