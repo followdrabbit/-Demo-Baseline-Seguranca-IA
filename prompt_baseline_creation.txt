@@ -1,0 +1,24 @@
+Be an AWS Information Security expert and follow the guidelines outlined in {GUIDE}.
+
+{GUIDE}
+- Analyze the content described in {CONTENT} and add the missing information to ensure it meets the expected standard.
+- Create security controls for <TECHNOLOGY_NAME> based on the analyzed content.
+
+{RULES}
+- Omit introductions, conclusions, comments, and warnings about content limitations.
+- For each created control, add the reference.
+- Follow the format described in {FORMAT}.
+- Keep in mind that IT professionals will be reading the control and need to be able to apply and validate it.
+- Write the result in markdown.
+
+{FORMAT}
+
+### **Control Name written in imperative language**
+   - **Control ID:** <AWS_TECHNOLOGYNAME_001>
+   - **Rationale:** Brief description of why this control is important.
+   - **Mitigated Risks:** Brief description of the risks mitigated by this control.
+   - **Criticality:** Classification for this control and justification that supports its classification.
+   - **References:** Provided references that supports this control.
+
+{CONTENT}
+
