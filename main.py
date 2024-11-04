@@ -32,17 +32,11 @@ def gerar_id_unico(vendor: str, classificacao: str, tecnologia: str, ano: int, r
     return f"{vendor}.{classificacao}.{tecnologia}.{ano}.r{revisao}"
 
 def setup_openai_client():
-    try:
-        secrets = toml.load("secrets.toml")  # Carrega o arquivo secrets.toml
-        openai_key = secrets.get("openai", {}).get("openai_key")
-        
-        if not openai_key:
-            st.error("Chave da API OpenAI não encontrada no arquivo secrets.toml.")
-            return None
-        return OpenAI(api_key=openai_key)
-    except FileNotFoundError:
-        st.error("Arquivo secrets.toml não encontrado.")
+    openai_key = st.secrets["OpenAI_key"]  # Busca a chave de API do OpenAI em st.secrets
+    if not openai_key:
+        st.error("Chave da API OpenAI não encontrada em secrets.toml.")
         return None
+    return OpenAI(api_key=openai_key)
 
 # Função para garantir a criação de diretórios
 def ensure_directory_exists(directory):
@@ -78,12 +72,13 @@ def fetch_page_content(url):
         return None
 
 def cleanup_generated_files():
+    st.write("Removendo arquivos temporarios:")
     try:
         for root, dirs, files in os.walk(ARTIFACTS_DIRECTORY):
             for file in files:
                 file_path = os.path.join(root, file)
                 os.remove(file_path)
-        st.write("Todos os arquivos temporários foram removidos.")
+        st.write("------> Todos os arquivos temporários foram removidos.")
     except Exception as e:
         st.error(f"Erro ao limpar arquivos: {e}")
 
@@ -95,6 +90,7 @@ def html_to_markdown(html_content):
 
 # Função para processar URLs e salvar como Markdown com UUID único por execução e cabeçalho de referência
 def process_urls_to_markdown(urls, id_unico):
+    st.write(f"Baixando conteudo das URLs fornecidas")
     for url in urls:
         html_content = fetch_page_content(url)
         if html_content:
@@ -107,7 +103,7 @@ def process_urls_to_markdown(urls, id_unico):
             unique_filename = f"{url.replace('https://', '').replace('http://', '').replace('/', '_')}.{execution_uuid}.md"  # Usa o UUID único por execução
             file_path = os.path.join(DIRECTORY_MD, unique_filename)
             save_file(header, file_path)  # Salva o conteúdo com o cabeçalho
-            st.write(f"Conteúdo Markdown salvo em {file_path}")
+            st.write(f"------> Conteúdo Markdown salvo em {file_path}")
 
 # Função para carregar todos os arquivos Markdown gerados
 def load_markdown_files():
@@ -162,9 +158,10 @@ def execute_assistant_thread(client, content, assistant_id, output_file):
                 responses = [msg.content[0].text.value for msg in messages if msg.role == "assistant"]
                 for response in responses:
                     append_to_file(response, output_file)
-                st.write(f"Respostas salvas em {output_file}")
+                st.write(f"------------> Respostas salvas em {output_file}")
                 return responses
             elif run_status in ["queued", "in_progress"]:
+                st.write(f"------> Aguardando processamento, status de execução: {run_status}")
                 time.sleep(3)
             else:
                 break
@@ -179,6 +176,7 @@ def consolidate_and_send_to_assistant(client, assistant_id):
     
     if prompt_consolidacao_content and controles_gerados_content:
         combined_content = f"{prompt_consolidacao_content}\n\n{controles_gerados_content}"
+        st.write(f"Consolidando controles com ajuda da OpenAI:")
         execute_assistant_thread(client, combined_content, assistant_id, FINAL_OUTPUT_FILE)
 
 # Função para converter conteúdo Markdown em HTML e gerar uma tabela HTML
@@ -309,6 +307,7 @@ if submit_button:
                     f"ID: {id_unico}\nVendor: {vendor}\nTecnologia: {tecnologia}\n\n"
                     f"{prompt_content}\n\n{content}"
                 )
+                st.write(f"Extraindo controles com ajuda da OpenAI:")
                 execute_assistant_thread(client, combined_content, assistant_id, OUTPUT_FILE)
 
             # Consolidação final e envio ao assistente
