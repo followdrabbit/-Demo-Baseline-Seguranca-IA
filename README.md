@@ -1,121 +1,76 @@
-Here is the updated README in English with the additional information you requested:
+```markdown
+# Gerador de Baselines de Segurança com I.A.
 
----
+Este projeto utiliza o [Streamlit](https://streamlit.io/) e a API da [OpenAI](https://openai.com/) para gerar baselines de segurança automatizados para serviços de tecnologia. A aplicação permite selecionar vendors e tecnologias específicas para consultar conteúdos da web, consolidá-los em Markdown, e gerar um documento HTML final.
 
-## README: CyberSecurity Assistant Script
+## Funcionalidades
 
-### Overview
+- **Seleção de Vendors e Tecnologias**: Carrega configurações para os vendors AWS e Azure, permitindo selecionar tecnologias específicas.
+- **Geração de ID Único**: Gera um ID baseado no vendor, tecnologia, classificação, ano e revisão.
+- **Processamento de URLs**: Extrai conteúdo de URLs, converte para Markdown e salva com cabeçalho de referência.
+- **Integração com OpenAI**: Usa a API da OpenAI para processar e consolidar conteúdos, gerando baselines personalizados.
+- **Exportação de Documentos**: Converte o conteúdo consolidado em uma página HTML para download.
+- **Limpeza de Arquivos Temporários**: Remove arquivos gerados após o download, mantendo o ambiente limpo.
 
-This Python script automates the process of downloading web pages, converting them into Markdown files, and interacting with the OpenAI API to generate security baselines for AWS services. The script is designed to be modular, allowing for downloading, processing, and creating threads for the content, utilizing OpenAI's API to build and manage security baselines.
+## Estrutura de Arquivos
 
-### Features
+- `config.toml`: Arquivo de configuração com informações dos vendors e tecnologias.
+- `template_html.html`: Template para gerar a página HTML final.
+- `prompt_criacao.txt` e `prompt_consolidacao.txt`: Arquivos de prompt para instruções do assistente.
 
-1. **Download Web Pages**: The script fetches web pages and saves them in both HTML and Markdown formats.
-2. **Markdown Conversion**: Converts HTML files to Markdown for easier readability and processing.
-3. **Content Management**: Loads and processes Markdown files, stores them in variables for further use.
-4. **OpenAI Assistant**: Interacts with the OpenAI API, allowing the creation and execution of security baselines using an assistant named `CyberSecurityAssistant`.
-5. **Threaded Processing**: Creates and runs threaded tasks in OpenAI, collects responses, and manages the status of tasks.
+## Configuração Inicial
 
-### Requirements
+1. **Instale as dependências**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+   
+2. **Configure o arquivo `config.toml`** com a chave da OpenAI e URLs para as tecnologias desejadas:
+   ```toml
+   [openai]
+   openai_key = "sua_chave_openai"
 
-This script requires the following packages listed in the `requirements.txt` file:
+   [AWS]
+   classificacao = "cloud"
+   urls = ["https://url_da_aws"]
 
-```txt
-requests
-html2text
-openai
-python-dotenv
-```
+   [Azure]
+   classificacao = "cloud"
+   urls = ["https://url_da_azure"]
+   ```
 
-You can install all dependencies with the following command:
+## Como Executar
 
-```bash
-pip install -r requirements.txt
-```
+1. **Inicie o Streamlit**:
+   ```bash
+   streamlit run main.py
+   ```
 
-### Setup
+2. **Use a Interface**: 
+   - Selecione o vendor e tecnologia.
+   - Clique em "Gerar Baseline" para processar URLs, gerar IDs e executar o assistente OpenAI.
+   - Baixe o arquivo HTML gerado com o botão "Baixar Página Web".
 
-#### **OpenAI API Key**
+## Funções Principais
 
-To use the transcription and translation features, you must generate an OpenAI API key. Be aware that using the API may incur costs, depending on the volume of requests. For more information on how to generate your API key, refer to [this blog post on Asimov Academy](https://hub.asimov.academy/blog/openai-api/).
+- `gerar_id_unico()`: Gera um ID único com base nas informações fornecidas.
+- `setup_openai_client()`: Configura o cliente da API OpenAI.
+- `fetch_page_content()`: Extrai conteúdo HTML de URLs.
+- `html_to_markdown()`: Converte HTML em Markdown.
+- `execute_assistant_thread()`: Executa o assistente da OpenAI e armazena as respostas.
+- `generate_html_page()`: Gera uma página HTML a partir de um template e conteúdo consolidado.
+- `cleanup_generated_files()`: Limpa arquivos temporários após o download.
 
-Add the API key to a `.env` file with the following content:
+## Observações
 
-```bash
-OPENAI_API_KEY=<your-openai-api-key>
-```
+- **Arquivo `config.toml`**: Certifique-se de incluir suas chaves de API e URLs corretamente.
+- **Cleanup Automático**: Todos os arquivos gerados são removidos após o download do HTML para otimizar o uso do armazenamento.
+  
+## Requisitos
 
-#### **Directory Structure**
+- Python 3.12 ou superior
+- Chave de API da OpenAI
 
-The script expects certain directories for storing content:
+## Licença
 
-- `paginas_md`: For storing converted Markdown files.
-- `paginas_baixadas`: For storing downloaded HTML files.
-
-#### **Prompt Baseline**
-
-The `prompt_baseline_creation.txt` file should contain the template or prompt instructions to be used when interacting with OpenAI.
-
-### Usage
-
-#### Step 1: Download Web Pages
-
-The script downloads web pages from a list of URLs and stores the HTML files locally.
-
-- **Function**: `processar_urls(lista_urls)`
-- **Output**: Saves the downloaded HTML content into the `paginas_baixadas` directory.
-
-#### Step 2: Convert HTML to Markdown
-
-The HTML files are converted into Markdown format for easier processing and saved to the `paginas_md` directory.
-
-- **Function**: `processar_urls_para_markdown(lista_urls)`
-- **Output**: Saves the converted Markdown content into the `paginas_md` directory.
-
-#### Step 3: Load Markdown Files
-
-Once the Markdown files are saved, the script loads them into variables for further use.
-
-- **Function**: `carregar_conteudo_md()`
-- **Output**: Loads all Markdown files into a dictionary.
-
-#### Step 4: Create OpenAI Assistant
-
-The script checks whether the assistant already exists or creates a new one using OpenAI's API.
-
-- **Function**: `criar_assistente(client, info_assistente)`
-- **Output**: Creates or retrieves an existing assistant from OpenAI.
-
-#### Step 5: Execute Threads and Get Responses
-
-The script creates threads in OpenAI, sends messages with the Markdown content and prompt, and retrieves the assistant's response.
-
-- **Function**: `enviar_mensagens_sequencial(client, diretorio_md, caminho_prompt_baseline, assistant_id)`
-- **Output**: Sends content to OpenAI in threaded requests and processes the responses.
-
-### Customization
-
-- **Assistant Configuration**: You can customize the assistant's name and instructions in the `assistant_info` variable.
-- **Prompt Customization**: The `prompt_baseline_creation.txt` file can be modified to adjust the instructions for the security baseline creation.
-
-### Example Execution
-
-To run the script:
-
-```bash
-python script_name.py
-```
-
-### Additional Notes
-
-- Ensure that the `OPENAI_API_KEY` is correctly set in the `.env` file.
-- Make sure the directories `paginas_md` and `paginas_baixadas` exist or are created dynamically by the script.
-- **Platform**: This script was created and tested in Jupyter Notebook on a Windows environment using Python version 3.12.
-
-### License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
-
----
-
-Feel free to customize this script for your specific use case in developing security baselines for AWS services!
+Este projeto é disponibilizado sob a licença MIT. Consulte o arquivo `LICENSE` para mais detalhes.
