@@ -32,11 +32,17 @@ def gerar_id_unico(vendor: str, classificacao: str, tecnologia: str, ano: int, r
     return f"{vendor}.{classificacao}.{tecnologia}.{ano}.r{revisao}"
 
 def setup_openai_client():
-    openai_key = os.getenv("OPENAI_API_KEY")  # Pega a chave de API da variável de ambiente
-    if not openai_key:
-        st.error("Chave da API OpenAI não encontrada nas variáveis de ambiente.")
+    try:
+        secrets = toml.load("secrets.toml")  # Carrega o arquivo secrets.toml
+        openai_key = secrets.get("openai", {}).get("openai_key")
+        
+        if not openai_key:
+            st.error("Chave da API OpenAI não encontrada no arquivo secrets.toml.")
+            return None
+        return OpenAI(api_key=openai_key)
+    except FileNotFoundError:
+        st.error("Arquivo secrets.toml não encontrado.")
         return None
-    return OpenAI(api_key=openai_key)
 
 # Função para garantir a criação de diretórios
 def ensure_directory_exists(directory):

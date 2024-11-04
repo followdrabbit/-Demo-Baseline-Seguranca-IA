@@ -16,6 +16,7 @@ Este projeto utiliza o [Streamlit](https://streamlit.io/) e a API da [OpenAI](ht
 - `config.toml`: Arquivo de configuração com informações dos vendors e tecnologias.
 - `template_html.html`: Template para gerar a página HTML final.
 - `prompt_criacao.txt` e `prompt_consolidacao.txt`: Arquivos de prompt para instruções do assistente.
+- `secrets.toml`: Arquivo com chave da openai
 
 ## Configuração Inicial
 
@@ -24,18 +25,10 @@ Este projeto utiliza o [Streamlit](https://streamlit.io/) e a API da [OpenAI](ht
    pip install -r requirements.txt
    ```
    
-2. **Configure o arquivo `config.toml`** com a chave da OpenAI e URLs para as tecnologias desejadas:
+2. **Crie o arquivo `secrets.toml`** com a chave da OpenAI:
    ```toml
    [openai]
    openai_key = "sua_chave_openai"
-
-   [AWS]
-   classificacao = "cloud"
-   urls = ["https://url_da_aws"]
-
-   [Azure]
-   classificacao = "cloud"
-   urls = ["https://url_da_azure"]
    ```
 
 ## Como Executar
@@ -59,11 +52,6 @@ Este projeto utiliza o [Streamlit](https://streamlit.io/) e a API da [OpenAI](ht
 - `execute_assistant_thread()`: Executa o assistente da OpenAI e armazena as respostas.
 - `generate_html_page()`: Gera uma página HTML a partir de um template e conteúdo consolidado.
 - `cleanup_generated_files()`: Limpa arquivos temporários após o download.
-
-## Observações
-
-- **Arquivo `config.toml`**: Certifique-se de incluir suas chaves de API e URLs corretamente.
-- **Cleanup Automático**: Todos os arquivos gerados são removidos após o download do HTML para otimizar o uso do armazenamento.
   
 ## Requisitos
 
