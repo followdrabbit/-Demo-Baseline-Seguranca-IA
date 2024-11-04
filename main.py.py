@@ -27,16 +27,14 @@ template_file_path = "template_html.html"  # Caminho para o arquivo template HTM
 execution_uuid = str(uuid.uuid4())  # Gera um UUID único para a execução
 
 
-
 # Função para gerar o ID único
 def gerar_id_unico(vendor: str, classificacao: str, tecnologia: str, ano: int, revisao: int) -> str:
     return f"{vendor}.{classificacao}.{tecnologia}.{ano}.r{revisao}"
 
-# Função para configurar cliente da API OpenAI
 def setup_openai_client():
-    openai_key = config.get("openai", {}).get("openai_key")
+    openai_key = os.getenv("OPENAI_API_KEY")  # Pega a chave de API da variável de ambiente
     if not openai_key:
-        st.error("Chave da API OpenAI não encontrada no arquivo config.toml.")
+        st.error("Chave da API OpenAI não encontrada nas variáveis de ambiente.")
         return None
     return OpenAI(api_key=openai_key)
 
