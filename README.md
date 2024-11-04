@@ -1,4 +1,3 @@
-```markdown
 # Gerador de Baselines de Segurança com I.A.
 
 Este projeto utiliza o [Streamlit](https://streamlit.io/) e a API da [OpenAI](https://openai.com/) para gerar baselines de segurança automatizados para serviços de tecnologia. A aplicação permite selecionar vendors e tecnologias específicas para consultar conteúdos da web, consolidá-los em Markdown, e gerar um documento HTML final.
