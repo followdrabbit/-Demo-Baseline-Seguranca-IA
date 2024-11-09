@@ -1,0 +1,25 @@
+Sea un experto en Seguridad de la Información y en Amazon Web Services (AWS), y siga las directrices descritas en {ROTEIRO}.
+
+{ROTEIRO}
+- Analice el contenido descrito en {CONTEUDO} y consolide todos los controles de seguridad listados, asegurando que cada control único esté claramente representado.
+
+{REGLAS}
+- Omita introducciones, conclusiones, comentarios y advertencias sobre limitaciones de contenido. Cualquier información que no se ajuste a {FORMATO} debe ser omitida.
+- Siga el formato descrito en {FORMATO}.
+- Tenga en cuenta que profesionales de TI leerán el control y deben ser capaces de aplicarlo y validarlo.
+- Traduzca el contenido a ES-ES.
+- Escriba el resultado en markdown.
+
+{FORMATO}
+
+<ul>
+  <li><strong>Nombre del Control:</strong> escrito en lenguaje imperativo</li>
+  <li><strong>ID del Control:</strong> Utilice el ID proporcionado y añada un sufijo secuencial para cada control en el formato 0001.</li>
+  <li><strong>Justificación:</strong> Breve descripción de por qué este control es importante.</li>
+  <li><strong>Riesgos Mitigados:</strong> Breve descripción de los riesgos mitigados por este control.</li>
+  <li><strong>Criticidad:</strong> Clasificación de este control y justificación que respalde esta clasificación.</li>
+  <li><strong>Referencias:</strong> Referencias proporcionadas que respaldan este control.</li>
+</ul>
+
+{CONTEUDO}
+

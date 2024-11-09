@@ -24,6 +24,8 @@ section_id = str(uuid.uuid4())  # Gera um UUID único para cada execução
 
 DIRECTORY_MD = os.path.join(ARTIFACTS_DIRECTORY, f"paginas_md_{section_id}")
 DIRECTORY_HTML = os.path.join(ARTIFACTS_DIRECTORY, f"paginas_baixadas_{section_id}")
+PROMPT_BASELINE_PATH = "prompt_criacao.txt"
+PROMPT_CONSOLIDACAO_PATH = "prompt_consolidacao.txt"
 OUTPUT_FILE = os.path.join(ARTIFACTS_DIRECTORY, f"gerados_{section_id}.txt")
 FINAL_OUTPUT_FILE = os.path.join(ARTIFACTS_DIRECTORY, f"consolidados_{section_id}.md")
 DOC_VERSION = 1
@@ -34,36 +36,7 @@ template_file_path = "template_html.html"
 def gerar_id_unico(vendor: str, classificacao: str, tecnologia: str, versao: str, ano: int, revisao: int) -> str:
     return f"{vendor}.{classificacao}.{tecnologia}.{versao}.{ano}.r{revisao}".replace("..", ".")  # Remover duplo ponto
 
-# Função para carregar os prompts com base no idioma
-def carregar_prompts(idioma):
-    if idioma == 'PT-BR':
-        arquivo_criacao = "prompt_criacao_pt.txt"
-        arquivo_consolidacao = "prompt_consolidacao_pt.txt"
-    elif idioma == 'EN-US':
-        arquivo_criacao = "prompt_criacao_en.txt"
-        arquivo_consolidacao = "prompt_consolidacao_en.txt"
-    elif idioma == 'ES-ES':
-        arquivo_criacao = "prompt_criacao_es.txt"
-        arquivo_consolidacao = "prompt_consolidacao_es.txt"
-    else:
-        st.error("Idioma não suportado.")
-        return None, None
-    
-    try:
-        with open(arquivo_criacao, "r") as f:
-            prompt_criacao = f.read()
-        with open(arquivo_consolidacao, "r") as f:
-            prompt_consolidacao = f.read()
-        
-        # Adicione print para verificação
-        print(f"Prompt Criação ({idioma}):\n{prompt_criacao}")
-        print(f"Prompt Consolidação ({idioma}):\n{prompt_consolidacao}")
 
-    except FileNotFoundError:
-        st.error("Erro: Arquivo de prompt não encontrado.")
-        return None, None
-
-    return prompt_criacao, prompt_consolidacao
 
 def setup_openai_client():
     openai_key = st.secrets["OpenAI_key"]  # Busca a chave de API do OpenAI em st.secrets
@@ -217,7 +190,7 @@ def execute_assistant_thread(client, content, assistant_id, output_file):
 
 # Função para consolidar e enviar ao assistente
 def consolidate_and_send_to_assistant(client, assistant_id):
-    prompt_consolidacao_content = load_file_content(prompt_consolidacao)
+    prompt_consolidacao_content = load_file_content(PROMPT_CONSOLIDACAO_PATH)
     controles_gerados_content = load_file_content(OUTPUT_FILE)
     if prompt_consolidacao_content and controles_gerados_content:
         combined_content = f"{prompt_consolidacao_content}\n\n{controles_gerados_content}"
@@ -225,55 +198,30 @@ def consolidate_and_send_to_assistant(client, assistant_id):
         execute_assistant_thread(client, combined_content, assistant_id, FINAL_OUTPUT_FILE)
 
 
-# Função para converter Markdown em HTML e gerar uma tabela HTML
-def markdown_to_html_table(md_content, idioma):
-    # Carrega os rótulos do config.toml de acordo com o idioma selecionado
-    config = toml.load("config.toml")
-    labels = config["tabela_labels"].get(idioma, {})
-    
-    # Verifica se o idioma possui rótulos definidos
-    if not labels:
-        st.error("Erro: Idioma não suportado ou rótulos ausentes no config.toml.")
-        return "<p>Erro na conversão de Markdown para tabela HTML.</p>"
-
-    # Converte o conteúdo Markdown em HTML
+# Função para converter conteúdo Markdown em HTML e gerar uma tabela HTML
+def markdown_to_html_table(md_content):
     html_content = markdown.markdown(md_content)
     soup = BeautifulSoup(html_content, "html.parser")
     controls = []
 
-    # Extrai os campos de cada controle no Markdown
     for ul in soup.find_all("ul"):
         control = {}
         for li in ul.find_all("li"):
-            strong_tag = li.find("strong")
-            if strong_tag:
-                key = strong_tag.get_text(strip=True).replace(":", "")
-                value = li.get_text(strip=True).replace(f"{key}:", "").strip()
-                control[key] = value
-        if control:
-            controls.append(control)
+            key = li.strong.get_text(strip=True).replace(":", "")
+            value = li.get_text(strip=True).replace(f"{key}:", "").strip()
+            control[key] = value
+        controls.append(control)
 
-    if not controls:
-        st.error("Erro: Não foi possível extrair dados dos controles do conteúdo Markdown.")
-        return "<p>Erro na conversão de Markdown para tabela HTML.</p>"
-
-    # Gera a tabela HTML com os rótulos carregados
-    table_html = (
-        f"<table>\n<tr><th>{labels['nome_controle']}</th>"
-        f"<th>{labels['id_controle']}</th>"
-        f"<th>{labels['justificativa']}</th>"
-        f"<th>{labels['riscos_mitigados']}</th>"
-        f"<th>{labels['criticidade']}</th>"
-        f"<th>{labels['referencias']}</th></tr>\n"
-    )
+    # Criando a tabela HTML
+    table_html = "<table>\n<tr><th>Nome do Controle</th><th>ID do Controle</th><th>Justificativa</th><th>Riscos Mitigados</th><th>Criticidade</th><th>Referências</th></tr>\n"
     for control in controls:
         table_html += "<tr>"
-        table_html += f"<td>{control.get(labels['nome_controle'], '')}</td>"
-        table_html += f"<td>{control.get(labels['id_controle'], '')}</td>"
-        table_html += f"<td>{control.get(labels['justificativa'], '')}</td>"
-        table_html += f"<td>{control.get(labels['riscos_mitigados'], '')}</td>"
-        table_html += f"<td>{control.get(labels['criticidade'], '')}</td>"
-        table_html += f"<td>{control.get(labels['referencias'], '')}</td>"
+        table_html += f"<td>{control.get('Nome do Controle', '')}</td>"
+        table_html += f"<td>{control.get('ID do Controle', '')}</td>"
+        table_html += f"<td>{control.get('Justificativa', '')}</td>"
+        table_html += f"<td>{control.get('Riscos Mitigados', '')}</td>"
+        table_html += f"<td>{control.get('Criticidade', '')}</td>"
+        table_html += f"<td>{control.get('Referências', '')}</td>"
         table_html += "</tr>\n"
     table_html += "</table>"
 
@@ -289,15 +237,15 @@ def load_file_content(file_path):
         return None
 
 # Função para gerar uma página HTML a partir de um template e conteúdo consolidado
-def generate_html_page(template_path, markdown_path, output_html_path, idioma):
+def generate_html_page(template_path, markdown_path, output_html_path):
     # Ler o conteúdo do arquivo consolidado de controles em Markdown
     markdown_content = load_file_content(markdown_path)
     if markdown_content is None:
         st.error("Erro ao carregar o conteúdo do arquivo Markdown.")
         return None
 
-    # Converter o conteúdo Markdown para uma tabela HTML, passando o idioma
-    table_html = markdown_to_html_table(markdown_content, idioma)
+    # Converter o conteúdo Markdown para uma tabela HTML
+    table_html = markdown_to_html_table(markdown_content)
 
     # Ler o template HTML
     html_template = load_file_content(template_path)
@@ -320,12 +268,6 @@ def generate_html_page(template_path, markdown_path, output_html_path, idioma):
     
 # Interface do Streamlit
 st.title("Gerador de Baselines de Segurança com I.A.")
-
-# Opção de seleção do idioma
-idioma_selecionado = st.selectbox("Selecione o idioma do documento:", ("PT-BR", "EN-US", "ES-ES"))
-
-# Carregar os prompts com base na seleção do idioma
-prompt_criacao, prompt_consolidacao = carregar_prompts(idioma_selecionado)
 
 # Seleção do vendor, tecnologia e classificação
 vendor = st.selectbox("Selecione o Vendor", ["AWS", "Azure"])
@@ -360,49 +302,49 @@ if submit_button:
             OUTPUT_FILE = os.path.join(ARTIFACTS_DIRECTORY, f"gerados.{id_unico}.{section_id}.txt")
             FINAL_OUTPUT_FILE = os.path.join(ARTIFACTS_DIRECTORY, f"consolidados.{id_unico}.{section_id}.md")
             
-            # Processar URLs e salvar como Markdown
-            process_urls_to_markdown(urls)
+        # Processar URLs e salvar como Markdown
+        process_urls_to_markdown(urls)
 
-            # Carregar cliente OpenAI e executar o assistente
-            client = setup_openai_client()
-            assistant_info = {
-                "instructions": "Você é um Especialista em Segurança Cibernética focado em desenvolver baselines de segurança para serviços e produtos da AWS.",
-                "name": "CyberSecurityAssistant",
-                "tools": [{"type": "code_interpreter"}],
-                "model": "gpt-4o"
-            }
-            assistant_id = find_or_create_assistant(client, assistant_info)
+        # Carregar cliente OpenAI e executar o assistente
+        client = setup_openai_client()
+        assistant_info = {
+            "instructions": "Você é um Especialista em Segurança Cibernética focado em desenvolver baselines de segurança para serviços e produtos da AWS.",
+            "name": "CyberSecurityAssistant",
+            "tools": [{"type": "code_interpreter"}],
+            "model": "gpt-4o"
+        }
+        assistant_id = find_or_create_assistant(client, assistant_info)
 
-            # Executar assistente para cada URL processada com prompt específico ao idioma
-            markdown_contents = load_markdown_files()
-            if prompt_criacao and assistant_id:
-                for filename, content in markdown_contents.items():
-                    combined_content = (
-                        f"ID: {id_unico}\nVendor: {vendor}\nTecnologia: {tecnologia}\nVersão: {versao}\n\n"
-                        f"{prompt_criacao}\n\n{content}"
-                    )
-                    st.write(f"Extraindo controles com ajuda da OpenAI:")
-                    execute_assistant_thread(client, combined_content, assistant_id, OUTPUT_FILE)
-
-                # Consolidação final e envio ao assistente usando o prompt de consolidação específico ao idioma
-                if prompt_consolidacao:
-                    combined_content = f"{prompt_consolidacao}\n\n{load_file_content(OUTPUT_FILE)}"
-                    execute_assistant_thread(client, combined_content, assistant_id, FINAL_OUTPUT_FILE)
-
-            # Gerar a página HTML final e permitir download
-            output_html_file_path = os.path.join(ARTIFACTS_DIRECTORY, f"{id_unico}_controles.html")
-            html_content = generate_html_page(template_file_path, FINAL_OUTPUT_FILE, output_html_file_path, idioma_selecionado)
-
-            if html_content:
-                download_button_clicked = st.download_button(
-                    label="Baixar Página Web",
-                    data=html_content,
-                    file_name=f"{id_unico}_controles.html",
-                    mime="text/html"
+        # Executar assistente para cada URL processada
+        markdown_contents = load_markdown_files()
+        prompt_content = load_file_content(PROMPT_BASELINE_PATH)
+        
+        if prompt_content and assistant_id:
+            for filename, content in markdown_contents.items():
+                combined_content = (
+                    f"ID: {id_unico}\nVendor: {vendor}\nTecnologia: {tecnologia}\nVersão: {versao}\n\n"
+                    f"{prompt_content}\n\n{content}"
                 )
+                st.write(f"Extraindo controles com ajuda da OpenAI:")
+                execute_assistant_thread(client, combined_content, assistant_id, OUTPUT_FILE)
 
-            # Executar cleanup
-            cleanup_generated_files()
+            # Consolidação final e envio ao assistente
+            consolidate_and_send_to_assistant(client, assistant_id)
+
+        # Gerar a página HTML final e permitir download
+        output_html_file_path = os.path.join(ARTIFACTS_DIRECTORY, f"{id_unico}_controles.html")
+        html_content = generate_html_page(template_file_path, FINAL_OUTPUT_FILE, output_html_file_path)
+        if html_content:
+            download_button_clicked = st.download_button(
+                label="Baixar Página Web",
+                data=html_content,
+                file_name=f"{id_unico}_controles.html",
+                mime="text/html"
+            )
+
+        # Executar cleanup
+        cleanup_generated_files()
 
     else:
         st.error("Por favor, preencha todos os campos para gerar o ID.")
+

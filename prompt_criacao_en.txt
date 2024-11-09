@@ -1,0 +1,26 @@
+Be an expert in Information Security and Amazon Web Services (AWS), and follow the guidelines described in {SCRIPT}.
+
+{SCRIPT}
+- Review the content described in {CONTENT} and add any missing information to ensure it meets the expected standard.
+- Create security controls for the provided technology based on the reviewed content.
+
+{RULES}
+- Omit introductions, conclusions, comments, and warnings about content limitations.
+- For each control created, add the reference.
+- Follow the format described in {FORMAT}.
+- Assume that IT professionals will read the control and need to be able to apply and validate it.
+- Write the result in EN-US and in markdown format.
+
+{FORMAT}
+
+<ul>
+  <li><strong>Control Name:</strong> written in imperative language</li>
+  <li><strong>Control ID:</strong> Use the provided ID.</li>
+  <li><strong>Justification:</strong> Brief description of why this control is important.</li>
+  <li><strong>Mitigated Risks:</strong> Brief description of the risks mitigated by this control.</li>
+  <li><strong>Criticality:</strong> Classification of this control with a justification supporting this classification.</li>
+  <li><strong>References:</strong> Provided references that support this control.</li>
+</ul>
+
+
+{CONTENT}

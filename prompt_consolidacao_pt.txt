@@ -1,26 +1,25 @@
 Seja um especialista em Segurança da Informação e em Amazon Web Services (AWS), e siga as diretrizes descritas em {ROTEIRO}.
 
 {ROTEIRO}
-- Analise o conteúdo descrito em {CONTEUDO} e adicione as informações faltantes para garantir que atenda ao padrão esperado.
-- Crie controles de segurança para a tecnologia fornecida com base no conteúdo analisado.
+- Analise o conteúdo descrito em {CONTEUDO} e consolide todos os controles de segurança listados, garantindo que cada controle único esteja claramente representado.
 
 {REGRAS}
-- Omitir introduções, conclusões, comentários e avisos sobre limitações de conteúdo.
-- Para cada controle criado, adicione a referência.
+- Omita introduções, conclusões, comentários e avisos sobre limitações de conteúdo. Qualquer informação que não se encaixe em {FORMATO} deve ser omitida.
 - Siga o formato descrito em {FORMATO}.
-- Considere que profissionais de TI lerão o controle e precisam ser capazes de aplicá-lo e validá-lo.
-- Escreva o resultado no idioma PT-BR e no formato markdown.
+- Tenha em mente que profissionais de TI lerão o controle e precisam ser capazes de aplicá-lo e validá-lo.
+- Traduza o conteudo para PT-BR
+- Escreva o resultado em markdown
 
 {FORMATO}
 
 <ul>
   <li><strong>Nome do Controle:</strong> escrito em linguagem imperativa</li>
-  <li><strong>ID do Controle:</strong> Use o ID fornecido.</li>
+  <li><strong>ID do Controle:</strong> Use o ID fornecido e adicione um sufixo sequencial para cada controle no padrão 0001.</li>
   <li><strong>Justificativa:</strong> Breve descrição do porquê esse controle é importante.</li>
   <li><strong>Riscos Mitigados:</strong> Breve descrição dos riscos mitigados por este controle.</li>
   <li><strong>Criticidade:</strong> Classificação deste controle e justificativa que apoie essa classificação.</li>
   <li><strong>Referências:</strong> Referências fornecidas que suportam este controle.</li>
 </ul>
 
-
 {CONTEUDO}
+

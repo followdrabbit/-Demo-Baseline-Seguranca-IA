@@ -1,7 +1,42 @@
 [AWS]
-EC2 = { classificacao = "Compute", urls = ["https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html", "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html", "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html"] }
-S3 = { classificacao = "Storage", urls = ["https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html", "https://docs.aws.amazon.com/AmazonS3/latest/userguide/privatelink-interface-endpoints.html", "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingEncryption.html"] }
+classificacoes = [
+    "Compute",
+    "Storage",
+    "Database",
+    "Networking",
+    "Security",
+    "Machine Learning",
+    "Analytics",
+    "Developer Tools",
+    "IoT",
+    "Mobile",
+    "Game Tech",
+    "Blockchain",
+    "Business Applications",
+    "AR & VR",
+    "Quantum Technologies"
+]
 
 [Azure]
-Azure_Functions = { classificacao = "Functions", urls = ["https://learn.microsoft.com/en-us/azure/well-architected/service-guides/azure-functions-security", "https://learn.microsoft.com/en-us/azure/azure-functions/security-concepts"] }
-Azure_VM = { classificacao = "Compute", urls = ["https://learn.microsoft.com/en-us/security/benchmark/azure/baselines/virtual-machines-windows-virtual-machines-security-baseline", "https://learn.microsoft.com/en-us/azure/security/fundamentals/virtual-machines-overview"] }
+classificacoes = [
+    "Compute",
+    "Storage",
+    "Database",
+    "Networking",
+    "Security",
+    "AI + Machine Learning",
+    "Analytics",
+    "Developer Tools",
+    "IoT",
+    "Mixed Reality",
+    "Integration",
+    "Management Tools",
+    "Media",
+    "Web",
+    "Migration"
+]
+
+[tabela_labels]
+PT-BR = { nome_controle = "Nome do Controle", id_controle = "ID do Controle", justificativa = "Justificativa", riscos_mitigados = "Riscos Mitigados", criticidade = "Criticidade", referencias = "Referências" }
+EN-US = { nome_controle = "Control Name", id_controle = "Control ID", justificativa = "Justification", riscos_mitigados = "Mitigated Risks", criticidade = "Criticality", referencias = "References" }
+ES-ES = { nome_controle = "Nombre del Control", id_controle = "ID del Control", justificativa = "Justificación", riscos_mitigados = "Riesgos Mitigados", criticidade = "Criticidad", referencias = "Referencias" }
