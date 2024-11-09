@@ -1,3 +1,6 @@
+# .DevContainer
+.devcontainer/
+
 # Venv
 venv/
 
