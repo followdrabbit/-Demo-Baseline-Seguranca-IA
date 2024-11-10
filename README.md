@@ -1,69 +1,64 @@
-# Gerador de Baselines de Segurança com I.A.
+# Security Baselines Generator with AI
 
-Este projeto utiliza o [Streamlit](https://streamlit.io/) e a API da [OpenAI](https://openai.com/) para gerar baselines de segurança automatizados para serviços de tecnologia. A aplicação permite selecionar vendors, tecnologias específicas e idioma do documento para consultar conteúdos da web, consolidá-los em Markdown e gerar um documento HTML final.
+This application leverages **Streamlit** and **OpenAI** to generate AI-enhanced security baselines based on user-selected inputs, language preferences, and custom prompts. This project dynamically loads configuration details and categorizes content for users to quickly generate organized security baselines with unique IDs.
 
-## Funcionalidades
+## Key Features
 
-- **Seleção de Vendors, Tecnologias e Idiomas**: Carrega configurações para os vendors AWS e Azure, permitindo selecionar tecnologias específicas e o idioma do documento (PT-BR, EN-US, ES-ES).
-- **Geração de ID Único**: Gera um ID único com base no vendor, tecnologia, classificação, versão, ano e revisão.
-- **Processamento de URLs**: Extrai conteúdo de até 10 URLs, converte para Markdown e salva com cabeçalho de referência e UUID exclusivo para cada execução.
-- **Integração com OpenAI**: Usa a API da OpenAI para processar e consolidar conteúdos com prompts personalizados conforme o idioma, gerando baselines específicos.
-- **Exportação de Documentos**: Converte o conteúdo consolidado em uma página HTML multilíngue e organizada para download.
-- **Limpeza de Arquivos Temporários por Sessão**: Remove arquivos gerados por sessão após o download, mantendo o ambiente limpo e organizado.
+- **Multi-language Support**: Supports **EN-US**, **PT-BR**, and **ES-ES**, dynamically loading configuration settings from `config.toml`, which includes:
+  - Language-specific prompts for vendor, technology, version, category, URLs, and baseline generation.
+  - Labels in each language for table headers in the HTML output.
+  - Categories covering various technology fields, enabling organized selection.
+  - Dynamic table headers in the HTML output, based on user-selected language.
 
-## Estrutura de Arquivos
+- **Unique ID Generation**: A structured ID format is created using parameters like vendor, category, technology, and version for consistency across generated baselines.
 
-- `config.toml`: Arquivo de configuração com informações dos vendors, tecnologias e rótulos de tabela para diferentes idiomas.
-- `template_html.html`: Template para gerar a página HTML final.
-- `prompt_criacao_[idioma].txt` e `prompt_consolidacao_[idioma].txt`: Arquivos de prompt para instruções do assistente, disponíveis em múltiplos idiomas.
-- `secrets.toml`: Arquivo com chave da OpenAI.
+- **OpenAI Assistant**: The application checks for an existing assistant with pre-set instructions. If not found, a new assistant is created to assist in generating security controls based on prompts and URLs.
 
-## Configuração Inicial
+- **Conversion to HTML**: Processes Markdown files into dynamic HTML tables, incorporating labels specific to each selected language for a customized final report.
 
-1. **Instale as dependências**:
+- **Automated Cleanup**: Temporary files and folders generated during each session are cleaned up after use, optimizing server storage.
+
+## Project Structure
+
+- **main.py**: The primary script handling Streamlit’s UI elements, OpenAI assistant operations, and file management.
+- **config.toml**: Configuration file defining language settings, available categories, table labels, and template text.
+- **artefatos/**: Directory for temporary files generated during processing.
+- **template_html.html**: HTML template used to generate the final downloadable HTML report based on consolidated content.
+
+## Configuration Overview
+
+The `config.toml` file organizes settings as follows:
+
+- `[MENU]`: Language-specific prompts for UI elements.
+- `[Categories]`: List of categories to choose from for security control contexts.
+- `[tabela_labels]`: Language-specific table labels for displaying security controls.
+- `[html_template_control_list]`: Title of the control list section for each language in the HTML output.
+
+## Getting Started
+
+### Installation
+
+1. **Install Required Libraries**:
    ```bash
    pip install -r requirements.txt
    ```
-   
-2. **Crie o arquivo `secrets.toml`** com a chave da OpenAI:
-   ```toml
-   [openai]
-   openai_key = "sua_chave_openai"
-   ```
 
-## Como Executar
-
-1. **Inicie o Streamlit**:
+2. **Start the Application**:
    ```bash
    streamlit run main.py
    ```
 
-2. **Use a Interface**: 
-   - Selecione o idioma, vendor, tecnologia e classificação.
-   - Insira as URLs para consulta (até 10 URLs).
-   - Clique em "Gerar Baseline" para processar URLs, gerar ID e executar o assistente OpenAI.
-   - Baixe o arquivo HTML gerado com o botão "Baixar Página Web".
+### Usage
 
-## Funções Principais
+1. **Choose Language**: Select from **EN-US**, **PT-BR**, or **ES-ES** for UI and prompt language.
+2. **Input Details**:
+   - Select **Vendor** and **Category**.
+   - Enter **Technology Name** and **Version** (leave as "Static" if there’s no specific version).
+   - Add up to **10 URLs** for processing, separated by commas.
+3. **Generate Baseline**: The application generates a unique ID and processes the URLs, saving the results in Markdown and converting them to HTML.
+4. **Download**: After processing, download the generated HTML report containing the organized security controls list.
+5. **File Management**: Temporary files are removed post-download for optimal storage management.
 
-- `gerar_id_unico()`: Gera um ID único com base nas informações fornecidas, incluindo versão e idioma.
-- `setup_openai_client()`: Configura o cliente da API OpenAI.
-- `fetch_page_content()`: Extrai conteúdo HTML de URLs.
-- `html_to_markdown()`: Converte HTML em Markdown.
-- `execute_assistant_thread()`: Executa o assistente da OpenAI e armazena as respostas.
-- `generate_html_page()`: Gera uma página HTML a partir de um template e conteúdo consolidado com suporte a idiomas.
-- `cleanup_generated_files()`: Limpa arquivos temporários específicos ao UUID da sessão após o download.
+## Acknowledgments
 
-## Requisitos
-
-- Python 3.12 ou superior
-- Chave de API da OpenAI
-
-## Licença
-
-Este projeto é disponibilizado sob a licença MIT. Consulte o arquivo `LICENSE` para mais detalhes.
-
-## TO DO:
-
-- [ ] Unificar lista de categorias e adicionar categorias faltantes
-- [ ] Melhorar o template para suportar multiplos idiomas e ser mais bonito
+Special thanks to OpenAI and Streamlit communities for tools and resources that made this project possible.

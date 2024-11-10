@@ -116,19 +116,19 @@ def fetch_page_content(url):
         st.write(f"Erro ao acessar {url}: {e}")
         return None
 
-# Função para limpar arquivos temporários específicos ao `section_id`
+# Função para limpar arquivos temporários específicos ao `section_id` e `id_unico`
 def cleanup_generated_files():
     st.write("Removendo arquivos temporários:")
     try:
-        # Primeiro remove todos os arquivos dentro dos diretórios
         for root, dirs, files in os.walk(ARTIFACTS_DIRECTORY, topdown=False):
             for file in files:
-                if section_id in file:
+                # Verifica se o arquivo contém `section_id` ou `id_unico`
+                if section_id in file or id_unico in file:
                     file_path = os.path.join(root, file)
                     os.remove(file_path)
                     st.write(f"Arquivo removido: {file_path}")
 
-            # Em seguida, remove os diretórios se estiverem vazios
+            # Remove diretórios se estiverem vazios e contiverem `section_id`
             for dir in dirs:
                 dir_path = os.path.join(root, dir)
                 if section_id in dir:
@@ -141,6 +141,7 @@ def cleanup_generated_files():
         st.write("------> Todos os arquivos e diretórios temporários foram removidos.")
     except Exception as e:
         st.error(f"Erro ao limpar arquivos: {e}")
+
 
 # Função para converter HTML para Markdown
 def html_to_markdown(html_content):
@@ -160,7 +161,7 @@ def process_urls_to_markdown(urls):
             unique_filename = f"{url.replace('https://', '').replace('http://', '').replace('/', '_')}_{section_id}.md"
             file_path = os.path.join(DIRECTORY_MD, unique_filename)
             save_file(header, file_path)
-            st.write(f"Conteúdo Markdown salvo em {file_path}")
+            st.write(f"------------> Conteúdo Markdown salvo em {file_path}")
 
 # Função para carregar todos os arquivos Markdown gerados
 def load_markdown_files():
@@ -301,34 +302,57 @@ def load_file_content(file_path):
 
 # Função para gerar uma página HTML a partir de um template e conteúdo consolidado
 def generate_html_page(template_path, markdown_path, output_html_path, idioma):
-    # Ler o conteúdo do arquivo consolidado de controles em Markdown
+
+    # Match idioma to expected lowercase keys (en, pt, es) for control list title
+    idioma_key = idioma.split("-")[0].lower()  # Convert "EN-US" to "en", "PT-BR" to "pt", etc.
+
+    # Attempt to get the title from config.toml
+    control_list_title = config["html_template_control_list"].get(idioma_key, "Security Controls List")
+
+    # Load and convert Markdown to HTML table content if available
     markdown_content = load_file_content(markdown_path)
-    if markdown_content is None:
-        st.error("Erro ao carregar o conteúdo do arquivo Markdown.")
-        return None
+    if markdown_content:
+        table_html = markdown_to_html_table(markdown_content, idioma)
+    else:
+        table_html = "<p>Error loading table content.</p>"
+        st.error("Erro: Conteúdo do Markdown não carregado.")
 
-    # Converter o conteúdo Markdown para uma tabela HTML, passando o idioma
-    table_html = markdown_to_html_table(markdown_content, idioma)
-
-    # Ler o template HTML
+    # Load HTML template
+    st.write("Carregando o Template HTML:")
     html_template = load_file_content(template_path)
     if html_template is None:
-        st.error("Erro ao carregar o template HTML.")
+        st.error("------------> Erro ao carregar o template HTML.")
+        return None
+    else:
+        st.write("------------> Template HTML carregado com sucesso.")
+
+
+    # Render template with Jinja2, injecting the title and control list
+    try:
+        st.write("Renderizando o documento HTML:")
+        template = Template(html_template)
+        final_html = template.render(
+            title=id_unico,        # Page title
+            control_list=control_list_title, # Heading text
+            table_content=table_html         # HTML table content
+        )
+        st.write("------------> Documento HTML gerado com sucesso.")
+    except Exception as e:
+        st.error(f"------------> Erro ao renderizar o template: {e}")
         return None
 
-    # Usar o template com Jinja2 para renderizar a tabela
-    template = Template(html_template)
-    final_html = template.render(table_content=table_html)
-
-    # Salvar o HTML final no arquivo de saída
+    # Save generated HTML file
     try:
+        st.write("Salvando o documento:")
         with open(output_html_path, "w", encoding="utf-8") as file:
             file.write(final_html)
-        return final_html  # Retorna o conteúdo HTML para download
+        st.write(f"------------>  Documento salvo em: {output_html_path}")
+        return final_html
     except Exception as e:
-        st.error(f"Erro ao salvar o arquivo HTML: {e}")
+        st.error(f"------------> Erro ao salvar o documento: {e}")
         return None
-    
+
+
 # Interface do Streamlit
 st.title("Gerador de Baselines de Segurança com I.A.")
 
@@ -352,7 +376,7 @@ prompt_criacao, prompt_consolidacao = carregar_prompts(idioma_selecionado)
 vendor = st.selectbox(textos["select_vendor"], ["AWS", "Azure"])
 tecnologia = st.text_input(textos["enter_technology_name"])
 versao = st.text_input(textos["enter_technology_version"], "Static")
-categoria = st.selectbox(textos["select_category"], ["Selecione uma categoria"] + categorias) # Carregar e exibir categorias
+categoria = st.selectbox(textos["select_category"], [""] + categorias) # Carregar e exibir categorias
 
 # Verificação adicional para depuração
 if not categorias:
@@ -369,17 +393,16 @@ with st.form("Formulário de ID"):
 
 # Processamento ao clicar em "Gerar ID"
 if submit_button:
-    if vendor and tecnologia and categoria != "Selecione uma categoria" and versao and urls:
+    if vendor and tecnologia and categoria != "" and versao and urls:
         if len(urls) > 10:
             st.error("Por favor, insira no máximo 10 URLs.")
         else:
-            st.write(f"Categoria da Tecnologia: {categoria}")
-            st.write("URLs carregadas:")
+            st.write("URLs:")
             for url in urls:
-                st.write(url)
+                st.write('------------> ', url)
 
             id_unico = gerar_id_unico(vendor, categoria, tecnologia, versao, ano_atual, DOC_VERSION)
-            st.success(f"O ID único gerado é: {id_unico}")
+            st.success(f"ID: {id_unico}")
 
             # Processar URLs e salvar como Markdown
             process_urls_to_markdown(urls)

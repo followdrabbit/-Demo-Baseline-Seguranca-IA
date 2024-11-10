@@ -73,3 +73,9 @@ justificativa = "Justificación"
 riscos_mitigados = "Riesgos Mitigados"
 criticidade = "Criticidad"
 referencias = "Referencias"
+
+[html_template_control_list]
+en = "Security Controls List"
+pt = "Lista de Controles de Segurança"
+es = "Lista de Controles de Seguridad"
+
