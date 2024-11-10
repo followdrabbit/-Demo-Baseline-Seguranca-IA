@@ -66,3 +66,4 @@ Este projeto é disponibilizado sob a licença MIT. Consulte o arquivo `LICENSE`
 ## TO DO:
 
 - [ ] Unificar lista de categorias e adicionar categorias faltantes
+- [ ] Melhorar o template para suportar multiplos idiomas e ser mais bonito

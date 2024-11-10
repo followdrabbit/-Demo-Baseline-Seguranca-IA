@@ -1,42 +1,75 @@
-[AWS]
-classificacoes = [
-    "Compute",
-    "Storage",
-    "Database",
-    "Networking",
-    "Security",
-    "Machine Learning",
-    "Analytics",
-    "Developer Tools",
-    "IoT",
-    "Mobile",
-    "Game Tech",
+[MENU.EN-US]
+language_selection = "Select the desired language | Selecione o idioma desejado | Seleccione el idioma deseado:"
+select_vendor = "Select Vendor"
+enter_technology_name = "Enter the Technology Name"
+enter_technology_version = "Enter the version of the technology (or leave 'Static' if the technology has no version)"
+select_category = "Select Category"
+enter_urls = "Enter up to 10 URLs separated by commas"
+generate_baseline = "Generate Baseline"
+
+[MENU.PT-BR]
+language_selection = "Selecione o idioma desejado"
+select_vendor = "Selecione o Fornecedor"
+enter_technology_name = "Digite o nome da Tecnologia"
+enter_technology_version = "Digite a versão da tecnologia (ou deixe com valor padrão 'Static' se a tecnologia não possuir versão)"
+select_category = "Selecione a categoria"
+enter_urls = "Digite até 10 URLs separadas por vírgulas"
+generate_baseline = "Gerar Baseline"
+
+[MENU.ES-ES]
+language_selection = "Seleccione el idioma deseado"
+select_vendor = "Seleccione el Proveedor"
+enter_technology_name = "Introduzca el nombre de la Tecnología"
+enter_technology_version = "Introduzca la versión de la tecnología (o deje 'Static' si la tecnología no tiene versión)"
+select_category = "Seleccione la categoría"
+enter_urls = "Ingrese hasta 10 URLs separadas por comas"
+generate_baseline = "Generar Baseline"
+
+[Categories]
+items = [
+    "Analytics and Big Data",
+    "Artificial Intelligence",
+    "Augmented Reality and Virtual Reality (AR/VR)",
     "Blockchain",
     "Business Applications",
-    "AR & VR",
-    "Quantum Technologies"
-]
-
-[Azure]
-classificacoes = [
     "Compute",
-    "Storage",
+    "Containers",
     "Database",
-    "Networking",
-    "Security",
-    "AI + Machine Learning",
-    "Analytics",
+    "DevOps",
     "Developer Tools",
-    "IoT",
-    "Mixed Reality",
-    "Integration",
-    "Management Tools",
-    "Media",
-    "Web",
-    "Migration"
+    "Game Development",
+    "Internet of Things (IoT)",
+    "Machine Learning",
+    "Management and Governance",
+    "Media Services",
+    "Migration and Transfer",
+    "Mobile",
+    "Networking and Content Delivery",
+    "Quantum Technologies",
+    "Security, Identity, and Compliance",
+    "Storage"
 ]
 
-[tabela_labels]
-PT-BR = { nome_controle = "Nome do Controle", id_controle = "ID do Controle", justificativa = "Justificativa", riscos_mitigados = "Riscos Mitigados", criticidade = "Criticidade", referencias = "Referências" }
-EN-US = { nome_controle = "Control Name", id_controle = "Control ID", justificativa = "Justification", riscos_mitigados = "Mitigated Risks", criticidade = "Criticality", referencias = "References" }
-ES-ES = { nome_controle = "Nombre del Control", id_controle = "ID del Control", justificativa = "Justificación", riscos_mitigados = "Riesgos Mitigados", criticidade = "Criticidad", referencias = "Referencias" }
+[tabela_labels.PT-BR]
+nome_controle = "Nome do Controle"
+id_controle = "ID do Controle"
+justificativa = "Justificativa"
+riscos_mitigados = "Riscos Mitigados"
+criticidade = "Criticidade"
+referencias = "Referências"
+
+[tabela_labels.EN-US]
+nome_controle = "Control Name"
+id_controle = "Control ID"
+justificativa = "Justification"
+riscos_mitigados = "Mitigated Risks"
+criticidade = "Criticality"
+referencias = "References"
+
+[tabela_labels.ES-ES]
+nome_controle = "Nombre del Control"
+id_controle = "ID del Control"
+justificativa = "Justificación"
+riscos_mitigados = "Riesgos Mitigados"
+criticidade = "Criticidad"
+referencias = "Referencias"

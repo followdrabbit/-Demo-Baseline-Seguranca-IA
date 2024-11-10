@@ -12,12 +12,23 @@ from bs4 import BeautifulSoup
 from jinja2 import Template
 import uuid
 
+# Função para carregar o arquivo config.toml
+def carregar_config():
+    try:
+        return toml.load("config.toml")
+    except toml.TomlDecodeError as e:
+        st.error(f"Erro ao carregar config.toml: {e}")
+        return None
+
 # Configuração inicial
-config = toml.load("config.toml")
-# Carregar apenas a lista de classificações para produtos AWS e Azure
-aws_classificacoes = config.get("AWS", {}).get("classificacoes", [])
-azure_classificacoes = config.get("Azure", {}).get("classificacoes", [])
-classificacoes = aws_classificacoes + azure_classificacoes
+config = carregar_config()
+if not config:
+    st.stop()  # Interrompe a execução se o config.toml não carregar corretamente
+
+# Carregar a lista de categorias
+categorias = config.get("Categories", {}).get("items", [])
+if not categorias:
+    st.warning("Nenhuma categoria encontrada no arquivo config.toml.")
 
 ARTIFACTS_DIRECTORY = "artefatos"
 section_id = str(uuid.uuid4())  # Gera um UUID único para cada execução
@@ -30,37 +41,37 @@ DOC_VERSION = 1
 template_file_path = "template_html.html"
 
 
+# Função para carregar textos com base no idioma selecionado
+def carregar_textos(idioma):
+    try:
+        return config["MENU"][idioma]
+    except KeyError:
+        st.error(f"Erro: idioma '{idioma}' não encontrado no config.toml.")
+        return None
+
 # Função para gerar o ID único com o novo padrão
-def gerar_id_unico(vendor: str, classificacao: str, tecnologia: str, versao: str, ano: int, revisao: int) -> str:
-    return f"{vendor}.{classificacao}.{tecnologia}.{versao}.{ano}.r{revisao}".replace("..", ".")  # Remover duplo ponto
+def gerar_id_unico(vendor: str, categoria: str, tecnologia: str, versao: str, ano: int, revisao: int) -> str:
+    return f"{vendor}.{categoria}.{tecnologia}.{versao}.{ano}.r{revisao}".replace("..", ".")  # Remover duplo ponto
 
 # Função para carregar os prompts com base no idioma
 def carregar_prompts(idioma):
-    if idioma == 'PT-BR':
-        arquivo_criacao = "prompt_criacao_pt.txt"
-        arquivo_consolidacao = "prompt_consolidacao_pt.txt"
-    elif idioma == 'EN-US':
-        arquivo_criacao = "prompt_criacao_en.txt"
-        arquivo_consolidacao = "prompt_consolidacao_en.txt"
-    elif idioma == 'ES-ES':
-        arquivo_criacao = "prompt_criacao_es.txt"
-        arquivo_consolidacao = "prompt_consolidacao_es.txt"
-    else:
+    arquivos_prompts = {
+        'PT-BR': ("prompt_criacao_pt.txt", "prompt_consolidacao_pt.txt"),
+        'EN-US': ("prompt_criacao_en.txt", "prompt_consolidacao_en.txt"),
+        'ES-ES': ("prompt_criacao_es.txt", "prompt_consolidacao_es.txt"),
+    }
+    if idioma not in arquivos_prompts:
         st.error("Idioma não suportado.")
         return None, None
-    
+
+    arquivo_criacao, arquivo_consolidacao = arquivos_prompts[idioma]
     try:
         with open(arquivo_criacao, "r") as f:
             prompt_criacao = f.read()
         with open(arquivo_consolidacao, "r") as f:
             prompt_consolidacao = f.read()
-        
-        # Adicione print para verificação
-        print(f"Prompt Criação ({idioma}):\n{prompt_criacao}")
-        print(f"Prompt Consolidação ({idioma}):\n{prompt_consolidacao}")
-
-    except FileNotFoundError:
-        st.error("Erro: Arquivo de prompt não encontrado.")
+    except FileNotFoundError as e:
+        st.error(f"Erro: {e}")
         return None, None
 
     return prompt_criacao, prompt_consolidacao
@@ -321,88 +332,99 @@ def generate_html_page(template_path, markdown_path, output_html_path, idioma):
 # Interface do Streamlit
 st.title("Gerador de Baselines de Segurança com I.A.")
 
+# Verificar e exibir a lista de categorias
+
 # Opção de seleção do idioma
-idioma_selecionado = st.selectbox("Selecione o idioma do documento:", ("PT-BR", "EN-US", "ES-ES"))
+idioma_selecionado = st.selectbox(
+    config["MENU"]["EN-US"]["language_selection"],  # Título multilíngue para seleção de idioma
+    ("EN-US", "PT-BR", "ES-ES")
+)
+
+# Carregar os textos do idioma selecionado
+textos = carregar_textos(idioma_selecionado)
+if not textos:
+    st.stop()  # Interrompe a execução se os textos do idioma não forem carregados
 
 # Carregar os prompts com base na seleção do idioma
 prompt_criacao, prompt_consolidacao = carregar_prompts(idioma_selecionado)
 
-# Seleção do vendor, tecnologia e classificação
-vendor = st.selectbox("Selecione o Vendor", ["AWS", "Azure"])
-tecnologia = st.text_input("Digite o nome da Tecnologia")
-versao = st.text_input("Digite a versão da tecnologia (ou deixe com valor padrão 'Static' se a tecnologia não possuir versão)", "Static")  # "none" como padrão
-classificacao = st.selectbox("Selecione a classificação", ["Selecione uma classificação"] + classificacoes)
+# Campos da interface com os textos obtidos do arquivo config.toml
+vendor = st.selectbox(textos["select_vendor"], ["AWS", "Azure"])
+tecnologia = st.text_input(textos["enter_technology_name"])
+versao = st.text_input(textos["enter_technology_version"], "Static")
+categoria = st.selectbox(textos["select_category"], ["Selecione uma categoria"] + categorias) # Carregar e exibir categorias
+
+# Verificação adicional para depuração
+if not categorias:
+    st.warning("A lista de categorias está vazia. Verifique se a chave 'Categories' está correta no arquivo config.toml.")
 
 # Campo para URLs
-urls_input = st.text_area("Digite até 10 URLs separadas por vírgulas", "")
+urls_input = st.text_area(textos["enter_urls"], "")
 urls = [url.strip() for url in urls_input.split(",") if url.strip()]
 
 # Ano atual e formulário para revisão e geração de ID
 ano_atual = datetime.now().year
 with st.form("Formulário de ID"):
-    submit_button = st.form_submit_button("Gerar Baseline")
+    submit_button = st.form_submit_button(textos["generate_baseline"])
 
 # Processamento ao clicar em "Gerar ID"
 if submit_button:
-    if vendor and tecnologia and classificacao != "Selecione uma classificação" and versao and urls:
+    if vendor and tecnologia and categoria != "Selecione uma categoria" and versao and urls:
         if len(urls) > 10:
             st.error("Por favor, insira no máximo 10 URLs.")
         else:
-            st.write(f"Classificação da Tecnologia: {classificacao}")
+            st.write(f"Categoria da Tecnologia: {categoria}")
             st.write("URLs carregadas:")
             for url in urls:
                 st.write(url)
 
-            id_unico = gerar_id_unico(vendor, classificacao, tecnologia, versao, ano_atual, DOC_VERSION)
+            id_unico = gerar_id_unico(vendor, categoria, tecnologia, versao, ano_atual, DOC_VERSION)
             st.success(f"O ID único gerado é: {id_unico}")
 
-            # Configuração dos caminhos de saída
-            OUTPUT_FILE = os.path.join(ARTIFACTS_DIRECTORY, f"gerados.{id_unico}.{section_id}.txt")
-            FINAL_OUTPUT_FILE = os.path.join(ARTIFACTS_DIRECTORY, f"consolidados.{id_unico}.{section_id}.md")
-            
             # Processar URLs e salvar como Markdown
             process_urls_to_markdown(urls)
 
             # Carregar cliente OpenAI e executar o assistente
             client = setup_openai_client()
-            assistant_info = {
-                "instructions": "Você é um Especialista em Segurança Cibernética focado em desenvolver baselines de segurança para serviços e produtos da AWS.",
-                "name": "CyberSecurityAssistant",
-                "tools": [{"type": "code_interpreter"}],
-                "model": "gpt-4o"
-            }
-            assistant_id = find_or_create_assistant(client, assistant_info)
+            if client:
+                assistant_info = {
+                    "instructions": "Você é um Especialista em Segurança Cibernética focado em desenvolver baselines de segurança para serviços e produtos da AWS.",
+                    "name": "CyberSecurityAssistant",
+                    "tools": [{"type": "code_interpreter"}],
+                    "model": "gpt-4o"
+                }
+                assistant_id = find_or_create_assistant(client, assistant_info)
 
-            # Executar assistente para cada URL processada com prompt específico ao idioma
-            markdown_contents = load_markdown_files()
-            if prompt_criacao and assistant_id:
-                for filename, content in markdown_contents.items():
-                    combined_content = (
-                        f"ID: {id_unico}\nVendor: {vendor}\nTecnologia: {tecnologia}\nVersão: {versao}\n\n"
-                        f"{prompt_criacao}\n\n{content}"
-                    )
-                    st.write(f"Extraindo controles com ajuda da OpenAI:")
-                    execute_assistant_thread(client, combined_content, assistant_id, OUTPUT_FILE)
+                # Executar assistente para cada URL processada com prompt específico ao idioma
+                markdown_contents = load_markdown_files()
+                if prompt_criacao and assistant_id:
+                    for filename, content in markdown_contents.items():
+                        combined_content = (
+                            f"ID: {id_unico}\nVendor: {vendor}\nTecnologia: {tecnologia}\nVersão: {versao}\n\n"
+                            f"{prompt_criacao}\n\n{content}"
+                        )
+                        st.write(f"Extraindo controles com ajuda da OpenAI:")
+                        execute_assistant_thread(client, combined_content, assistant_id, OUTPUT_FILE)
 
-                # Consolidação final e envio ao assistente usando o prompt de consolidação específico ao idioma
-                if prompt_consolidacao:
-                    combined_content = f"{prompt_consolidacao}\n\n{load_file_content(OUTPUT_FILE)}"
-                    execute_assistant_thread(client, combined_content, assistant_id, FINAL_OUTPUT_FILE)
+                    # Consolidação final e envio ao assistente usando o prompt de consolidação específico ao idioma
+                    if prompt_consolidacao:
+                        combined_content = f"{prompt_consolidacao}\n\n{load_file_content(OUTPUT_FILE)}"
+                        execute_assistant_thread(client, combined_content, assistant_id, FINAL_OUTPUT_FILE)
 
-            # Gerar a página HTML final e permitir download
-            output_html_file_path = os.path.join(ARTIFACTS_DIRECTORY, f"{id_unico}_controles.html")
-            html_content = generate_html_page(template_file_path, FINAL_OUTPUT_FILE, output_html_file_path, idioma_selecionado)
+                    # Gerar a página HTML final e permitir download
+                    output_html_file_path = os.path.join(ARTIFACTS_DIRECTORY, f"{id_unico}_controles.html")
+                    html_content = generate_html_page(template_file_path, FINAL_OUTPUT_FILE, output_html_file_path, idioma_selecionado)
 
-            if html_content:
-                download_button_clicked = st.download_button(
-                    label="Baixar Página Web",
-                    data=html_content,
-                    file_name=f"{id_unico}_controles.html",
-                    mime="text/html"
-                )
+                    if html_content:
+                        download_button_clicked = st.download_button(
+                            label="Baixar Página Web",
+                            data=html_content,
+                            file_name=f"{id_unico}_controles.html",
+                            mime="text/html"
+                        )
 
-            # Executar cleanup
-            cleanup_generated_files()
+                    # Executar cleanup
+                    cleanup_generated_files()
 
     else:
         st.error("Por favor, preencha todos os campos para gerar o ID.")

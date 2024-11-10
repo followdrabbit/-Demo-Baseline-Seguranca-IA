@@ -1,0 +1,133 @@
+<ul>
+  <li><strong>Control Name:</strong> Implement Network Policies for Pod Communication</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> By default, all Pod-to-Pod communication in Kubernetes is unrestricted, which can pose a security risk. Network policies allow you to explicitly define and control the communication between Pods and external services, reducing the risk of unauthorized data access or modification.</li>
+  <li><strong>Mitigated Risks:</strong> Unauthorized access to sensitive data, potential service disruption due to malicious attacks, increased attack surface.</li>
+  <li><strong>Criticality:</strong> High; Unrestricted network communication between Pods can lead to data breaches and security incidents.</li>
+  <li><strong>References:</strong> AWS EKS Best Practices Guide, Kubernetes Network Policies Documentation</li>
+</ul>
+
+<ul>
+  <li><strong>Control Name:</strong> Enable Encryption for Data in Transit</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> Encrypting data in transit ensures that sensitive information is not exposed to potential interception or eavesdropping. It provides a secure communication channel between applications and services.</li>
+  <li><strong>Mitigated Risks:</strong> Data interception, man-in-the-middle attacks, information leakage.</li>
+  <li><strong>Criticality:</strong> High; Ensuring data privacy and integrity during transmission is crucial for security and compliance.</li>
+  <li><strong>References:</strong> AWS Documentation, TLS Encryption Standards</li>
+</ul>
+
+<ul>
+  <li><strong>Control Name:</strong> Use Security Groups for Controlling External Access</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> Security Groups act as a virtual firewall for your instance to control inbound and outbound traffic. They can be used to restrict access to the Kubernetes API server and cluster nodes from external sources.</li>
+  <li><strong>Mitigated Risks:</strong> Unrestricted external access leading to unauthorized API calls, potential attack vectors.</li>
+  <li><strong>Criticality:</strong> Medium; While internal communication should be tightly controlled, guarding external access helps prevent unauthorized entry and cyber threats.</li>
+  <li><strong>References:</strong> AWS VPC Security Groups User Guide</li>
+</ul>
+
+<ul>
+  <li><strong>Control Name:</strong> Regularly Audit and Monitor Network Policy Changes</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> Regular auditing and monitoring of network policies can help detect unauthorized changes and ensure that the policies align with current security requirements and application needs.</li>
+  <li><strong>Mitigated Risks:</strong> Misconfigurations leading to security vulnerabilities, unauthorized access due to overlooked policy changes.</li>
+  <li><strong>Criticality:</strong> Medium; Proactive monitoring helps maintain security posture and prevents potential breaches.</li>
+  <li><strong>References:</strong> AWS CloudWatch, Kubernetes Network Policy Best Practices</li>
+</ul>
+
+<ul>
+  <li><strong>Control Name:</strong> Implement Layered Security Approach Using Security Groups and Network Policies</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> Combining Security Groups and Kubernetes Network Policies provides defense-in-depth, ensuring that both inter-pod and external accesses are controlled and monitored.</li>
+  <li><strong>Mitigated Risks:</strong> Security breaches due to single-point failures, excessive permission exposures.</li>
+  <li><strong>Criticality:</strong> High; Layered security significantly reduces the likelihood of a successful attack by incorporating multiple protective measures.</li>
+  <li><strong>References:</strong> AWS EKS Best Practices Guide, AWS VPC Documentation</li>
+</ul>
+<ul>
+  <li><strong>Control Name:</strong> Ensure Consistent CoreDNS Add-On Version with EKS Kubernetes Version</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> Matching the CoreDNS add-on version to the EKS Kubernetes version ensures compatibility and reduces the risk of runtime errors.</li>
+  <li><strong>Mitigated Risks:</strong> Incompatibility issues that may cause application failures or degraded performance.</li>
+  <li><strong>Criticality:</strong> Medium - Important for operational stability but does not directly expose the cluster to a security threat.</li>
+  <li><strong>References:</strong> <a href="https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/EKS/eks-aws-managed-core-dns-addon.html">Trend Micro Knowledge Base</a></li>
+</ul>
+
+<ul>
+  <li><strong>Control Name:</strong> Disable Remote Access to EKS Cluster Node Groups</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> Preventing remote access to node groups minimizes the chances of external attacks and unauthorized access.</li>
+  <li><strong>Mitigated Risks:</strong> Unauthorized access and potential exploitation of node vulnerabilities.</li>
+  <li><strong>Criticality:</strong> High - Directly prevents access that could lead to a security breach.</li>
+  <li><strong>References:</strong> <a href="https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/EKS/eks-node-group-remote-access.html">Trend Micro Knowledge Base</a></li>
+</ul>
+
+<ul>
+  <li><strong>Control Name:</strong> Restrict EKS Cluster Endpoint Public Access</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> Limiting endpoint exposure reduces the possibility of unauthorized access and mitigates security risks.</li>
+  <li><strong>Mitigated Risks:</strong> Data breaches and unauthorized control over the cluster.</li>
+  <li><strong>Criticality:</strong> High - Key to preventing unwanted access to critical endpoints.</li>
+  <li><strong>References:</strong> <a href="https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/EKS/endpoint-access.html">Trend Micro Knowledge Base</a></li>
+</ul>
+
+<ul>
+  <li><strong>Control Name:</strong> Apply Appropriate IAM Role Policies to EKS Cluster Node Groups</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> Ensuring that only necessary permissions are granted mitigates risk of privilege escalation and unauthorized access.</li>
+  <li><strong>Mitigated Risks:</strong> Misuse of elevated permissions leading to changes in cluster configuration.</li>
+  <li><strong>Criticality:</strong> Medium - Protects from privilege misuse but not directly exposing to immediate threats.</li>
+  <li><strong>References:</strong> <a href="https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/EKS/worker-nodes-managed-policies.html">Trend Micro Knowledge Base</a></li>
+</ul>
+
+<ul>
+  <li><strong>Control Name:</strong> Configure EKS Security Groups to Allow Only Necessary Traffic</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> Properly configured security groups ensure that only trusted and necessary communication is permitted.</li>
+  <li><strong>Mitigated Risks:</strong> Unauthorized data access and potential execution of malicious scripts.</li>
+  <li><strong>Criticality:</strong> High - Directly responsible for network-level security of the EKS environment.</li>
+  <li><strong>References:</strong> <a href="https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/EKS/security-groups.html">Trend Micro Knowledge Base</a></li>
+</ul>
+
+<ul>
+  <li><strong>Control Name:</strong> Enable CloudTrail Logging for All Kubernetes API Calls</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> Logging all API calls provides an audit trail for monitoring and investigating suspicious activities.</li>
+  <li><strong>Mitigated Risks:</strong> Undetected malicious activities and insufficient evidence for forensic analysis.</li>
+  <li><strong>Criticality:</strong> High - Essential for maintaining situational awareness and auditing capabilities.</li>
+  <li><strong>References:</strong> <a href="https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/EKS/eks-logging-kubes-api-calls.html">Trend Micro Knowledge Base</a></li>
+</ul>
+
+<ul>
+  <li><strong>Control Name:</strong> Enable Envelope Encryption for Kubernetes Secrets</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> Envelope encryption safeguards sensitive data by encrypting secrets using AWS’s Key Management Service.</li>
+  <li><strong>Mitigated Risks:</strong> Compromise of secret data which could be exploited to gain unauthorized access or execute malicious activities.</li>
+  <li><strong>Criticality:</strong> High - Directly protects sensitive configurations and data within the EKS ecosystem.</li>
+  <li><strong>References:</strong> <a href="https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/EKS/enable-envelope-encryption.html">Trend Micro Knowledge Base</a></li>
+</ul>
+
+<ul>
+  <li><strong>Control Name:</strong> Enable and Configure Kubernetes Cluster Logging</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> Enabling logging aids in monitoring, troubleshooting, and improving the security posture of the cluster.</li>
+  <li><strong>Mitigated Risks:</strong> Operational challenges and security incidents not being detected or analyzed due to lack of visibility.</li>
+  <li><strong>Criticality:</strong> Medium - While useful for operational insights, not always directly linked to immediate security threats.</li>
+  <li><strong>References:</strong> <a href="https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/EKS/cluster-logging.html">Trend Micro Knowledge Base</a></li>
+</ul>
+
+<ul>
+  <li><strong>Control Name:</strong> Use the Latest Version of Kubernetes for EKS Clusters</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> Using the latest Kubernetes version ensures access to the latest features, performance improvements, and security patches.</li>
+  <li><strong>Mitigated Risks:</strong> Vulnerabilities and issues present in older software versions.</li>
+  <li><strong>Criticality:</strong> High - Updating addresses potential security flaws within outdated software components.</li>
+  <li><strong>References:</strong> <a href="https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/EKS/kubernetes-version.html">Trend Micro Knowledge Base</a></li>
+</ul>
+
+<ul>
+  <li><strong>Control Name:</strong> Monitor and Audit Amazon EKS Configuration Changes</li>
+  <li><strong>Control ID:</strong> AWS.Containers.Amazon EKS.Static.2024.r1</li>
+  <li><strong>Justification:</strong> Monitoring configuration changes allows for the detection of unauthorized or unintentional alterations that could compromise the cluster.</li>
+  <li><strong>Mitigated Risks:</strong> Configuration drift and potential security policy violations.</li>
+  <li><strong>Criticality:</strong> Medium - Important for maintaining consistent configuration, security posture, and compliance.</li>
+  <li><strong>References:</strong> <a href="https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/EKS/configuration-changes.html">Trend Micro Knowledge Base</a></li>
+</ul>
