@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controles de Segurança</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Controles de Segurança</h1>
+    <table>
+<tr><th>Nome do Controle</th><th>ID do Controle</th><th>Justificativa</th><th>Riscos Mitigados</th><th>Criticidade</th><th>Referências</th></tr>
+<tr><td>Desative listas de controle de acesso (ACLs)</td><td>AWS.Storage.Amazon S3.Static.2024.r1.0001</td><td>A desativação das ACLs facilita a gestão de permissões e auditoria, além de simplificar o processo de controle de acesso sendo baseado em políticas, que são mais robustas e completas.</td><td>Este controle reduz o risco de permissões excessivas e vazamento de dados por meio de ACLs indevidamente configuradas.</td><td>Alta. ACLs mal configuradas podem expor seus dados, tornando essencial o uso de políticas de acesso mais abrangentes e seguras.</td><td>Amazon S3 security best practices</td></tr>
+<tr><td>Bloqueie o acesso público aos buckets do Amazon S3</td><td>AWS.Storage.Amazon S3.Static.2024.r1.0002</td><td>Bloquear acesso público a buckets impede que dados confidenciais sejam expostos de forma não intencional na internet.</td><td>Elimina o risco de acessos não autorizados a partir da internet e vazamento de dados confidenciais.</td><td>Crítica. A exposição pública pode resultar em grandes penalizações e danos à reputação.</td><td>Amazon S3 security best practices</td></tr>
+<tr><td>Implemente acesso de menor privilégio</td><td>AWS.Storage.Amazon S3.Static.2024.r1.0003</td><td>Garantir que os usuários e serviços possuam apenas as permissões estritamente necessárias minimiza o risco de ações maliciosas ou acidentais.</td><td>Reduz a superfície de ataque limitando as ações que usuários ou aplicativos podem efetuar sobre os dados.</td><td>Alta. O princípio do menor privilégio é fundamental para a segurança de dados.</td><td>Amazon S3 security best practices</td></tr>
+<tr><td>Utilize funções IAM para acessar o Amazon S3 por aplicações e serviços AWS</td><td>AWS.Storage.Amazon S3.Static.2024.r1.0004</td><td>Assegura que credenciais temporárias sejam usadas, evitando o uso de credenciais de longo prazo, que apresentam riscos elevados de comprometimento.</td><td>Minimize o risco de comprometimento de credenciais de acesso a longo prazo.</td><td>Alta. A exposição de credenciais permanentes pode ter sérias consequências de segurança.</td><td>Amazon S3 security best practices</td></tr>
+<tr><td>Considere a criptografia de dados em repouso</td><td>AWS.Storage.Amazon S3.Static.2024.r1.0005</td><td>Criptografar dados em repouso garante que os dados estejam protegidos em caso de acesso não autorizado ou perda de mídia de armazenamento.</td><td>Reduz o risco de perda de dados sensíveis em caso de acesso físico ou invasão de mídia de armazenamento.</td><td>Crítica. Protege a confidencialidade dos dados armazenados.</td><td>Amazon S3 security best practices</td></tr>
+<tr><td>Enforce a criptografia de dados em trânsito</td><td>AWS.Storage.Amazon S3.Static.2024.r1.0006</td><td>O uso de HTTPS (TLS) protege os dados contra espionagem e ataques de interceptação durante a transmissão.</td><td>Elimina o risco de interceptação de dados, garantindo comunicação segura entre clientes e o Amazon S3.</td><td>Crítica. Garantir a confidencialidade e integridade dos dados em trânsito é essencial.</td><td>Amazon S3 security best practices</td></tr>
+<tr><td>Habilitar o Bloqueio de Acesso Público no Nível da Conta AWS para Amazon S3</td><td>AWS.Storage.Amazon S3.Static.2024.r1.0007</td><td>Para reduzir o risco de exposição não intencional ou não autorizada de dados armazenados no Amazon S3, é crucial bloquear o acesso público nos níveis da conta e do bucket.</td><td>Este controle mitiga o risco de vazamentos de dados por acessos públicos indevidos que podem levar a compromissos de integridade, confidencialidade e disponibilidade dos dados.</td><td>Alta. A exposição pública de dados sensíveis pode resultar em violações de segurança significativas e implicações legais.</td><td>[Enable S3 Block Public Access for AWS Accounts](https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/S3/account-public-access-block.html)</td></tr>
+<tr><td>Configurar Propriedade de Objetos S3</td><td>AWS.Storage.Amazon S3.Static.2024.r1.0008</td><td>Ao configurar a Propriedade de Objetos, garante-se que todos os objetos em um bucket de S3 sejam de propriedade das contas desejadas, aumentando o controle sobre os dados.</td><td>Atenua o risco de perda de controle sobre os dados, já que a propriedade inadequada pode levar a dificuldades de gestão e possíveis violações.</td><td>Média. Perder a propriedade de dados pode ser difícil de gerenciar, especialmente em grandes ambientes multi-usuários.</td><td>[Configure S3 Object Ownership](https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/S3/enforce-s3-object-ownership.html)</td></tr>
+<tr><td>Habilitar Logs de Acesso do Bucket S3 em Um Bucket Diferente</td><td>AWS.Storage.Amazon S3.Static.2024.r1.0009</td><td>Estabelecer monitoramento de acesso adequado para cada bucket S3, armazenando logs em um bucket separado, para que as informações de acesso sejam protegidas e estruturadas.</td><td>Este controle reduz o risco de alteração acidental ou intencional dos logs de acesso, garantindo integridade e auditabilidade.</td><td>Alta. Logs são cruciais para auditoria e análise forense em caso de incidente de segurança.</td><td>[Configure Different S3 Bucket for Server Access Logging Storage](https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/S3/server-access-log-storage-different-bucket.html)</td></tr>
+<tr><td>Enforce SSL para Transportar Dados no S3</td><td>AWS.Storage.Amazon S3.Static.2024.r1.0010</td><td>Forçar o uso de SSL para dados em trânsito para proteger contra interceptações e ataques man-in-the-middle durante a transferência de dados.</td><td>Este controle safa os dados de interceptações e garantem a confidencialidade e integridade durante a transmissão.</td><td>Média. Transmissões não criptografadas são vulneráveis a espionagem e interceptação.</td><td>[Secure Transport](https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/S3/secure-transport.html)</td></tr>
+<tr><td>Habilitar Criptografia no Lado do Servidor para Buckets S3</td><td>AWS.Storage.Amazon S3.Static.2024.r1.0011</td><td>Garantir que todos os dados armazenados nos buckets S3 estejam sempre criptografados, protegendo-os contra acessos não autorizados.</td><td>Diminui o risco de exposição de dados não criptografados em caso de acesso não autorizado ou comprometimento do bucket.</td><td>Alta. O armazenamento seguro é fundamental para proteger dados sensíveis de exploração.</td><td>[Server Side Encryption](https://www.trendmicro.com/cloudoneconformity-staging/knowledge-base/aws/S3/server-side-encryption.html)</td></tr>
+</table>
+</body>
+</html>
