@@ -79,3 +79,29 @@ en = "Security Controls List"
 pt = "Lista de Controles de Segurança"
 es = "Lista de Controles de Seguridad"
 
+[history_table.EN-US]
+version = "VERSION"
+revised_on = "REVISED ON"
+description = "DESCRIPTION"
+short_description = "Short Description: Document Created"
+excluded_controls = "Excluded Controls:"
+None_text = "None"
+included_controls = "Included Controls:"
+
+[history_table.PT-BR]
+version = "VERSÃO"
+revised_on = "REVISADO EM"
+description = "DESCRIÇÃO"
+short_description = "Descrição Breve: Documento Criado"
+excluded_controls = "Controles Excluídos:"
+None_text = "Nenhum"
+included_controls = "Controles Incluídos:"
+
+[history_table.ES-ES]
+version = "VERSIÓN"
+revised_on = "REVISADO EL"
+description = "DESCRIPCIÓN"
+short_description = "Descripción Corta: Documento Creado"
+excluded_controls = "Controles Excluidos:"
+None_text = "Ninguno"
+included_controls = "Controles Incluidos:"
