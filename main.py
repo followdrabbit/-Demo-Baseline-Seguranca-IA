@@ -269,9 +269,9 @@ def markdown_to_html_table(md_content, idioma):
         st.error("Erro: Não foi possível extrair dados dos controles do conteúdo Markdown.")
         return "<p>Erro na conversão de Markdown para tabela HTML.</p>"
 
-    # Gera a tabela HTML com os rótulos carregados
+    # Gera a tabela HTML com o ID 'controls_table' e os rótulos carregados
     table_html = (
-        f"<table>\n<tr><th>{labels['nome_controle']}</th>"
+        f"<table id='controls_table'>\n<tr><th>{labels['nome_controle']}</th>"
         f"<th>{labels['id_controle']}</th>"
         f"<th>{labels['justificativa']}</th>"
         f"<th>{labels['riscos_mitigados']}</th>"
@@ -300,57 +300,150 @@ def load_file_content(file_path):
         st.error(f"Erro ao carregar o arquivo: {e}")
         return None
 
+def extract_controls_info(controls_table_content):
+    # Parse o HTML com BeautifulSoup
+    soup = BeautifulSoup(controls_table_content, "html.parser")
+    controls = []
+
+    # Encontre todas as linhas de controle (ignorando o cabeçalho)
+    rows = soup.find_all("tr")[1:]  # Ignora a primeira linha de cabeçalho
+    for row in rows:
+        cells = row.find_all("td")
+        if len(cells) >= 2:  # Verifica se a linha tem colunas suficientes
+            control_title = cells[0].get_text(strip=True)
+            control_id = cells[1].get_text(strip=True)
+            controls.append((control_title, control_id))
+    
+    return controls
+
+# Função para carregar os textos da seção 'history_table' com base no idioma selecionado
+def carregar_textos_history_table(idioma):
+    try:
+        # Acessa a seção 'history_table' no arquivo config.toml para o idioma especificado
+        return config["history_table"][idioma]
+    except KeyError:
+        st.error(f"Erro: idioma '{idioma}' não encontrado na seção 'history_table' do config.toml.")
+        return None
+
+
+# Função para gerar a tabela de revisão do documento HTML
+def generate_history_table(datetime_str, controls_info, textos_history_table):
+    # Cria o conteúdo da tabela de histórico "history_table" em HTML
+    included_controls_html = "\n".join(
+        f"<li>{control_id} - {control_title}</li>"
+        for control_title, control_id in controls_info
+    )
+
+    # Utiliza os textos traduzidos carregados de 'textos_history_table'
+    table_html = f"""
+    <table id='history_table'>
+        <thead>
+            <tr>
+                <th>{textos_history_table["version"]}</th>
+                <th>{textos_history_table["revised_on"]}</th>
+                <th>{textos_history_table["description"]}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style='width: 16%;'>
+                    <p><strong>1.0</strong></p>
+                </td>
+                <td style='width: 21%;'>
+                    <p><strong>{datetime_str}</strong></p>
+                </td>
+                <td style='width: 63%; text-align: left;'>
+                    <p><strong>{textos_history_table["short_description"]}</strong></p>
+                    <p>&nbsp;</p>
+                    <p><strong>{textos_history_table["excluded_controls"]}</strong></p>
+                    <ul>
+                        <li>{textos_history_table["None_text"]}</li>
+                    </ul>
+                    <p>&nbsp;</p>
+                    <p><strong>{textos_history_table["included_controls"]}</strong></p>
+                    <ul>
+                        {included_controls_html}
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>&nbsp;</p>
+    """
+    return table_html
+
 # Função para gerar uma página HTML a partir de um template e conteúdo consolidado
 def generate_html_page(template_path, markdown_path, output_html_path, idioma):
+    # Chave de idioma
+    idioma_key = idioma.split("-")[0].lower()
 
-    # Match idioma to expected lowercase keys (en, pt, es) for control list title
-    idioma_key = idioma.split("-")[0].lower()  # Convert "EN-US" to "en", "PT-BR" to "pt", etc.
-
-    # Attempt to get the title from config.toml
+    # Carregar título de controle da configuração
     control_list_title = config["html_template_control_list"].get(idioma_key, "Security Controls List")
+    
+    # Carregar textos específicos para a tabela de histórico com base no idioma selecionado
+    textos_history_table = config.get("history_table", {}).get(idioma, {
+        "version": "Version",
+        "revised_on": "Revised On",
+        "description": "Description",
+        "short_description": "Short Description: Document Created",
+        "excluded_controls": "Excluded Controls:",
+        "none_text": "None_text",
+        "included_controls": "Included Controls:"
+    })
 
-    # Load and convert Markdown to HTML table content if available
+    # Gera o conteúdo da tabela de controles
     markdown_content = load_file_content(markdown_path)
     if markdown_content:
-        table_html = markdown_to_html_table(markdown_content, idioma)
+        controls_table_content = markdown_to_html_table(markdown_content, idioma)
     else:
-        table_html = "<p>Error loading table content.</p>"
+        controls_table_content = "<p>Error loading table content.</p>"
         st.error("Erro: Conteúdo do Markdown não carregado.")
 
-    # Load HTML template
+    # Verifique se `controls_table_content` foi definido corretamente
+    if controls_table_content is None:
+        controls_table_content = "<p>No content available.</p>"
+
+    # Extrai informações do controle para o histórico
+    controls_info = extract_controls_info(controls_table_content)
+
+    # Gera o conteúdo da tabela de histórico com os textos específicos
+    datetime_str = datetime.now().strftime("%Y-%m-%d")
+    history_table_content = generate_history_table(datetime_str, controls_info, textos_history_table)
+
+    # Carregar o template HTML
     st.write("Carregando o Template HTML:")
     html_template = load_file_content(template_path)
     if html_template is None:
-        st.error("------------> Erro ao carregar o template HTML.")
+        st.error("Erro ao carregar o template HTML.")
         return None
-    else:
-        st.write("------------> Template HTML carregado com sucesso.")
 
-
-    # Render template with Jinja2, injecting the title and control list
+    # Renderizar o template HTML com o conteúdo gerado
     try:
         st.write("Renderizando o documento HTML:")
         template = Template(html_template)
         final_html = template.render(
-            title=id_unico,        # Page title
-            control_list=control_list_title, # Heading text
-            table_content=table_html         # HTML table content
+            title=id_unico,                      # Título da página
+            control_list=control_list_title,     # Título da tabela de controles
+            controls_table_content=controls_table_content,  # Conteúdo da tabela de controles
+            history_table_content=history_table_content     # Conteúdo da tabela de histórico
         )
-        st.write("------------> Documento HTML gerado com sucesso.")
+        st.write("Documento HTML gerado com sucesso.")
     except Exception as e:
-        st.error(f"------------> Erro ao renderizar o template: {e}")
+        st.error(f"Erro ao renderizar o template: {e}")
         return None
 
-    # Save generated HTML file
+    # Salvar o arquivo HTML gerado
     try:
         st.write("Salvando o documento:")
         with open(output_html_path, "w", encoding="utf-8") as file:
             file.write(final_html)
-        st.write(f"------------>  Documento salvo em: {output_html_path}")
+        st.write(f"Documento salvo em: {output_html_path}")
         return final_html
     except Exception as e:
-        st.error(f"------------> Erro ao salvar o documento: {e}")
+        st.error(f"Erro ao salvar o documento: {e}")
         return None
+
+
 
 
 # Interface do Streamlit
@@ -373,7 +466,7 @@ if not textos:
 prompt_criacao, prompt_consolidacao = carregar_prompts(idioma_selecionado)
 
 # Campos da interface com os textos obtidos do arquivo config.toml
-vendor = st.selectbox(textos["select_vendor"], ["AWS", "Azure"])
+vendor = st.selectbox(textos["select_vendor"], ["AWS", "Azure", "GCP", "Huawei", "OCI"])
 tecnologia = st.text_input(textos["enter_technology_name"])
 versao = st.text_input(textos["enter_technology_version"], "Static")
 categoria = st.selectbox(textos["select_category"], [""] + categorias) # Carregar e exibir categorias
