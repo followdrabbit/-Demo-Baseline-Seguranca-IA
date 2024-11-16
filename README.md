@@ -2,6 +2,12 @@
 
 This application leverages **Streamlit** and **OpenAI** to generate AI-enhanced security baselines based on user-selected inputs, language preferences, and custom prompts. This project dynamically loads configuration details and categorizes content for users to quickly generate organized security baselines with unique IDs.
 
+## Important Announcement
+
+This project has evolved significantly, surpassing its original purpose as a simple demo. Due to its growth and increased complexity, we have migrated the codebase to a new repository: [BaselineForge](https://github.com/followdrabbit/BaselineForge). 
+
+BaselineForge introduces additional features, enhanced modularity, and a more robust architecture, providing a solid foundation for further development and scaling. Please visit the new repository for the latest updates and improvements.
+
 ## Key Features
 
 - **Multi-language Support**: Supports **EN-US**, **PT-BR**, and **ES-ES**, dynamically loading configuration settings from `config.toml`, which includes:
@@ -41,24 +47,3 @@ The `config.toml` file organizes settings as follows:
 1. **Install Required Libraries**:
    ```bash
    pip install -r requirements.txt
-   ```
-
-2. **Start the Application**:
-   ```bash
-   streamlit run main.py
-   ```
-
-### Usage
-
-1. **Choose Language**: Select from **EN-US**, **PT-BR**, or **ES-ES** for UI and prompt language.
-2. **Input Details**:
-   - Select **Vendor** and **Category**.
-   - Enter **Technology Name** and **Version** (leave as "Static" if there’s no specific version).
-   - Add up to **10 URLs** for processing, separated by commas.
-3. **Generate Baseline**: The application generates a unique ID and processes the URLs, saving the results in Markdown and converting them to HTML.
-4. **Download**: After processing, download the generated HTML report containing the organized security controls list.
-5. **File Management**: Temporary files are removed post-download for optimal storage management.
-
-## Acknowledgments
-
-Special thanks to OpenAI and Streamlit communities for tools and resources that made this project possible.
